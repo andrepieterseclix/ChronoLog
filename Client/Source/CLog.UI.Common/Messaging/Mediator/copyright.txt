@@ -1,0 +1,2 @@
+﻿Mediator and MediatorMessageSinkAttribute was "borrowed" from Sacha Barber's excellent Cinch framework for MVVM
+https://www.codeproject.com/Articles/38278/WPF-If-Carlsberg-did-MVVM-Frameworks-Part-of-n

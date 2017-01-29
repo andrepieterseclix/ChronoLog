@@ -1,0 +1,46 @@
+Layered Application Guidelines
+	https://msdn.microsoft.com/en-us/library/ee658109.aspx
+
+IDisposable Implementation
+	https://msdn.microsoft.com/en-us/library/ms244737.aspx
+
+Password Hashing
+	https://www.codeproject.com/Articles/14537/The-Art-Science-of-Storing-Passwords
+	https://www.codeproject.com/Articles/704865/Salted-Password-Hashing-Doing-it-Right
+
+Login Security Tokens
+	http://stackoverflow.com/questions/840537/generating-cryptographically-secure-authentication-tokens
+
+Entity Framework Relationship Mapping (Fluent API)
+	https://msdn.microsoft.com/en-us/library/jj591620(v=vs.113).aspx
+
+WCF Help
+	http://www.c-sharpcorner.com/UploadFile/db2972/wcf-service-configuration-using-web-config-day-11/
+
+WCF Client
+	https://www.codeproject.com/Tips/558163/Difference-between-Proxy-and-Channel-Factory-in-WC
+
+WCF Token Security
+	https://www.codeproject.com/Articles/380900/WCF-Authentication-and-Authorization-in-Enterprise
+
+Unity.WCF
+	http://www.devtrends.co.uk/blog/introducing-unity.wcf-providing-easy-ioc-integration-for-your-wcf-services
+
+Unity Lifetime Managers (RegisterType -> use Transient by default if no LifetimeManager specified)
+	https://msdn.microsoft.com/en-us/library/ff660872%28v=pandp.20%29.aspx?f=255&MSPPError=-2147217396
+
+What is a framework?
+	https://www.codeproject.com/Articles/5381/What-Is-A-Framework
+
+WPF Custom Authentication and Authorization
+	https://blog.magnusmontin.net/2013/03/24/custom-authorization-in-wpf/
+
+Unity tricks:  building a composite
+	http://sharpfellows.com/post/Unity-IoC-Container-
+
+Email Regex :D
+	http://emailregex.com/
+
+Validating User Input
+	http://www.codearsenal.net/2012/06/wpf-textbox-validation-idataerrorinfo.html#.WHvMBFV95QK
+

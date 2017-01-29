@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{49EACEAA-4D6B-4537-950A-B902D15E0C7E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CLog.Business.Access</RootNamespace>
+    <AssemblyName>CLog.Business.Access</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Managers\AccessManager.cs" />
+    <Compile Include="Messages\ErrorMessages.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\CLog.Common\CLog.Common.csproj">
+      <Project>{C1C7C56E-18AA-41C2-8051-9FE696F8A3BF}</Project>
+      <Name>CLog.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.Business.Contracts\CLog.Business.Contracts.csproj">
+      <Project>{709A7764-2254-43C1-83DB-8B50A941D8FD}</Project>
+      <Name>CLog.Business.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.Business.Security.Contracts\CLog.Business.Security.Contracts.csproj">
+      <Project>{192A5FFB-E001-4D61-89FB-EC3EBFC91D4E}</Project>
+      <Name>CLog.Business.Security.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.DataAccess.Contracts\CLog.DataAccess.Contracts.csproj">
+      <Project>{69D9EC6A-DE20-466E-BB13-1DDF9A8C395B}</Project>
+      <Name>CLog.DataAccess.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.Framework.Business\CLog.Framework.Business.csproj">
+      <Project>{9559A4A8-5060-4C31-99BC-453E30B506DA}</Project>
+      <Name>CLog.Framework.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.Framework.Models\CLog.Framework.Models.csproj">
+      <Project>{AF965730-D7B2-4174-B0E7-A3B431EA5532}</Project>
+      <Name>CLog.Framework.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.Infrastructure.Contracts\CLog.Infrastructure.Contracts.csproj">
+      <Project>{CCF59BB2-CE3B-4651-B51F-2DB83F2314B7}</Project>
+      <Name>CLog.Infrastructure.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.Models\CLog.Models.csproj">
+      <Project>{072bc0ec-7786-4e71-a344-daca6f0beff0}</Project>
+      <Name>CLog.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

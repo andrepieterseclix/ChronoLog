@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="CLog.UI.CaptureTime.Views.CaptureTimeDayView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CLog.UI.CaptureTime.Views">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="../Resources/Dictionary.xaml"/>
+    </UserControl.Resources>
+
+    <Border CornerRadius="4" Width="130" Style="{StaticResource CaptureTimeBoxStyle}">
+        <Border.Effect>
+            <DropShadowEffect Color="LightGray"/>
+        </Border.Effect>
+        <StackPanel>
+            <Border Height="26" BorderBrush="{StaticResource BorderColour}" BorderThickness="0, 0, 0, 1" Background="{StaticResource GradientBrush}" SnapsToDevicePixels="True" CornerRadius="4, 4, 0, 0" Style="{StaticResource CaptureTimeBoxInnerStyle}">
+                <TextBlock IsEnabled="{Binding Model.IsEnabled}" Text="{Binding Model.Date, StringFormat=yyyy/MM/dd, FallbackValue=[Date]}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Style="{StaticResource DisableableHeaderStyle}"/>
+            </Border>
+            <Grid Height="14" Panel.ZIndex="-1">
+                <TextBlock Text="{Binding Model.Date.DayOfWeek, FallbackValue=[DayOfWeek]}" FontSize="10" Foreground="{StaticResource TertiaryColour}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Margin="0, 3, 0, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Hours:" Margin="4, 4, 2, 4" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" IsEnabled="{Binding Model.IsEnabled}" Text="{Binding Model.Hours}" Margin="2, 4, 4, 4" VerticalAlignment="Center"/>
+            </Grid>
+        </StackPanel>
+    </Border>
+</UserControl>

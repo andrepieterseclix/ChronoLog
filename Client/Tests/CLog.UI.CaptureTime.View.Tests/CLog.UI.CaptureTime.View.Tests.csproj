@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8D5E55B6-BA48-41D8-B9A0-C7698DE09EFB}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CLog.UI.CaptureTime.View.Tests</RootNamespace>
+    <AssemblyName>CLog.UI.CaptureTime.View.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Moq, Version=4.5.30.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Moq.4.5.30\lib\net45\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\CLog.Common.Log4NetLogger\CLog.Common.Log4NetLogger.csproj">
+      <Project>{73CC9B66-1F09-4F70-9EEB-76945251CC88}</Project>
+      <Name>CLog.Common.Log4NetLogger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\CLog.Common\CLog.Common.csproj">
+      <Project>{C1C7C56E-18AA-41C2-8051-9FE696F8A3BF}</Project>
+      <Name>CLog.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Framework.ServiceClients\CLog.Framework.ServiceClients.csproj">
+      <Project>{9111B9F4-2F57-43F1-A596-D24D7C3CD816}</Project>
+      <Name>CLog.Framework.ServiceClients</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Framework.Services.Models\CLog.Framework.Services.Models.csproj">
+      <Project>{43E08E22-C9CB-471C-90D7-1FDAB177823A}</Project>
+      <Name>CLog.Framework.Services.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Framework.Services\CLog.Framework.Services.csproj">
+      <Project>{E8F5210D-AC3C-481D-B018-51193DBAEFF5}</Project>
+      <Name>CLog.Framework.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Services.Contracts\CLog.Services.Contracts.csproj">
+      <Project>{73be3234-f7ac-4fdd-b3f9-63533e5fab05}</Project>
+      <Name>CLog.Services.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Services.Models\CLog.Services.Models.csproj">
+      <Project>{659a8269-14b2-4215-87c2-3a7b8db4c158}</Project>
+      <Name>CLog.Services.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.ServiceClients.Contracts\CLog.ServiceClients.Contracts.csproj">
+      <Project>{6FDEEA1C-53C7-437E-BCF3-6FA64B5A64C6}</Project>
+      <Name>CLog.ServiceClients.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.UI.CaptureTime\CLog.UI.CaptureTime.csproj">
+      <Project>{CBCC85C1-68C8-486F-89F9-3480D5FB0E71}</Project>
+      <Name>CLog.UI.CaptureTime</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.UI.Common\CLog.UI.Common.csproj">
+      <Project>{A4C0E351-F70F-4738-AA07-E46DF0E60374}</Project>
+      <Name>CLog.UI.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.UI.Framework.Testing\CLog.UI.Framework.Testing.csproj">
+      <Project>{7dfb36ef-68f1-40b4-b840-6c5f62ee5d1f}</Project>
+      <Name>CLog.UI.Framework.Testing</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

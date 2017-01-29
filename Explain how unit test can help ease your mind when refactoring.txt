@@ -1,0 +1,92 @@
+Old code:
+
+		public BusinessResult<CapturedTime[]> GetCapturedTime(DateTime fromDate, DateTime toDate)
+        {
+            BusinessResult<CapturedTime[]> result = new BusinessResult<CapturedTime[]>();
+
+            Execute(() =>
+            {
+                fromDate = fromDate.Date;
+                toDate = toDate.Date;
+
+                // Validate
+                if (fromDate > toDate)
+                {
+                    result.Errors.Add(ErrorMessages.InvalidFromAndToDate);
+                    return;
+                }
+
+                if (toDate.Subtract(fromDate).Days > CAPTURED_TIME_QUERY_MAX_DAY_SPAN)
+                {
+                    result.Errors.Add(ErrorMessages.QueryMaxDaySpan);
+                    return;
+                }
+
+                User user = _userRepository.Get(x => x.Id == UserIdentity.UserId);
+
+                if (user == null)
+                {
+                    LoggerHelper.Error(Logger, "The user with Id '{1}' and UserName '{0}' was not found after being authenticated!", UserIdentity.UserId, UserIdentity.Name);
+                    throw new BusinessException("User not found!");
+                }
+
+                // Obtain data
+                CapturedTime[] items = user
+                    .CapturedTimeItems
+                    .Where(x => x.Date >= fromDate && x.Date <= toDate)
+                    .OrderBy(x => x.Date)
+                    .ToArray();
+
+                if (items.Select(x => x.Date.Date).Distinct().Count() < items.Length)
+                {
+                    LoggerHelper.Error(Logger, "User with Id '{0}' has duplicate Captured Time items between '{1}' and '{2}'!", user.Id, fromDate, toDate);
+                    result.Errors.Add(ErrorMessages.CapturedTimeDuplicateDates);
+                    return;
+                }
+
+                // Stitch data
+                SortedDictionary<DateTime, CapturedTime> capturedTimeDictionary =
+                    new SortedDictionary<DateTime, CapturedTime>(items.ToDictionary(x => x.Date));
+
+                for (DateTime date = fromDate; date <= toDate; date = date.AddDays(1))
+                {
+                    CapturedTime item = null;
+                    if (!capturedTimeDictionary.TryGetValue(date, out item))
+                    {
+                        item = CapturedTime.New(user, date, 0, DayType.Unknown, false);
+                        capturedTimeDictionary.Add(date, item);
+                    }
+
+                    // Set properties according to business rules
+                    item.TypeOfDay = (item.Date.DayOfWeek == DayOfWeek.Saturday || item.Date.DayOfWeek == DayOfWeek.Sunday)
+                        ? DayType.Weekend
+                        : DayType.WorkDay;
+
+                    // TODO:  check if public holiday
+
+                    item.IsEnabled = !item.IsLocked && item.Date <= DateTime.Now.Date;
+                }
+
+                result.Result = capturedTimeDictionary.Values.ToArray();
+            });
+
+            return result;
+        }
+
+New Code:
+
+        public BusinessResult<CapturedTime[]> GetCapturedTime(DateTime fromDate, DateTime toDate)
+        {
+            BusinessResult<CapturedTime[]> result = new BusinessResult<CapturedTime[]>();
+
+            Execute(() =>
+            {
+                IDictionary<DateTime, CapturedTime> items;
+                GetCapturedTimeInternal(fromDate, toDate, result, out items);
+
+                if (!result.HasErrors)
+                    result.Result = items?.Values.ToArray();
+            });
+
+            return result;
+        }

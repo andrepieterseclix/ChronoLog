@@ -1,0 +1,21 @@
+﻿<Window x:Class="CLog.UI.Main.Views.ShellWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:CLog.UI.Main.Views"
+        Background="{StaticResource Background}"
+        UseLayoutRounding="True" SnapsToDevicePixels="True"
+        Title="ChronoLog"
+        Height="640" Width="1022" MinHeight="600" MinWidth="700"
+        WindowStartupLocation="CenterScreen">
+
+    <DockPanel Margin="2">
+        <local:BannerView DockPanel.Dock="Top" DataContext="{Binding Banner}" Style="{StaticResource DivisionStyle}" Margin="5"/>
+        <StatusBar DockPanel.Dock="Bottom">
+            <TextBlock FontWeight="Bold" Text="{Binding Status, FallbackValue=[Status]}" Foreground="{Binding StatusType, Converter={StaticResource StatusTypeColourConverter}}" Margin="5, 0" />
+        </StatusBar>
+        
+        <!--Tab Items added through App.xaml.cs-->
+        <TabControl Name="UITabs" x:FieldModifier="public" Style="{StaticResource DivisionStyle}" Margin="5" />
+    </DockPanel>
+
+</Window>

@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E15AC53D-E008-4217-96BD-76D47B62F56A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CLog.Business.Tests</RootNamespace>
+    <AssemblyName>CLog.Business.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Moq, Version=4.5.30.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Moq.4.5.30\lib\net45\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="Managers\AccessManagerTest.cs" />
+    <Compile Include="Managers\TimesheetManagerTest.cs" />
+    <Compile Include="ManagerTestBase.cs" />
+    <Compile Include="Managers\UserManagerTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\CLog.Common\CLog.Common.csproj">
+      <Project>{C1C7C56E-18AA-41C2-8051-9FE696F8A3BF}</Project>
+      <Name>CLog.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.Business.Access\CLog.Business.Access.csproj">
+      <Project>{49EACEAA-4D6B-4537-950A-B902D15E0C7E}</Project>
+      <Name>CLog.Business.Access</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.Business.Contracts\CLog.Business.Contracts.csproj">
+      <Project>{709A7764-2254-43C1-83DB-8B50A941D8FD}</Project>
+      <Name>CLog.Business.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.Business.Security.Contracts\CLog.Business.Security.Contracts.csproj">
+      <Project>{192A5FFB-E001-4D61-89FB-EC3EBFC91D4E}</Project>
+      <Name>CLog.Business.Security.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.Business.Timesheets\CLog.Business.Timesheets.csproj">
+      <Project>{6931ABDB-03A2-46E7-919D-A95DC7EABAB5}</Project>
+      <Name>CLog.Business.Timesheets</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.Business.Users\CLog.Business.Users.csproj">
+      <Project>{7E609F90-971A-4B93-80B2-5255A5F85404}</Project>
+      <Name>CLog.Business.Users</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.DataAccess.Contracts\CLog.DataAccess.Contracts.csproj">
+      <Project>{69D9EC6A-DE20-466E-BB13-1DDF9A8C395B}</Project>
+      <Name>CLog.DataAccess.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.Framework.Business\CLog.Framework.Business.csproj">
+      <Project>{9559A4A8-5060-4C31-99BC-453E30B506DA}</Project>
+      <Name>CLog.Framework.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.Framework.Models\CLog.Framework.Models.csproj">
+      <Project>{AF965730-D7B2-4174-B0E7-A3B431EA5532}</Project>
+      <Name>CLog.Framework.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.Framework.Security\CLog.Framework.Security.csproj">
+      <Project>{6a92f35d-3d0f-4356-a309-7daaf54c7c3e}</Project>
+      <Name>CLog.Framework.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.Framework.Services\CLog.Framework.Services.csproj">
+      <Project>{E8F5210D-AC3C-481D-B018-51193DBAEFF5}</Project>
+      <Name>CLog.Framework.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.Infrastructure.Contracts\CLog.Infrastructure.Contracts.csproj">
+      <Project>{CCF59BB2-CE3B-4651-B51F-2DB83F2314B7}</Project>
+      <Name>CLog.Infrastructure.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.Models\CLog.Models.csproj">
+      <Project>{072bc0ec-7786-4e71-a344-daca6f0beff0}</Project>
+      <Name>CLog.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.Models.Mocks\CLog.Models.Mocks.csproj">
+      <Project>{4AA3E63B-7FE4-4FD2-AD20-066E428BF8F7}</Project>
+      <Name>CLog.Models.Mocks</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

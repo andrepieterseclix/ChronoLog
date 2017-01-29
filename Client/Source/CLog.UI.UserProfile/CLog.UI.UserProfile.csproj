@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6CA4953B-8F4E-4EE1-885C-88F43C6FB339}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CLog.UI.UserProfile</RootNamespace>
+    <AssemblyName>CLog.UI.UserProfile</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="UserProfileModuleInitialiser.cs" />
+    <Compile Include="ViewModels\UserProfileViewModel.cs" />
+    <Compile Include="Views\UserProfileView.xaml.cs">
+      <DependentUpon>UserProfileView.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\CLog.Common\CLog.Common.csproj">
+      <Project>{c1c7c56e-18aa-41c2-8051-9fe696f8a3bf}</Project>
+      <Name>CLog.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Framework.ServiceClients\CLog.Framework.ServiceClients.csproj">
+      <Project>{9111B9F4-2F57-43F1-A596-D24D7C3CD816}</Project>
+      <Name>CLog.Framework.ServiceClients</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Framework.Services.Models\CLog.Framework.Services.Models.csproj">
+      <Project>{43e08e22-c9cb-471c-90d7-1fdab177823a}</Project>
+      <Name>CLog.Framework.Services.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Framework.Services\CLog.Framework.Services.csproj">
+      <Project>{E8F5210D-AC3C-481D-B018-51193DBAEFF5}</Project>
+      <Name>CLog.Framework.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Services.Contracts\CLog.Services.Contracts.csproj">
+      <Project>{73BE3234-F7AC-4FDD-B3F9-63533E5FAB05}</Project>
+      <Name>CLog.Services.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Services.Models\CLog.Services.Models.csproj">
+      <Project>{659A8269-14B2-4215-87C2-3A7B8DB4C158}</Project>
+      <Name>CLog.Services.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.ServiceClients.Contracts\CLog.ServiceClients.Contracts.csproj">
+      <Project>{6FDEEA1C-53C7-437E-BCF3-6FA64B5A64C6}</Project>
+      <Name>CLog.ServiceClients.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.ServiceClients.Security\CLog.ServiceClients.Security.csproj">
+      <Project>{B683C213-EE65-4425-AB9A-AE9CDC12E4F6}</Project>
+      <Name>CLog.ServiceClients.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.UI.Common\CLog.UI.Common.csproj">
+      <Project>{a4c0e351-f70f-4738-aa07-e46df0e60374}</Project>
+      <Name>CLog.UI.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.UI.Models\CLog.UI.Models.csproj">
+      <Project>{80C544C2-E16D-47BC-AABB-6D94235C6D13}</Project>
+      <Name>CLog.UI.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Views\UserProfileView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

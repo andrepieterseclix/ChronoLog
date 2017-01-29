@@ -1,0 +1,25 @@
+﻿<Window x:Class="CLog.UI.Framework.Testing.Views.TestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:CLog.UI.Framework.Testing.Views"
+        Title="Wpf View Test Bench" WindowStartupLocation="CenterScreen"
+        Height="600" Width="1400" MinWidth="400" MinHeight="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="300"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="300" MinWidth="80"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" BorderThickness="5" BorderBrush="DarkGray">
+            <ContentControl x:FieldModifier="public" x:Name="ContentHost"/>
+        </Border>
+
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" ResizeDirection="Columns" />
+
+
+        <Grid Grid.Column="2">
+            <Rectangle Fill="WhiteSmoke"/>
+        </Grid>
+    </Grid>
+</Window>

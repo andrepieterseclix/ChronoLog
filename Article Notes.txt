@@ -1,0 +1,11 @@
+Explain usage of service locator, and why it's bad.
+
+Explain how service locator and incorrect instance (singleton) was being resolved in ServerMessageSessionInspector, leading to single instance of Datacontext that did not get updated data from DB!
+
+Explain that each layer should not trust the other.
+
+Business logic should validate every scenario, such as the dupliate dates check in TimesheetManager.GetCapturedTime
+
+Segregation of work, full stack developers don't focus enough on one task, forget smaller detail about one task.
+
+Unit testing and refactoring:  TimesheetManager.GetCapturedTime, see other attached doc

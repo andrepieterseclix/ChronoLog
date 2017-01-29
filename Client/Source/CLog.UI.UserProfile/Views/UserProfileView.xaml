@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="CLog.UI.UserProfile.Views.UserProfileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="500">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/CLog.UI.Common;component/Resources/Resources.xaml"/>
+    </UserControl.Resources>
+
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top" Text="Update User Profile" Style="{StaticResource ModuleHeaderTextBlock}"/>
+        <Grid Width="400" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource FieldTextBlock}" Text="User Name:"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource FieldTextBlock}" Text="Name:"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource FieldTextBlock}" Text="Surname:"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource FieldTextBlock}" Text="E-mail:"/>
+
+            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource TextField}" Text="{Binding ShadowUser.UserName, Mode=OneWay}" IsReadOnly="True" Foreground="{StaticResource QuaternaryColour}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextField}" Text="{Binding ShadowUser.Name, ValidatesOnDataErrors=true, NotifyOnValidationError=true, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource TextField}" Text="{Binding ShadowUser.Surname, ValidatesOnDataErrors=true, NotifyOnValidationError=true, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource TextField}" Text="{Binding ShadowUser.Email, ValidatesOnDataErrors=true, NotifyOnValidationError=true, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" Margin="0, 10">
+                <Button Style="{StaticResource ButtonStyle}" Command="{Binding SaveCommand}">Save</Button>
+                <Button Style="{StaticResource ButtonStyle}" Command="{Binding ResetCommand}">Reset</Button>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+</UserControl>
