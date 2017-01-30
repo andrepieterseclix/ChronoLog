@@ -4,6 +4,10 @@ using System.Windows.Interactivity;
 
 namespace CLog.UI.Common.Behaviors
 {
+    /// <summary>
+    /// Represents the bindable password box behavior.
+    /// </summary>
+    /// <seealso cref="System.Windows.Interactivity.Behavior{System.Windows.Controls.PasswordBox}" />
     public sealed class PasswordBoxBindableBehavior : Behavior<PasswordBox>
     {
         public static DependencyProperty PasswordTextProperty = DependencyProperty.Register("PasswordText", typeof(string), typeof(PasswordBoxBindableBehavior), new UIPropertyMetadata(PasswordText_Changed));

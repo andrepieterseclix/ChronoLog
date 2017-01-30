@@ -1,0 +1,23 @@
+﻿<Window x:Class="CLog.UI.Framework.Testing.Views.ObjectPropertyGridWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="clr-namespace:CLog.UI.Framework.Testing.Controls"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CLog.UI.Framework.Testing.Views"
+        mc:Ignorable="d"
+        Title="Object Inspector" Height="400" Width="600" WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <c:BindablePropertyGrid DockPanel.Dock="Bottom" SelectedObject="{Binding}"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" FlowDirection="RightToLeft" Margin="5, 5, 5, 10">
+            <Button Margin="3" IsDefault="True" Width="80" Click="Button_Click">OK</Button>
+            <Button x:Name="cancelButton" Margin="3" IsCancel="True" Width="80">Cancel</Button>
+        </StackPanel>
+    </Grid>
+</Window>

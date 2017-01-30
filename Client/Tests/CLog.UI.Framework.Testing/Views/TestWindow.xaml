@@ -1,25 +1,57 @@
 ﻿<Window x:Class="CLog.UI.Framework.Testing.Views.TestWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:m="clr-namespace:CLog.UI.Framework.Testing.Models"
+        xmlns:c="clr-namespace:CLog.UI.Framework.Testing.Controls"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:beh="clr-namespace:CLog.UI.Common.Behaviors;assembly=CLog.UI.Common"
         xmlns:local="clr-namespace:CLog.UI.Framework.Testing.Views"
-        Title="Wpf View Test Bench" WindowStartupLocation="CenterScreen"
-        Height="600" Width="1400" MinWidth="400" MinHeight="300">
+        Title="ChronoLog UI Test Bench" WindowStartupLocation="CenterScreen"
+        Height="720" Width="1400" MinWidth="400" MinHeight="300">
+
+    <Window.Resources>
+        <ResourceDictionary Source="../Resources/Dictionary.xaml"/>
+    </Window.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="300"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="300" MinWidth="80"/>
+            <ColumnDefinition Width="400" MinWidth="80"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="0" BorderThickness="5" BorderBrush="DarkGray">
-            <ContentControl x:FieldModifier="public" x:Name="ContentHost"/>
-        </Border>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderThickness="5" BorderBrush="DarkGray">
+                <ContentControl x:FieldModifier="public" x:Name="ContentHost"/>
+            </Border>
+            <Expander Grid.Row="1" Header="Status Messages" IsExpanded="False">
+                <ListBox ItemsSource="{Binding Status.Messages}" Height="200"/>
+            </Expander>
+        </Grid>
 
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" ResizeDirection="Columns" />
 
-
         <Grid Grid.Column="2">
-            <Rectangle Fill="WhiteSmoke"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TreeView Grid.Row="0" ItemsSource="{Binding TestParameterModels}">
+                <i:Interaction.Behaviors>
+                    <beh:SelectedItemTreeViewBehavior SelectedItem="{Binding SelectedObject, Mode=TwoWay}"/>
+                </i:Interaction.Behaviors>
+            </TreeView>
+            <GridSplitter Grid.Row="1" Height="5" ResizeDirection="Rows" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            <DockPanel Grid.Row="2">
+                <ListBox MaxHeight="180" DockPanel.Dock="Top" Margin="0, 0, 0, 4" BorderThickness="1" BorderBrush="Gray" Visibility="{Binding RunMethodModels.Count, Converter={StaticResource IntToVisibilityConverter}}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding RunMethodModels}" ItemTemplate="{StaticResource RunMethodTemplate}" HorizontalContentAlignment="Stretch"/>
+                <c:BindablePropertyGrid DockPanel.Dock="Bottom" SelectedObject="{Binding SelectedObject, Mode=TwoWay}"/>
+            </DockPanel>
         </Grid>
     </Grid>
 </Window>

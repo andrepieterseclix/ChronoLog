@@ -42,5 +42,20 @@ namespace CLog.Framework.Services.Models
         public List<ErrorDto> Errors { get; set; }
 
         #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return GetType().Name;
+        }
+
+        #endregion
     }
 }

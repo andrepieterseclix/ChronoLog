@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\PasswordBoxBindableBehavior.cs" />
+    <Compile Include="Behaviors\SelectedItemTreeViewBehavior.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Controls\TextPath.cs" />
     <Compile Include="Converters\StatusTypeColourConverter.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Messaging\Mediator\Mediator.cs" />
     <Compile Include="Messaging\Mediator\MediatorMessageSinkAttribute.cs" />
     <Compile Include="Messaging\Models\StatusMessage.cs" />
+    <Compile Include="ViewModels\BindableBase.cs" />
     <Compile Include="Modules\IDependencyContainer.cs" />
     <Compile Include="Modules\IModuleInitialiser.cs" />
     <Compile Include="Modules\Module.cs" />

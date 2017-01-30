@@ -55,6 +55,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLog.UI.Framework.Testing",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLog.UI.CaptureTime.View.Tests", "Client\Tests\CLog.UI.CaptureTime.View.Tests\CLog.UI.CaptureTime.View.Tests.csproj", "{9CF6848D-D9B0-4C71-ABC7-DF0BEAD2D3E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLog.UI.Testing.Configuration", "Client\Tests\CLog.UI.Testing.Configuration\CLog.UI.Testing.Configuration.csproj", "{C5CA04B2-7CDD-41A0-8912-734CC7FE8796}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLog.Framework.Configuration", "Common\CLog.Framework.Configuration\CLog.Framework.Configuration.csproj", "{29254870-8CAC-4798-8CCB-8DAB46A5F4E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLog.UI.Main", "Client\Source\CLog.UI.Main\CLog.UI.Main.csproj", "{72965DB6-5688-4643-8ADA-3ECA78BC6988}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLog.ServiceClients.Security", "Client\Source\CLog.ServiceClients.Security\CLog.ServiceClients.Security.csproj", "{B683C213-EE65-4425-AB9A-AE9CDC12E4F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +125,22 @@ Global
 		{9CF6848D-D9B0-4C71-ABC7-DF0BEAD2D3E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CF6848D-D9B0-4C71-ABC7-DF0BEAD2D3E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CF6848D-D9B0-4C71-ABC7-DF0BEAD2D3E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5CA04B2-7CDD-41A0-8912-734CC7FE8796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5CA04B2-7CDD-41A0-8912-734CC7FE8796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5CA04B2-7CDD-41A0-8912-734CC7FE8796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5CA04B2-7CDD-41A0-8912-734CC7FE8796}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29254870-8CAC-4798-8CCB-8DAB46A5F4E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29254870-8CAC-4798-8CCB-8DAB46A5F4E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29254870-8CAC-4798-8CCB-8DAB46A5F4E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29254870-8CAC-4798-8CCB-8DAB46A5F4E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72965DB6-5688-4643-8ADA-3ECA78BC6988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72965DB6-5688-4643-8ADA-3ECA78BC6988}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72965DB6-5688-4643-8ADA-3ECA78BC6988}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72965DB6-5688-4643-8ADA-3ECA78BC6988}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B683C213-EE65-4425-AB9A-AE9CDC12E4F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B683C213-EE65-4425-AB9A-AE9CDC12E4F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B683C213-EE65-4425-AB9A-AE9CDC12E4F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B683C213-EE65-4425-AB9A-AE9CDC12E4F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,5 +169,12 @@ Global
 		{9AF4DBE1-8682-4B75-8FF3-278BDEC90752} = {6EB30D48-530E-4433-B637-024C89438AEE}
 		{7DFB36EF-68F1-40B4-B840-6C5F62EE5D1F} = {4C706CE7-4176-41FA-8A95-877F194DE7E4}
 		{9CF6848D-D9B0-4C71-ABC7-DF0BEAD2D3E2} = {288A2221-1A68-4348-A58D-E03C7FB6FF53}
+		{C5CA04B2-7CDD-41A0-8912-734CC7FE8796} = {4C706CE7-4176-41FA-8A95-877F194DE7E4}
+		{29254870-8CAC-4798-8CCB-8DAB46A5F4E4} = {B1643B90-C906-424D-82FE-1C12A63F31C1}
+		{72965DB6-5688-4643-8ADA-3ECA78BC6988} = {EBF9FC04-A406-42B1-B4BF-806E7CA8F142}
+		{B683C213-EE65-4425-AB9A-AE9CDC12E4F6} = {23080C16-60B6-405B-96F2-928C98E698B5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal

@@ -3,8 +3,6 @@ using CLog.UI.Common.Commands;
 using CLog.UI.Common.Helpers;
 using CLog.UI.Common.Messaging.Mediator;
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace CLog.UI.Common.ViewModels
@@ -12,8 +10,9 @@ namespace CLog.UI.Common.ViewModels
     /// <summary>
     /// Represents the base class for view models.
     /// </summary>
-    /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
-    public abstract class ViewModelBase : INotifyPropertyChanged, IDisposable
+    /// <seealso cref="CLog.UI.Common.ViewModels.BindableBase" />
+    /// <seealso cref="System.IDisposable" />
+    public abstract class ViewModelBase : BindableBase, IDisposable
     {
         #region Constructors
 
@@ -75,25 +74,6 @@ namespace CLog.UI.Common.ViewModels
         }
 
         /// <summary>
-        /// Sets the property and invokes a change notification event through the <see cref="INotifyPropertyChanged"/> interface.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="field">The field.</param>
-        /// <param name="value">The value.</param>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns></returns>
-        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName]string propertyName = null)
-        {
-            if (Equals(field, value))
-                return false;
-
-            field = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-            return true;
-        }
-
-        /// <summary>
         /// Invokes the specified callback on the UI thread.
         /// </summary>
         /// <param name="callback">The callback.</param>
@@ -112,9 +92,20 @@ namespace CLog.UI.Common.ViewModels
         {
             return new DelegateCommand(execute, canExecute);
         }
-        
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return GetType().Name;
+        }
+
         #endregion
-        
+
         #region IDisposable Implementation
 
         /// <summary>
@@ -143,15 +134,6 @@ namespace CLog.UI.Common.ViewModels
             // Release native resources
             // NOTE:  call Dispose(false); in finalizer if this class contains unmanaged resources.
         }
-
-        #endregion
-
-        #region Events
-
-        /// <summary>
-        /// Occurs when a property value changes.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
     }

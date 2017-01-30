@@ -70,6 +70,10 @@
       <Project>{C1C7C56E-18AA-41C2-8051-9FE696F8A3BF}</Project>
       <Name>CLog.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\CLog.Framework.Configuration\CLog.Framework.Configuration.csproj">
+      <Project>{29254870-8cac-4798-8ccb-8dab46a5f4e4}</Project>
+      <Name>CLog.Framework.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Server\Source\CLog.Framework.ServiceClients\CLog.Framework.ServiceClients.csproj">
       <Project>{9111B9F4-2F57-43F1-A596-D24D7C3CD816}</Project>
       <Name>CLog.Framework.ServiceClients</Name>
@@ -105,6 +109,10 @@
     <ProjectReference Include="..\CLog.UI.Framework.Testing\CLog.UI.Framework.Testing.csproj">
       <Project>{7dfb36ef-68f1-40b4-b840-6c5f62ee5d1f}</Project>
       <Name>CLog.UI.Framework.Testing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.UI.Testing.Configuration\CLog.UI.Testing.Configuration.csproj">
+      <Project>{C5CA04B2-7CDD-41A0-8912-734CC7FE8796}</Project>
+      <Name>CLog.UI.Testing.Configuration</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

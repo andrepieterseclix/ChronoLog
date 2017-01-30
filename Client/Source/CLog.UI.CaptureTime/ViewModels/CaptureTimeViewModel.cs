@@ -136,7 +136,7 @@ namespace CLog.UI.CaptureTime.ViewModels
         #region Methods
 
         [MediatorMessageSink(MessagingConstants.DATE_CHANGED)]
-        public void SelectedDateChanged(DateTime selectedDate)
+        private void SelectedDateChanged(DateTime selectedDate)
         {
             bool sameWeekSelected = false;
 
@@ -196,6 +196,7 @@ namespace CLog.UI.CaptureTime.ViewModels
 
         private void SaveCommand_Execute(object parameter)
         {
+            _statusService.SetStatus(StatusMessageType.Warning, "Save has not yet been implemented!");
             throw new NotImplementedException();
         }
 

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{26C1D61B-F746-4D2B-BDAF-72E8A6A315FC}</ProjectGuid>
+    <ProjectGuid>{C5CA04B2-7CDD-41A0-8912-734CC7FE8796}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CLog.UI.Framework.Testing</RootNamespace>
-    <AssemblyName>CLog.UI.Framework.Testing</AssemblyName>
+    <RootNamespace>CLog.UI.Testing.Configuration</RootNamespace>
+    <AssemblyName>CLog.UI.Testing.Configuration</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -42,16 +42,6 @@
       <HintPath>..\..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="envdte80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -70,12 +60,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -85,28 +69,18 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\IntToVisibilityConverter.cs" />
-    <Compile Include="Exceptions\CancelException.cs" />
-    <Compile Include="Helpers\ReflectionHelper.cs" />
-    <Compile Include="Helpers\ReflectionHelperMarshalByRef.cs" />
-    <Compile Include="Helpers\VisualStudioHelper.cs" />
-    <Compile Include="Models\GroupModel.cs" />
-    <Compile Include="Models\MethodModel.cs" />
-    <Compile Include="Models\ValueModel.cs" />
-    <Compile Include="Models\ValueModelExpandable.cs" />
-    <Compile Include="Models\ValueModelGeneric.cs" />
-    <Compile Include="ViewModels\MethodRunViewModel.cs" />
-    <Compile Include="Models\MockModel.cs" />
-    <Compile Include="Models\TestModel.cs" />
-    <Compile Include="Models\TestParameterModelBase.cs" />
-    <Compile Include="Models\ViewModelModel.cs" />
+    <Compile Include="DataHelpers\AccessDataHelper.cs" />
+    <Compile Include="DataHelpers\TimesheetsDataHelper.cs" />
+    <Compile Include="DataHelpers\UsersDataHelper.cs" />
+    <Compile Include="TestsBootstrapper.cs" />
+    <Compile Include="Installers\CrossCuttingConcernsModuleInstaller.cs" />
+    <Compile Include="Installers\MainModuleInstaller.cs" />
+    <Compile Include="Installers\ServicesIntegrationModuleInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -120,19 +94,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Controls\BindablePropertyGrid.cs" />
-    <Compile Include="ViewModels\SelectModuleViewModel.cs" />
-    <Compile Include="ViewModels\StatusViewModel.cs" />
-    <Compile Include="ViewModels\TestViewModel.cs" />
-    <Compile Include="Views\ObjectPropertyGridWindow.xaml.cs">
-      <DependentUpon>ObjectPropertyGridWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SelectModuleWindow.xaml.cs">
-      <DependentUpon>SelectModuleWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TestWindow.xaml.cs">
-      <DependentUpon>TestWindow.xaml</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -144,40 +105,60 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\CLog.Common.Log4NetLogger\CLog.Common.Log4NetLogger.csproj">
-      <Project>{73CC9B66-1F09-4F70-9EEB-76945251CC88}</Project>
+      <Project>{73cc9b66-1f09-4f70-9eeb-76945251cc88}</Project>
       <Name>CLog.Common.Log4NetLogger</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Common\CLog.Common\CLog.Common.csproj">
-      <Project>{C1C7C56E-18AA-41C2-8051-9FE696F8A3BF}</Project>
+      <Project>{c1c7c56e-18aa-41c2-8051-9fe696f8a3bf}</Project>
       <Name>CLog.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\CLog.Framework.Configuration\CLog.Framework.Configuration.csproj">
+      <Project>{29254870-8CAC-4798-8CCB-8DAB46A5F4E4}</Project>
+      <Name>CLog.Framework.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Framework.ServiceClients\CLog.Framework.ServiceClients.csproj">
+      <Project>{9111b9f4-2f57-43f1-a596-d24d7c3cd816}</Project>
+      <Name>CLog.Framework.ServiceClients</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Framework.Services.Models\CLog.Framework.Services.Models.csproj">
+      <Project>{43e08e22-c9cb-471c-90d7-1fdab177823a}</Project>
+      <Name>CLog.Framework.Services.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Framework.Services\CLog.Framework.Services.csproj">
+      <Project>{e8f5210d-ac3c-481d-b018-51193dbaeff5}</Project>
+      <Name>CLog.Framework.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Services.Contracts\CLog.Services.Contracts.csproj">
+      <Project>{73be3234-f7ac-4fdd-b3f9-63533e5fab05}</Project>
+      <Name>CLog.Services.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Services.Models\CLog.Services.Models.csproj">
+      <Project>{659a8269-14b2-4215-87c2-3a7b8db4c158}</Project>
+      <Name>CLog.Services.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Services.Security.Contracts\CLog.Services.Security.Contracts.csproj">
+      <Project>{9391bd19-c666-4bb5-8264-58ab71f4dd21}</Project>
+      <Name>CLog.Services.Security.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.ServiceClients.Contracts\CLog.ServiceClients.Contracts.csproj">
+      <Project>{6fdeea1c-53c7-437e-bcf3-6fa64b5a64c6}</Project>
+      <Name>CLog.ServiceClients.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Source\CLog.UI.Common\CLog.UI.Common.csproj">
-      <Project>{A4C0E351-F70F-4738-AA07-E46DF0E60374}</Project>
+      <Project>{a4c0e351-f70f-4738-aa07-e46df0e60374}</Project>
       <Name>CLog.UI.Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Resources\Dictionary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ObjectPropertyGridWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SelectModuleWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TestWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <ProjectReference Include="..\..\Source\CLog.UI.Main\CLog.UI.Main.csproj">
+      <Project>{72965DB6-5688-4643-8ADA-3ECA78BC6988}</Project>
+      <Name>CLog.UI.Main</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.UI.Framework.Testing\CLog.UI.Framework.Testing.csproj">
+      <Project>{7DFB36EF-68F1-40B4-B840-6C5F62EE5D1F}</Project>
+      <Name>CLog.UI.Framework.Testing</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
