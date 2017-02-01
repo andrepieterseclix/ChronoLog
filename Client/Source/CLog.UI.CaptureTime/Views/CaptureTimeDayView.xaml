@@ -17,10 +17,10 @@
             <Border Height="26" BorderBrush="{StaticResource BorderColour}" BorderThickness="0, 0, 0, 1" Background="{StaticResource GradientBrush}" SnapsToDevicePixels="True" CornerRadius="4, 4, 0, 0" Style="{StaticResource CaptureTimeBoxInnerStyle}">
                 <TextBlock IsEnabled="{Binding Model.IsEnabled}" Text="{Binding Model.Date, StringFormat=yyyy/MM/dd, FallbackValue=[Date]}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Style="{StaticResource DisableableHeaderStyle}"/>
             </Border>
-            <Grid Height="14" Panel.ZIndex="-1">
+            <Grid Height="16" Panel.ZIndex="-1">
                 <TextBlock Text="{Binding Model.Date.DayOfWeek, FallbackValue=[DayOfWeek]}" FontSize="10" Foreground="{StaticResource TertiaryColour}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
-            <Grid Margin="0, 3, 0, 0">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
