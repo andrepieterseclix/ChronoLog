@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CLog.UI.CaptureTime.View.Tests")]
+[assembly: AssemblyTitle("CLog.UI.TestBench")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CLog.UI.CaptureTime.View.Tests")]
+[assembly: AssemblyProduct("CLog.UI.TestBench")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9cf6848d-d9b0-4c71-abc7-df0bead2d3e2")]
+[assembly: Guid("c8f4cdd3-4398-4772-b413-3d6ea9db6717")]
 
 // Version information for an assembly consists of the following four values:
 //

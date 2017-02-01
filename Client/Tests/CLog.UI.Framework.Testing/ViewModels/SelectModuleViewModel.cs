@@ -1,5 +1,6 @@
 ﻿using CLog.Common.Logging;
 using CLog.UI.Common.ViewModels;
+using CLog.UI.Framework.Testing.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,19 +13,19 @@ namespace CLog.UI.Framework.Testing.ViewModels
     {
         #region Fields
 
-        private Type _selectedType;
+        private ModuleAssemblyModel _selectedType;
 
         #endregion
 
         #region Constructor
 
-        public SelectModuleViewModel(ILogger logger, IEnumerable<Type> types)
+        public SelectModuleViewModel(ILogger logger, IEnumerable<ModuleAssemblyModel> types)
             : base(logger)
         {
-            ModuleInstallers = new ObservableCollection<Type>(types);
+            ModuleInstallers = new ObservableCollection<ModuleAssemblyModel>(types);
             SelectedType = ModuleInstallers.FirstOrDefault();
 
-            OkCommand = CreateCommand(OkCommand_Execute, OkCommand_CanExecute);
+            OkCommand = CreateCommand(p => { }, p => SelectedType != null);
         }
 
         #endregion
@@ -33,25 +34,12 @@ namespace CLog.UI.Framework.Testing.ViewModels
 
         public ICommand OkCommand { get; private set; }
 
-        public ObservableCollection<Type> ModuleInstallers { get; private set; }
+        public ObservableCollection<ModuleAssemblyModel> ModuleInstallers { get; private set; }
 
-        public Type SelectedType
+        public ModuleAssemblyModel SelectedType
         {
             get { return _selectedType; }
             set { SetProperty(ref _selectedType, value); }
-        }
-
-        #endregion
-
-        #region Methods
-
-        private void OkCommand_Execute(object parameter)
-        {
-        }
-
-        private bool OkCommand_CanExecute(object parameter)
-        {
-            return SelectedType != null;
         }
 
         #endregion

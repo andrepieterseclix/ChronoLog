@@ -15,6 +15,8 @@ using CLog.UI.Testing.Configuration.DataHelpers;
 using Microsoft.Practices.Unity;
 using Moq;
 using System;
+using System.Linq;
+using System.Threading;
 
 namespace CLog.UI.Testing.Configuration.Installers
 {
@@ -23,6 +25,8 @@ namespace CLog.UI.Testing.Configuration.Installers
         public void Install(IUnityContainer container)
         {
             TestModel testModel = container.Resolve<TestModel>();
+            ServicesMockSettingsModel servicesMockSettingsModel =
+                (ServicesMockSettingsModel)testModel.Environment.Children.First(x => x.GetType() == typeof(ServicesMockSettingsModel));
 
             if (testModel == null)
                 throw new ArgumentNullException(nameof(testModel));
@@ -37,12 +41,12 @@ namespace CLog.UI.Testing.Configuration.Installers
             accessClientFactory
                 .Setup(x => x.Create())
                 .Returns(accessClient.Object)
-                .Callback(() => container.Resolve<ILogger>().Info(nameof(IAccessClientFactory.Create)));
+                .Callback(() => container.Resolve<ILogger>().Info($"{nameof(IAccessClientFactory)}.{nameof(IAccessClientFactory.Create)}"));
 
             accessClient
                 .SetupGet(x => x.Proxy)
                 .Returns(accessService.Object)
-                .Callback(() => container.Resolve<ILogger>().Info(nameof(IServiceClient<IAccessService>.Proxy)));
+                .Callback(() => container.Resolve<ILogger>().Info($"{nameof(IServiceClient<IAccessService>)}.{nameof(IServiceClient<IAccessService>.Proxy)}"));
 
             mockModel = new MockModel(nameof(IAccessService), accessService);
             testModel.Mocks.Children.Add(mockModel);
@@ -52,21 +56,33 @@ namespace CLog.UI.Testing.Configuration.Installers
             accessService
                 .Setup(x => x.Login(It.IsAny<LoginRequest>()))
                 .Returns(loginResponse)
-                .Callback(() => container.Resolve<ILogger>().Info(nameof(IAccessService.Login)));
+                .Callback(() =>
+                {
+                    container.Resolve<ILogger>().Info($"{nameof(IAccessService)}.{nameof(IAccessService.Login)}");
+                    Thread.Sleep(servicesMockSettingsModel.SimulateLatencyMilliseconds);
+                });
 
             LogoutResponse logoutResponse = AccessDataHelper.GetLogoutResponse();
             mockModel.Children.Add(new MethodModel(nameof(IAccessService.Logout), logoutResponse));
             accessService
                 .Setup(x => x.Logout(It.IsAny<LogoutRequest>()))
                 .Returns(logoutResponse)
-                .Callback(() => container.Resolve<ILogger>().Info(nameof(IAccessService.Logout)));
+                .Callback(() =>
+                {
+                    container.Resolve<ILogger>().Info($"{nameof(IAccessService)}.{nameof(IAccessService.Logout)}");
+                    Thread.Sleep(servicesMockSettingsModel.SimulateLatencyMilliseconds);
+                });
 
             UpdateUserPasswordResponse updateUserPasswordResponse = AccessDataHelper.GetUpdateUserPasswordResponse();
             mockModel.Children.Add(new MethodModel(nameof(IAccessService.UpdateUserPassword), updateUserPasswordResponse));
             accessService
                 .Setup(x => x.UpdateUserPassword(It.IsAny<UpdateUserPasswordRequest>()))
                 .Returns(updateUserPasswordResponse)
-                .Callback(() => container.Resolve<ILogger>().Info(nameof(IAccessService.UpdateUserPassword)));
+                .Callback(() =>
+                {
+                    container.Resolve<ILogger>().Info($"{nameof(IAccessService)}.{nameof(IAccessService.UpdateUserPassword)}");
+                    Thread.Sleep(servicesMockSettingsModel.SimulateLatencyMilliseconds);
+                });
 
             // Mocks - Timesheet Service
             Mock<ITimesheetClientFactory> timesheetClientFactory = new Mock<ITimesheetClientFactory>();
@@ -76,12 +92,12 @@ namespace CLog.UI.Testing.Configuration.Installers
             timesheetClientFactory
                 .Setup(x => x.Create())
                 .Returns(timesheetClient.Object)
-                .Callback(() => container.Resolve<ILogger>().Info(nameof(ITimesheetClientFactory.Create)));
+                .Callback(() => container.Resolve<ILogger>().Info($"{nameof(ITimesheetClientFactory)}.{nameof(ITimesheetClientFactory.Create)}"));
 
             timesheetClient
                 .SetupGet(x => x.Proxy)
                 .Returns(timesheetService.Object)
-                .Callback(() => container.Resolve<ILogger>().Info(nameof(IServiceClient<ITimesheetService>.Proxy)));
+                .Callback(() => container.Resolve<ILogger>().Info($"{nameof(IServiceClient<ITimesheetService>)}.{nameof(IServiceClient<ITimesheetService>.Proxy)}"));
 
             mockModel = new MockModel(nameof(ITimesheetService), timesheetService);
             testModel.Mocks.Children.Add(mockModel);
@@ -91,14 +107,22 @@ namespace CLog.UI.Testing.Configuration.Installers
             timesheetService
                 .Setup(x => x.GetCapturedTime(It.IsAny<GetCapturedTimeRequest>()))
                 .Returns(getCapturedTimeResponse)
-                .Callback(() => container.Resolve<ILogger>().Info(nameof(ITimesheetService.GetCapturedTime)));
+                .Callback(() =>
+                {
+                    container.Resolve<ILogger>().Info($"{nameof(ITimesheetService)}.{nameof(ITimesheetService.GetCapturedTime)}");
+                    Thread.Sleep(servicesMockSettingsModel.SimulateLatencyMilliseconds);
+                });
 
             SaveCapturedTimeResponse saveCapturedTimeResponse = TimesheetsDataHelper.GetSaveCapturedTimeResponse();
             mockModel.Children.Add(new MethodModel(nameof(ITimesheetService.SaveCapturedTime), saveCapturedTimeResponse));
             timesheetService
                 .Setup(x => x.SaveCapturedTime(It.IsAny<SaveCapturedTimeRequest>()))
                 .Returns(saveCapturedTimeResponse)
-                .Callback(() => container.Resolve<ILogger>().Info(nameof(ITimesheetService.SaveCapturedTime)));
+                .Callback(() =>
+                {
+                    container.Resolve<ILogger>().Info($"{nameof(ITimesheetService)}.{nameof(ITimesheetService.SaveCapturedTime)}");
+                    Thread.Sleep(servicesMockSettingsModel.SimulateLatencyMilliseconds);
+                });
 
             // Mocks - User Service
             Mock<IUserClientFactory> userClientFactory = new Mock<IUserClientFactory>();
@@ -108,12 +132,12 @@ namespace CLog.UI.Testing.Configuration.Installers
             userClientFactory
                 .Setup(x => x.Create())
                 .Returns(userClient.Object)
-                .Callback(() => container.Resolve<ILogger>().Info(nameof(IUserClientFactory.Create)));
+                .Callback(() => container.Resolve<ILogger>().Info($"{nameof(IUserClientFactory)}.{nameof(IUserClientFactory.Create)}"));
 
             userClient
                 .SetupGet(x => x.Proxy)
                 .Returns(userService.Object)
-                .Callback(() => container.Resolve<ILogger>().Info(nameof(IServiceClient<IUserService>.Proxy)));
+                .Callback(() => container.Resolve<ILogger>().Info($"{nameof(IServiceClient<IUserService>)}.{nameof(IServiceClient<IUserService>.Proxy)}"));
 
             mockModel = new MockModel(nameof(IUserService), userService);
             testModel.Mocks.Children.Add(mockModel);
@@ -123,7 +147,11 @@ namespace CLog.UI.Testing.Configuration.Installers
             userService
                 .Setup(x => x.UpdateUser(It.IsAny<UpdateUserRequest>()))
                 .Returns(updateUserResponse)
-                .Callback(() => container.Resolve<ILogger>().Info(nameof(IUserService.UpdateUser)));
+                .Callback(() =>
+                {
+                    container.Resolve<ILogger>().Info($"{nameof(IUserService)}.{nameof(IUserService.UpdateUser)}");
+                    Thread.Sleep(servicesMockSettingsModel.SimulateLatencyMilliseconds);
+                });
 
             // Register
             container

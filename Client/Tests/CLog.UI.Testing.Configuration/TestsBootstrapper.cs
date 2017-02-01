@@ -9,6 +9,7 @@ using CLog.UI.Framework.Testing.Views;
 using CLog.UI.Main;
 using Microsoft.Practices.Unity;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,11 +19,32 @@ namespace CLog.UI.Testing.Configuration
 {
     public class TestsBootstrapper : UnityBootstrapper, IDependencyContainer
     {
+        #region Fields
+
+        private string _testModuleAssemblyPath;
+
+        #endregion
+
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TestsBootstrapper"/> class.
+        /// </summary>
+        /// <remarks>
+        /// When the test is ran from within Visual Studio, it will scan the solution for modules automatically.
+        /// An assembly is considered a module if it contains a class that implements <see cref="IModuleInitialiser"/>.
+        /// </remarks>
         public TestsBootstrapper()
         {
+        }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TestsBootstrapper"/> class.
+        /// </summary>
+        /// <param name="testModuleAssemblyPath">The test module assembly path.</param>
+        public TestsBootstrapper(string testModuleAssemblyPath)
+        {
+            _testModuleAssemblyPath = testModuleAssemblyPath;
         }
 
         #endregion
@@ -47,24 +69,12 @@ namespace CLog.UI.Testing.Configuration
         {
             base.PostRegistration();
 
-            // Scan solution to get IModuleInitialiser
-            string[] assemblyPaths = VisualStudioHelper.GetSolutionOutputAssemblies();
-            Type[] types = ReflectionHelper.GetTypesAssignableFrom(typeof(IModuleInitialiser), assemblyPaths)
-                .Where(t => t != typeof(CompositeModule))
-                .ToArray();
+            ModuleAssemblyModel testModuleAssembly = ResolveTestModule();
 
-            Type moduleInitType = types.FirstOrDefault();
+            if (testModuleAssembly == null)
+                return;
 
-            if (types.Length != 1)
-            {
-                SelectModuleViewModel selectModuleViewModel = new SelectModuleViewModel(Container.Resolve<ILogger>(), types);
-                SelectModuleWindow selectModuleWindow = new SelectModuleWindow() { DataContext = selectModuleViewModel };
-
-                if (!selectModuleWindow.ShowDialog().Value)
-                    return;
-
-                moduleInitType = selectModuleViewModel.SelectedType;
-            }
+            Type moduleInitType = ReflectionHelper.LoadTypeExternal(testModuleAssembly);
 
             // Configure the container, and initialise the module
             IModuleInitialiser initialiser = (IModuleInitialiser)Activator.CreateInstance(moduleInitType);
@@ -97,6 +107,47 @@ namespace CLog.UI.Testing.Configuration
         public T Resolve<T>()
         {
             return Container.Resolve<T>();
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        private ModuleAssemblyModel ResolveTestModule()
+        {
+            ModuleAssemblyModel[] modules = null;
+
+            if (!string.IsNullOrWhiteSpace(_testModuleAssemblyPath))
+            {
+                modules =
+                    ReflectionHelper.GetTypesAssignableFrom(typeof(IModuleInitialiser), t => t.Name != typeof(CompositeModule).Name, _testModuleAssemblyPath);
+
+                if (modules.Length == 0)
+                    throw new ArgumentException($"The specified assembly '{_testModuleAssemblyPath}' does not contain a type that implements {nameof(IModuleInitialiser)}.");
+            }
+            else
+            {
+                // Scan solution to get IModuleInitialiser
+                string[] assemblyPaths = VisualStudioHelper.GetSolutionOutputAssemblies();
+
+                modules =
+                    ReflectionHelper.GetTypesAssignableFrom(typeof(IModuleInitialiser), t => t.Name != typeof(CompositeModule).Name, assemblyPaths);
+            }
+
+            ModuleAssemblyModel moduleInitType = modules.FirstOrDefault();
+
+            if (modules.Length != 1)
+            {
+                SelectModuleViewModel selectModuleViewModel = new SelectModuleViewModel(Container.Resolve<ILogger>(), modules);
+                SelectModuleWindow selectModuleWindow = new SelectModuleWindow() { DataContext = selectModuleViewModel };
+
+                if (!selectModuleWindow.ShowDialog().Value)
+                    return null;
+
+                moduleInitType = selectModuleViewModel.SelectedType;
+            }
+
+            return moduleInitType;
         }
 
         #endregion

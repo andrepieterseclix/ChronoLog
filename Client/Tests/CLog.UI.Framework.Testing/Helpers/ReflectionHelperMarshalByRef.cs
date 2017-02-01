@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CLog.UI.Framework.Testing.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace CLog.UI.Framework.Testing.Helpers
 {
     public class ReflectionHelperMarshalByRef : MarshalByRefObject
     {
-        public Type[] GetTypesAssignableFrom(Type type, string[] assemblyFiles)
+        public Type[] GetTypesAssignableFrom(Type type, string[] assemblyFiles, Predicate<Type> predicate, Action<string> foundCandidateAssemblyCallback)
         {
             List<Type> typeList = new List<Type>();
 
@@ -20,7 +21,7 @@ namespace CLog.UI.Framework.Testing.Helpers
 
                     var types = assembly
                         .GetTypes()
-                        .Where(t => type.IsAssignableFrom(t));
+                        .Where(t => type.IsAssignableFrom(t) && predicate(t));
 
                     typeList.AddRange(types);
                 }
@@ -30,21 +31,31 @@ namespace CLog.UI.Framework.Testing.Helpers
                 }
             }
 
+            // Returning types to the main domain will raise an exception if that domain can't resolve the libraries!
+            typeList
+                .Select(x => new Uri(x.Assembly.CodeBase).LocalPath)
+                .ToList()
+                .ForEach(x => foundCandidateAssemblyCallback?.Invoke(x));
+
             return typeList.ToArray();
         }
 
-        public Assembly Load(string path)
+        public ModuleAssemblyModel[] GetTypesAssignableFrom(Type type, string[] assemblyFiles, Predicate<Type> predicate)
         {
-            ValidatePath(path);
+            List<ModuleAssemblyModel> result = new List<ModuleAssemblyModel>();
 
-            return Assembly.Load(path);
-        }
+            foreach (string assemblyFile in assemblyFiles)
+            {
+                Assembly assembly = LoadFile(assemblyFile);
 
-        public Assembly LoadFrom(string path)
-        {
-            ValidatePath(path);
+                var types = assembly
+                    .GetTypes()
+                    .Where(t => type.IsAssignableFrom(t) && predicate(t));
 
-            return Assembly.LoadFrom(path);
+                result.AddRange(types.Select(t => new ModuleAssemblyModel(t.FullName, assemblyFile)));
+            }
+
+            return result.ToArray();
         }
 
         public Assembly LoadFile(string path)
@@ -61,6 +72,14 @@ namespace CLog.UI.Framework.Testing.Helpers
 
             if (!File.Exists(path))
                 throw new FileNotFoundException(path);
+        }
+
+        public Type GetTypeFromAssembly(ModuleAssemblyModel testModuleAssembly)
+        {
+            Assembly assembly = LoadFile(testModuleAssembly.AssemblyPath);
+            Type type = assembly.GetType(testModuleAssembly.ModuleClassName, true);
+
+            return type;
         }
     }
 }

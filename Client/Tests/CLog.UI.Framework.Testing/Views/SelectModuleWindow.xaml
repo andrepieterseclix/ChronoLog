@@ -13,6 +13,6 @@
             <Button Margin="3" Width="80" IsCancel="True">Cancel</Button>
             <Button Margin="3" Width="80" IsDefault="True" Click="Button_Click" Command="{Binding OkCommand}">OK</Button>
         </StackPanel>
-        <ListBox Margin="5" ItemsSource="{Binding ModuleInstallers}" SelectedItem="{Binding SelectedType}" DisplayMemberPath="Name"/>
+        <ListBox Margin="5" ItemsSource="{Binding ModuleInstallers}" SelectedItem="{Binding SelectedType}" DisplayMemberPath="ModuleClassName" ToolTip="{Binding AssemblyPath}"/>
     </DockPanel>
 </Window>

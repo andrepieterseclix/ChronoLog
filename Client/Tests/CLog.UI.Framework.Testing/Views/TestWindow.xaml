@@ -12,46 +12,47 @@
     <Window.Resources>
         <ResourceDictionary Source="../Resources/Dictionary.xaml"/>
     </Window.Resources>
-    
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="300"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="400" MinWidth="80"/>
-        </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Border Grid.Row="0" BorderThickness="5" BorderBrush="DarkGray">
-                <ContentControl x:FieldModifier="public" x:Name="ContentHost"/>
-            </Border>
-            <Expander Grid.Row="1" Header="Status Messages" IsExpanded="False">
+    <DockPanel Background="{StaticResource StripeBrush}">
+        <Border BorderBrush="DarkGray" BorderThickness="0, 1, 0, 0" DockPanel.Dock="Bottom" Background="WhiteSmoke">
+            <Expander IsExpanded="False">
+                <Expander.Header>
+                    <TextBlock Text="Status Messages" />
+                </Expander.Header>
                 <ListBox ItemsSource="{Binding Status.Messages}" Height="200"/>
             </Expander>
+        </Border>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" MinWidth="300"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" MinWidth="200"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Row="0" BorderThickness="5" BorderBrush="DarkSlateGray" Margin="10, 10, 0, 10" Background="#FFF" Padding="5">
+                <ContentControl x:FieldModifier="public" x:Name="ContentHost"/>
+            </Border>
+
+            <GridSplitter Grid.Column="1" Width="10" HorizontalAlignment="Stretch" ResizeDirection="Columns" Background="Transparent"/>
+
+            <Grid Grid.Column="2" Margin="0, 10, 10, 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+
+                <TreeView Grid.Row="0" ItemsSource="{Binding TestParameterModels}">
+                    <i:Interaction.Behaviors>
+                        <beh:SelectedItemTreeViewBehavior SelectedItem="{Binding SelectedObject, Mode=TwoWay}"/>
+                    </i:Interaction.Behaviors>
+                </TreeView>
+                <GridSplitter Grid.Row="1" Height="5" ResizeDirection="Rows" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent"/>
+                <DockPanel Grid.Row="2">
+                    <ListBox MaxHeight="180" DockPanel.Dock="Top" Margin="0, 0, 0, 4" BorderThickness="1" BorderBrush="Gray" Visibility="{Binding RunMethodModels.Count, Converter={StaticResource IntToVisibilityConverter}}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding RunMethodModels}" ItemTemplate="{StaticResource RunMethodTemplate}" HorizontalContentAlignment="Stretch"/>
+                    <c:BindablePropertyGrid DockPanel.Dock="Bottom" SelectedObject="{Binding SelectedObject, Mode=TwoWay}"/>
+                </DockPanel>
+            </Grid>
         </Grid>
-
-        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" ResizeDirection="Columns" />
-
-        <Grid Grid.Column="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <TreeView Grid.Row="0" ItemsSource="{Binding TestParameterModels}">
-                <i:Interaction.Behaviors>
-                    <beh:SelectedItemTreeViewBehavior SelectedItem="{Binding SelectedObject, Mode=TwoWay}"/>
-                </i:Interaction.Behaviors>
-            </TreeView>
-            <GridSplitter Grid.Row="1" Height="5" ResizeDirection="Rows" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-            <DockPanel Grid.Row="2">
-                <ListBox MaxHeight="180" DockPanel.Dock="Top" Margin="0, 0, 0, 4" BorderThickness="1" BorderBrush="Gray" Visibility="{Binding RunMethodModels.Count, Converter={StaticResource IntToVisibilityConverter}}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding RunMethodModels}" ItemTemplate="{StaticResource RunMethodTemplate}" HorizontalContentAlignment="Stretch"/>
-                <c:BindablePropertyGrid DockPanel.Dock="Bottom" SelectedObject="{Binding SelectedObject, Mode=TwoWay}"/>
-            </DockPanel>
-        </Grid>
-    </Grid>
+    </DockPanel>
 </Window>

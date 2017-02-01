@@ -3,6 +3,10 @@
                     xmlns:m="clr-namespace:CLog.UI.Framework.Testing.Models"
                     xmlns:c="clr-namespace:CLog.UI.Framework.Testing.Converters">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/CLog.UI.Common;component/Resources/Resources.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    
     <!--Data Templates-->
     <HierarchicalDataTemplate DataType="{x:Type m:TestParameterModelBase}" ItemsSource="{Binding Children}">
         <TextBlock Text="{Binding Text}"/>
