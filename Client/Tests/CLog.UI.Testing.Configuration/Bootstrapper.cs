@@ -1,5 +1,6 @@
 ﻿using CLog.Common.Logging;
 using CLog.Framework.Configuration.Bootstrap;
+using CLog.Services.Models;
 using CLog.UI.Common.Modules;
 using CLog.UI.Common.Services;
 using CLog.UI.Framework.Testing.Helpers;
@@ -7,6 +8,7 @@ using CLog.UI.Framework.Testing.Models;
 using CLog.UI.Framework.Testing.ViewModels;
 using CLog.UI.Framework.Testing.Views;
 using CLog.UI.Main;
+using CLog.UI.Models;
 using Microsoft.Practices.Unity;
 using System;
 using System.IO;
@@ -17,7 +19,7 @@ using System.Windows.Threading;
 
 namespace CLog.UI.Testing.Configuration
 {
-    public class TestsBootstrapper : UnityBootstrapper, IDependencyContainer
+    public class Bootstrapper : UnityBootstrapper, IDependencyContainer
     {
         #region Fields
 
@@ -28,21 +30,21 @@ namespace CLog.UI.Testing.Configuration
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TestsBootstrapper"/> class.
+        /// Initializes a new instance of the <see cref="Bootstrapper"/> class.
         /// </summary>
         /// <remarks>
         /// When the test is ran from within Visual Studio, it will scan the solution for modules automatically.
         /// An assembly is considered a module if it contains a class that implements <see cref="IModuleInitialiser"/>.
         /// </remarks>
-        public TestsBootstrapper()
+        public Bootstrapper()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TestsBootstrapper"/> class.
+        /// Initializes a new instance of the <see cref="Bootstrapper"/> class.
         /// </summary>
         /// <param name="testModuleAssemblyPath">The test module assembly path.</param>
-        public TestsBootstrapper(string testModuleAssemblyPath)
+        public Bootstrapper(string testModuleAssemblyPath)
         {
             _testModuleAssemblyPath = testModuleAssemblyPath;
         }
@@ -74,7 +76,12 @@ namespace CLog.UI.Testing.Configuration
             if (testModuleAssembly == null)
                 return;
 
+            Console.WriteLine("Resolved module initialiser '{0}' in assembly '{1}'...", testModuleAssembly.ModuleClassName, testModuleAssembly.AssemblyPath);
             Type moduleInitType = ReflectionHelper.LoadTypeExternal(testModuleAssembly);
+
+            ComponentModelHelper.MakeObjectsExpandable(moduleInitType.Assembly);
+            ComponentModelHelper.MakeObjectsExpandable(typeof(DtoBase).Assembly);
+            ComponentModelHelper.MakeObjectsExpandable(typeof(ModelBase).Assembly);
 
             // Configure the container, and initialise the module
             IModuleInitialiser initialiser = (IModuleInitialiser)Activator.CreateInstance(moduleInitType);

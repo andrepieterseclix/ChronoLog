@@ -49,6 +49,7 @@
     <Compile Include="Access\DataTransfer\UpdateUserPasswordResponse.cs" />
     <Compile Include="Access\SessionDto.cs" />
     <Compile Include="Access\UserDto.cs" />
+    <Compile Include="DtoBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Timesheets\CapturedTimeDetailDto.cs" />
     <Compile Include="Timesheets\CapturedTimeDto.cs" />

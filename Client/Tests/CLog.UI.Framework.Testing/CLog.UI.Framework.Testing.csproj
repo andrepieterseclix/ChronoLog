@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Exceptions\CancelException.cs" />
+    <Compile Include="Helpers\ComponentModelHelper.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Helpers\ReflectionHelperMarshalByRef.cs" />
     <Compile Include="Helpers\VisualStudioHelper.cs" />

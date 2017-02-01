@@ -55,6 +55,7 @@
     <Compile Include="Bootstrap\IBootstrapper.cs" />
     <Compile Include="Bootstrap\UnityBootstrapper.cs" />
     <Compile Include="Bootstrap\IUnityDependencyInstaller.cs" />
+    <Compile Include="Helpers\ConsoleHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

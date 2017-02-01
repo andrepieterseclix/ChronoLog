@@ -3,8 +3,12 @@ using System.Runtime.Serialization;
 
 namespace CLog.Services.Models.Timesheets
 {
+    /// <summary>
+    /// Represents the Captured Time Detail data transfer object.
+    /// </summary>
+    /// <seealso cref="CLog.Services.Models.DtoBase" />
     [DataContract]
-    public sealed class CapturedTimeDetailDto
+    public sealed class CapturedTimeDetailDto : DtoBase
     {
         #region Constructors
 

@@ -16,8 +16,8 @@
 
         <c:BindablePropertyGrid DockPanel.Dock="Bottom" SelectedObject="{Binding}"/>
         <StackPanel x:Name="ButtonPanel" Grid.Row="1" Orientation="Horizontal" FlowDirection="RightToLeft" Margin="5, 5, 5, 10">
-            <Button Margin="3" IsDefault="True" Width="80" Click="Button_Click">OK</Button>
             <Button Margin="3" IsCancel="True" Width="80">Cancel</Button>
+            <Button Margin="3" IsDefault="True" Width="80" Click="Button_Click">OK</Button>
         </StackPanel>
     </Grid>
 </Window>

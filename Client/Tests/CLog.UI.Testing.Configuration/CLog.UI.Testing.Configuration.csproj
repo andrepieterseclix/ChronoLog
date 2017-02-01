@@ -77,7 +77,7 @@
     <Compile Include="DataHelpers\AccessDataHelper.cs" />
     <Compile Include="DataHelpers\TimesheetsDataHelper.cs" />
     <Compile Include="DataHelpers\UsersDataHelper.cs" />
-    <Compile Include="TestsBootstrapper.cs" />
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Installers\CrossCuttingConcernsModuleInstaller.cs" />
     <Compile Include="Installers\MainModuleInstaller.cs" />
     <Compile Include="Installers\ServicesIntegrationModuleInstaller.cs" />
@@ -154,6 +154,10 @@
     <ProjectReference Include="..\..\Source\CLog.UI.Main\CLog.UI.Main.csproj">
       <Project>{72965DB6-5688-4643-8ADA-3ECA78BC6988}</Project>
       <Name>CLog.UI.Main</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.UI.Models\CLog.UI.Models.csproj">
+      <Project>{80C544C2-E16D-47BC-AABB-6D94235C6D13}</Project>
+      <Name>CLog.UI.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\CLog.UI.Framework.Testing\CLog.UI.Framework.Testing.csproj">
       <Project>{7DFB36EF-68F1-40B4-B840-6C5F62EE5D1F}</Project>

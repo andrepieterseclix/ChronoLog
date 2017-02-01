@@ -6,7 +6,7 @@ namespace CLog.Services.Models.Access
     /// Represents the User password data transfer object.
     /// </summary>
     [DataContract]
-    public sealed class UserPasswordDto
+    public sealed class UserPasswordDto : DtoBase
     {
         #region Constructors
 

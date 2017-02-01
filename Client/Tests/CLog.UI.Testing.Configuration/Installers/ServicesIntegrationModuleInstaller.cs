@@ -25,11 +25,12 @@ namespace CLog.UI.Testing.Configuration.Installers
         public void Install(IUnityContainer container)
         {
             TestModel testModel = container.Resolve<TestModel>();
-            ServicesMockSettingsModel servicesMockSettingsModel =
-                (ServicesMockSettingsModel)testModel.Environment.Children.First(x => x.GetType() == typeof(ServicesMockSettingsModel));
-
+            
             if (testModel == null)
                 throw new ArgumentNullException(nameof(testModel));
+
+            ServicesMockSettingsModel servicesMockSettingsModel =
+                (ServicesMockSettingsModel)testModel.Environment.Children.First(x => x.GetType() == typeof(ServicesMockSettingsModel));
 
             MockModel mockModel = null;
 

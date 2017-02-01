@@ -7,7 +7,7 @@ namespace CLog.Services.Models.Timesheets
     /// Represents the captured time data transfer object.
     /// </summary>
     [DataContract]
-    public sealed class CapturedTimeDto
+    public sealed class CapturedTimeDto : DtoBase
     {
         #region Constructors
 

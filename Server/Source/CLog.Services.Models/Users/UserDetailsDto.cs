@@ -6,7 +6,7 @@ namespace CLog.Services.Models.Users
     /// Represents the User update details data transfer object.
     /// </summary>
     [DataContract]
-    public class UserDetailsDto
+    public class UserDetailsDto : DtoBase
     {
         #region Constructors
 

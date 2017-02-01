@@ -7,7 +7,7 @@ namespace CLog.Services.Models.Access
     /// Represents the Session data transfer object.
     /// </summary>
     [DataContract]
-    public sealed class SessionDto
+    public sealed class SessionDto : DtoBase
     {
         #region Constructors
 

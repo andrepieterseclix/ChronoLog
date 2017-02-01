@@ -1,5 +1,5 @@
 ﻿using ChronoLog.Host.Configuration;
-using System;
+using CLog.Framework.Configuration.Helpers;
 
 namespace ChronoLog.Host
 {
@@ -7,23 +7,10 @@ namespace ChronoLog.Host
     {
         static void Main(string[] args)
         {
-            DoIntroduction();
+            ConsoleHelper.PrintIntroductionBox("ChronoLog", "Services Host");
 
             Bootstrapper bootstrapper = new Bootstrapper();
             bootstrapper.Run();
-        }
-
-        static void DoIntroduction()
-        {
-            string header = "Services Host";
-            int boxLength = header.Length + 4;
-
-            Console.WriteLine(string.Empty.PadLeft(boxLength, '*'));
-            Console.WriteLine("*".PadRight(boxLength - 1).PadRight(boxLength, '*'));
-            Console.WriteLine(string.Format("* {0}", header).PadRight(boxLength - 1).PadRight(boxLength, '*'));
-            Console.WriteLine("*".PadRight(boxLength - 1).PadRight(boxLength, '*'));
-            Console.WriteLine(string.Empty.PadLeft(boxLength, '*'));
-            Console.WriteLine();
         }
     }
 }
