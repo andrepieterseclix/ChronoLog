@@ -13,10 +13,26 @@
         <Setter Property="BorderBrush" Value="{StaticResource TertiaryColour}"/>
         <Setter Property="Background" Value="{StaticResource Background}"/>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding Model.IsLocked}" Value="True">
-                <Setter Property="Background" Value="{StaticResource LockedBrush}"/>
-                <Setter Property="ToolTip" Value="Locked"/>
-            </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Model.IsLocked}" Value="True"/>
+                    <Condition Binding="{Binding Model.IsEnabled}" Value="False"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource LockedBrush}"/>
+                    <Setter Property="ToolTip" Value="Locked"/>
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Model.IsLocked}" Value="False"/>
+                    <Condition Binding="{Binding Model.IsEnabled}" Value="False"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource DisabledBrush}"/>
+                    <Setter Property="ToolTip" Value="Disabled"/>
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
             <DataTrigger Binding="{Binding Model.IsPublicHoliday}" Value="True">
                 <Setter Property="Background" Value="{StaticResource SpecialBrush}"/>
                 <Setter Property="ToolTip" Value="Public Holiday"/>
@@ -26,28 +42,112 @@
                 <Setter Property="Padding" Value="0"/>
                 <Setter Property="Margin" Value="1, 1, 7, 6"/>
                 <Setter Property="BorderThickness" Value="2"/>
-                <Setter Property="BorderBrush" Value="{StaticResource SecondaryColour}"/>
-                <Setter Property="Background" Value="{StaticResource StripeBrush}"/>
             </Trigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Model.IsLocked}" Value="True"/>
+                    <Condition Binding="{Binding Model.IsEnabled}" Value="False"/>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="BorderBrush" Value="{StaticResource LockedColour}"/>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Model.IsLocked}" Value="False"/>
+                    <Condition Binding="{Binding Model.IsEnabled}" Value="False"/>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="BorderBrush" Value="{StaticResource DisabledColour}"/>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Model.IsPublicHoliday}" Value="True"/>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="BorderBrush" Value="{StaticResource SpecialColour}"/>
+            </MultiDataTrigger>
+            
         </Style.Triggers>
     </Style>
 
     <Style x:Key="CaptureTimeBoxInnerStyle" TargetType="Border">
         <Setter Property="Margin" Value="-1, 0, -1, 0"/>
+        <Setter Property="Background" Value="{StaticResource GradientBrush}" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=IsMouseOver}" Value="True">
                 <Setter Property="Margin" Value="0"/>
             </DataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Model.IsPublicHoliday}" Value="True"/>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=IsMouseOver}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource SpecialGradientBrush}" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Model.IsLocked}" Value="True"/>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=IsMouseOver}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource LockedGradientBrush}" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Model.IsLocked}" Value="False"/>
+                    <Condition Binding="{Binding Model.IsEnabled}" Value="False"/>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=IsMouseOver}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource DisabledGradientBrush}" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Model.IsLocked}" Value="False"/>
+                    <Condition Binding="{Binding Model.IsPublicHoliday}" Value="False"/>
+                    <Condition Binding="{Binding Model.IsEnabled}" Value="True"/>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=IsMouseOver}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource EnabledGradientBrush}" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            
         </Style.Triggers>
     </Style>
     
-    <Style x:Key="DisableableHeaderStyle" TargetType="TextBlock">
+    <Style x:Key="HighlightHeaderStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource PrimaryColour}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Model.IsEnabled}" Value="False">
+                <Setter Property="Foreground" Value="{StaticResource DisabledColour}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Model.IsLocked}" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource LockedColour}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Model.IsPublicHoliday}" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource SpecialColour}"/>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Border, AncestorLevel=2}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource Background}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DisableableLabelStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Black"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding Model.IsEnabled}" Value="False">
                 <Setter Property="Foreground" Value="{StaticResource DisabledColour}"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    
+
 </ResourceDictionary>

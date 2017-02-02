@@ -13,7 +13,9 @@
     <SolidColorBrush x:Key="SecondaryColour" Color="DarkRed"/>
     <SolidColorBrush x:Key="TertiaryColour" Color="SlateGray"/>
     <SolidColorBrush x:Key="QuaternaryColour" Color="LightGray"/>
+    <SolidColorBrush x:Key="SpecialColour" Color="Purple"/>
     <SolidColorBrush x:Key="DisabledColour" Color="Gray"/>
+    <SolidColorBrush x:Key="LockedColour" Color="DarkRed"/>
     <SolidColorBrush x:Key="Background" Color="WhiteSmoke"/>
     <SolidColorBrush x:Key="SectionBackground" Color="White"/>
     <SolidColorBrush x:Key="PanelBackground" Color="LightGray"/>
@@ -36,9 +38,31 @@
         <GradientStop Color="White" Offset="0.1" />
         <GradientStop Color="White" Offset="1" />
     </LinearGradientBrush>
+    <LinearGradientBrush x:Key="DisabledBrush" EndPoint="0,0" StartPoint="2,2" MappingMode="Absolute" SpreadMethod="Repeat">
+        <GradientStop Color="Black" Offset="0" />
+        <GradientStop Color="Black" Offset="0.1" />
+        <GradientStop Color="White" Offset="0.1" />
+        <GradientStop Color="White" Offset="1" />
+    </LinearGradientBrush>
     <LinearGradientBrush x:Key="GradientBrush" StartPoint="0.5, 0" EndPoint="0.5, 1">
-        <GradientStop Color="White" Offset="0" />
+        <GradientStop Color="White" Offset="-0.2" />
         <GradientStop Color="LightGray" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="SpecialGradientBrush" StartPoint="0.5, 0" EndPoint="0.5, 1">
+        <GradientStop Color="White" Offset="-0.2" />
+        <GradientStop Color="Purple" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="DisabledGradientBrush" StartPoint="0.5, 0" EndPoint="0.5, 1">
+        <GradientStop Color="White" Offset="-0.2" />
+        <GradientStop Color="Gray" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="LockedGradientBrush" StartPoint="0.5, 0" EndPoint="0.5, 1">
+        <GradientStop Color="White" Offset="-0.2" />
+        <GradientStop Color="DarkRed" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="EnabledGradientBrush" StartPoint="0.5, 0" EndPoint="0.5, 1">
+        <GradientStop Color="White" Offset="-0.2" />
+        <GradientStop Color="DarkSlateGray" Offset="1" />
     </LinearGradientBrush>
     <SolidColorBrush x:Key="BorderColour" Color="Gray"/>
     <SolidColorBrush x:Key="InfoColour" Color="SteelBlue"/>

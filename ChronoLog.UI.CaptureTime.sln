@@ -62,6 +62,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLog.ServiceClients.Security", "Client\Source\CLog.ServiceClients.Security\CLog.ServiceClients.Security.csproj", "{B683C213-EE65-4425-AB9A-AE9CDC12E4F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLog.UI.TestBench", "Client\Tests\CLog.UI.TestBench\CLog.UI.TestBench.csproj", "{C8F4CDD3-4398-4772-B413-3D6EA9DB6717}"
+	ProjectSection(ProjectDependencies) = postProject
+		{72965DB6-5688-4643-8ADA-3ECA78BC6988} = {72965DB6-5688-4643-8ADA-3ECA78BC6988}
+		{CBCC85C1-68C8-486F-89F9-3480D5FB0E71} = {CBCC85C1-68C8-486F-89F9-3480D5FB0E71}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
