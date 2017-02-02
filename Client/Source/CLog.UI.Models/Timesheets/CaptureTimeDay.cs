@@ -20,6 +20,8 @@ namespace CLog.UI.Models.Timesheets
 
         private bool _isPublicHoliday;
 
+        private bool _isToday;
+
         #endregion
 
         #region Constructors
@@ -39,6 +41,7 @@ namespace CLog.UI.Models.Timesheets
             IsLocked = isLocked;
             IsEnabled = isEnabled;
             IsPublicHoliday = isPublicHoliday;
+            IsToday = date.Date == DateTime.Now.Date;
         }
 
         #endregion
@@ -103,6 +106,18 @@ namespace CLog.UI.Models.Timesheets
         {
             get { return _isPublicHoliday; }
             set { SetProperty(ref _isPublicHoliday, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is today.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is today; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsToday
+        {
+            get { return _isToday; }
+            set { SetProperty(ref _isToday, value); }
         }
 
         #endregion

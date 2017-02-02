@@ -18,7 +18,7 @@
                 <TextBlock IsEnabled="{Binding Model.IsEnabled}" Text="{Binding Model.Date, StringFormat=yyyy/MM/dd, FallbackValue=[Date]}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Style="{StaticResource HighlightHeaderStyle}"/>
             </Border>
             <Grid Height="16" Panel.ZIndex="-1">
-                <TextBlock Text="{Binding Model.Date.DayOfWeek, FallbackValue=[DayOfWeek]}" FontSize="10" Foreground="{StaticResource TertiaryColour}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Model.Date.DayOfWeek, FallbackValue=[DayOfWeek]}" Style="{StaticResource DayTextBlock}"/>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
