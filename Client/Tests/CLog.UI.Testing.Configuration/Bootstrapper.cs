@@ -1,5 +1,6 @@
 ﻿using CLog.Common.Logging;
 using CLog.Framework.Configuration.Bootstrap;
+using CLog.ServiceClients.Security;
 using CLog.Services.Models;
 using CLog.UI.Common.Modules;
 using CLog.UI.Common.Services;
@@ -59,6 +60,13 @@ namespace CLog.UI.Testing.Configuration
 
         #region Methods
 
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+
+            AppDomain.CurrentDomain.SetThreadPrincipal(new ClientPrincipal());
+        }
+
         protected override void DoRegistration()
         {
             // Share the test model for installers to use
@@ -88,7 +96,12 @@ namespace CLog.UI.Testing.Configuration
             Module module = initialiser.Initialise(this);
 
             // Setup Window
-            TestViewModel testViewModel = new TestViewModel(Container.Resolve<ILogger>(), (StatusViewModel)Container.Resolve<IStatusService>());
+            TestViewModel testViewModel = new TestViewModel(
+                Container.Resolve<ILogger>(),
+                Container.Resolve<IStatusService>(),
+                Container.Resolve<IDialogService>(),
+                Container.Resolve<IMouseService>(),
+                (StatusViewModel)Container.Resolve<IStatusService>());
             testViewModel.TestParameterModels.Add(Model.ViewModels);
             testViewModel.TestParameterModels.Add(Model.Mocks);
             testViewModel.TestParameterModels.Add(Model.Environment);
@@ -145,7 +158,12 @@ namespace CLog.UI.Testing.Configuration
 
             if (modules.Length != 1)
             {
-                SelectModuleViewModel selectModuleViewModel = new SelectModuleViewModel(Container.Resolve<ILogger>(), modules);
+                SelectModuleViewModel selectModuleViewModel = new SelectModuleViewModel(
+                    Container.Resolve<ILogger>(),
+                    Container.Resolve<IStatusService>(),
+                    Container.Resolve<IDialogService>(),
+                    Container.Resolve<IMouseService>(),
+                    modules);
                 SelectModuleWindow selectModuleWindow = new SelectModuleWindow() { DataContext = selectModuleViewModel };
 
                 if (!selectModuleWindow.ShowDialog().Value)
