@@ -1,4 +1,5 @@
 ﻿using CLog.Common.Logging;
+using CLog.UI.Common.Services;
 using CLog.UI.Common.ViewModels;
 using CLog.UI.Framework.Testing.Exceptions;
 using CLog.UI.Framework.Testing.Models;
@@ -23,8 +24,8 @@ namespace CLog.UI.Framework.Testing.ViewModels
 
         private string _parameters;
 
-        public MethodRunViewModel(ILogger logger, object target, MethodInfo method)
-            : base(logger)
+        public MethodRunViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, object target, MethodInfo method)
+            : base(logger, statusService, dialogService, mouseService)
         {
             Method = method;
             Target = target;

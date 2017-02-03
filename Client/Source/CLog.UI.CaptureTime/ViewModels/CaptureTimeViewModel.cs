@@ -32,8 +32,6 @@ namespace CLog.UI.CaptureTime.ViewModels
 
         private string _description;
 
-        private readonly IStatusService _statusService;
-
         private readonly ITimesheetClientFactory _timesheetClientFactory;
 
         #endregion
@@ -44,18 +42,18 @@ namespace CLog.UI.CaptureTime.ViewModels
         /// Initializes a new instance of the <see cref="CaptureTimeViewModel" /> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
+        /// <param name="statusService">The status service.</param>
+        /// <param name="dialogService">The dialog service.</param>
+        /// <param name="mouseService">The mouse service.</param>
         /// <param name="timesheetClientFactory">The timesheet client factory.</param>
-        /// <exception cref="System.ArgumentNullException"></exception>
-        public CaptureTimeViewModel(ILogger logger, IStatusService statusService, ITimesheetClientFactory timesheetClientFactory)
-            : base(logger)
+        /// <exception cref="System.ArgumentNullException">
+        /// </exception>
+        public CaptureTimeViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, ITimesheetClientFactory timesheetClientFactory)
+            : base(logger, statusService, dialogService, mouseService)
         {
-            if (statusService == null)
-                throw new ArgumentNullException(nameof(statusService));
-
             if (timesheetClientFactory == null)
                 throw new ArgumentNullException(nameof(timesheetClientFactory));
 
-            _statusService = statusService;
             _timesheetClientFactory = timesheetClientFactory;
 
             Days = new ObservableCollection<CaptureTimeDayViewModel>();
@@ -150,53 +148,46 @@ namespace CLog.UI.CaptureTime.ViewModels
                 return;
 
             // Get data from server
-            Task.Factory.StartNew(() =>
+            ExecuteAsync(principal =>
             {
-                try
+                Invoke(Days.Clear);
+
+                DateTime fromDate = selectedDate;
+
+                while (fromDate.DayOfWeek != WEEK_START_DAY)
+                    fromDate = fromDate.AddDays(-1d);
+
+                DateTime toDate = fromDate.AddDays(DAYS_IN_WEEK - 1);
+
+                Invoke(() =>
                 {
-                    Invoke(Days.Clear);
+                    FromDate = fromDate;
+                    ToDate = toDate;
+                });
 
-                    DateTime fromDate = selectedDate;
+                GetCapturedTimeResponse response = null;
 
-                    while (fromDate.DayOfWeek != WEEK_START_DAY)
-                        fromDate = fromDate.AddDays(-1d);
-
-                    DateTime toDate = fromDate.AddDays(DAYS_IN_WEEK - 1);
-
-                    Invoke(() =>
-                    {
-                        FromDate = fromDate;
-                        ToDate = toDate;
-                    });
-
-                    GetCapturedTimeResponse response = null;
-
-                    using (IServiceClient<ITimesheetService> client = _timesheetClientFactory.Create())
-                    {
-                        GetCapturedTimeRequest request = new GetCapturedTimeRequest(fromDate, toDate);
-                        response = client.Proxy.GetCapturedTime(request);
-                    }
-
-                    // Map
-                    foreach (CapturedTimeDto item in response.CapturedTimeItems)
-                    {
-                        CaptureTimeDayViewModel itemViewModel = item.Map(Logger);
-                        if (itemViewModel != null)
-                            Invoke(() => Days.Add(itemViewModel));
-                    }
-                }
-                catch (Exception ex)
+                using (IServiceClient<ITimesheetService> client = _timesheetClientFactory.Create())
                 {
-                    // TODO:  improve exception handling
-                    _statusService.SetStatus(StatusMessageType.Error, "An unexpected error occurred, please check the logs.");
-                    LoggerHelper.Exception(Logger, ex, nameof(SelectedDateChanged));
+                    GetCapturedTimeRequest request = new GetCapturedTimeRequest(fromDate, toDate);
+                    response = client.Proxy.GetCapturedTime(request);
                 }
+
+                // Map
+                foreach (CapturedTimeDto item in response.CapturedTimeItems)
+                {
+                    CaptureTimeDayViewModel itemViewModel = item.Map();
+                    if (itemViewModel != null)
+                        Invoke(() => Days.Add(itemViewModel));
+                }
+
+                StatusService.SetStatus(StatusMessageType.Info, "Selected {0}.", SelectedDate.ToString("yyyy/MM/dd"));
             });
         }
 
         private void SaveCommand_Execute(object parameter)
         {
-            _statusService.SetStatus(StatusMessageType.Warning, "Save has not yet been implemented!");
+            StatusService.SetStatus(StatusMessageType.Warning, "Save has not yet been implemented!");
             throw new NotImplementedException();
         }
 

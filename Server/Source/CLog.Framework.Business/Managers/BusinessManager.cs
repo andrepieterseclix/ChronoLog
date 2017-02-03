@@ -1,10 +1,10 @@
-﻿using CLog.Common.Logging;
+﻿using CLog.Common.BaseClasses;
+using CLog.Common.Logging;
 using CLog.Framework.Business.Contracts;
 using CLog.Framework.Business.Models.Results;
 using CLog.Framework.Security;
 using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -14,35 +14,25 @@ namespace CLog.Framework.Business.Managers
     /// <summary>
     /// Represents the base class for business managers.
     /// </summary>
+    /// <seealso cref="CLog.Common.BaseClasses.CommonBase" />
     /// <seealso cref="CLog.Framework.Business.Contracts.IBusinessManager" />
-    public abstract class BusinessManager : IBusinessManager
+    [DebuggerNonUserCode]
+    public abstract class BusinessManager : CommonBase, IBusinessManager
     {
-        #region Constructors
+        #region Constructor
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BusinessManager"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
-        /// <exception cref="System.ArgumentNullException"></exception>
         public BusinessManager(ILogger logger)
+            : base(logger)
         {
-            if (logger == null)
-                throw new ArgumentNullException(nameof(logger));
-
-            Logger = logger;
         }
 
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// Gets the logger.
-        /// </summary>
-        /// <value>
-        /// The logger.
-        /// </value>
-        protected ILogger Logger { get; private set; }
 
         /// <summary>
         /// Gets the identity for the current user.
@@ -62,6 +52,11 @@ namespace CLog.Framework.Business.Managers
 
         #region Methods
 
+        /// <summary>
+        /// Executes the specified action.
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <param name="callingMethod">The calling method.</param>
         protected void Execute(Action action, [CallerMemberName]string callingMethod = null)
         {
             EnsureNotDisposed();
@@ -76,7 +71,7 @@ namespace CLog.Framework.Business.Managers
             }
             catch (Exception)
             {
-                LoggerHelper.Error(Logger, "Exception occurred in business manager:  {0}", GetQualifiedMethodName(callingMethod));
+                LoggerHelper.Error(Logger, "Unhandled Exception occurred in business manager:  {0}", GetQualifiedMethodName(callingMethod));
 
                 // Let unhandled exceptions bubble up
                 throw;
@@ -89,6 +84,14 @@ namespace CLog.Framework.Business.Managers
             }
         }
 
+        /// <summary>
+        /// Validates the text.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="regex">The regex.</param>
+        /// <param name="result">The result.</param>
+        /// <param name="error">The error.</param>
+        /// <returns><c>true</c> when the input text is valid according to the specified regex pattern, otherwise <c>false</c>.</returns>
         protected bool ValidateText(string input, string regex, BusinessResult result, ErrorMessage error)
         {
             if (string.IsNullOrWhiteSpace(input))
@@ -103,56 +106,6 @@ namespace CLog.Framework.Business.Managers
             }
 
             return true;
-        }
-
-        private string GetQualifiedMethodName(string methodName)
-        {
-            return string.Format(CultureInfo.CurrentCulture, "{0}.{1}", GetType().Name, methodName);
-        }
-
-        #endregion
-
-        #region IDisposable Implementation
-
-        /// <summary>
-        /// Keep this private, and create and maintain one for every derived class.
-        /// </summary>
-        private bool _disposed;
-
-        private void EnsureNotDisposed()
-        {
-            if (_disposed)
-                throw new ObjectDisposedException(GetType().Name);
-        }
-
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-                return;
-
-            if (disposing)
-            {
-                // Release managed resources, and set to null
-
-            }
-
-            // Release native resources
-            // NOTE:  call Dispose(false); in finalizer if this class contains unmanaged resources.
-
-            _disposed = true;
         }
 
         #endregion

@@ -17,13 +17,13 @@ using System.Windows.Input;
 
 namespace CLog.UI.Main.ViewModels
 {
+    /// <summary>
+    /// Represents the Login view model.
+    /// </summary>
+    /// <seealso cref="CLog.UI.Common.ViewModels.ViewModelBase" />
     public sealed class LoginViewModel : ViewModelBase
     {
         #region Fields
-
-        private readonly IDialogService _dialogService;
-
-        private readonly IMouseService _mouseService;
 
         private readonly IAccessClientFactory _accessClientFactory;
 
@@ -37,20 +37,22 @@ namespace CLog.UI.Main.ViewModels
 
         #region Constructors
 
-        public LoginViewModel(ILogger logger, IMouseService mouseService, IDialogService dialogService, IAccessClientFactory accessClientFactory)
-            : base(logger)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LoginViewModel"/> class.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="statusService">The status service.</param>
+        /// <param name="dialogService">The dialog service.</param>
+        /// <param name="mouseService">The mouse service.</param>
+        /// <param name="accessClientFactory">The access client factory.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// </exception>
+        public LoginViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, IAccessClientFactory accessClientFactory)
+            : base(logger, statusService, dialogService, mouseService)
         {
-            if (dialogService == null)
-                throw new ArgumentNullException(nameof(dialogService));
-
-            if (mouseService == null)
-                throw new ArgumentNullException(nameof(mouseService));
-
             if (accessClientFactory == null)
                 throw new ArgumentNullException(nameof(accessClientFactory));
 
-            _dialogService = dialogService;
-            _mouseService = mouseService;
             _accessClientFactory = accessClientFactory;
             LoginCommand = CreateCommand(LoginCommand_Execute, LoginCommand_CanExecute);
 
@@ -66,26 +68,56 @@ namespace CLog.UI.Main.ViewModels
 
         #region Properties
 
+        /// <summary>
+        /// Gets the login command.
+        /// </summary>
+        /// <value>
+        /// The login command.
+        /// </value>
         public ICommand LoginCommand { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the message.
+        /// </summary>
+        /// <value>
+        /// The message.
+        /// </value>
         public string Message
         {
             get { return _message; }
             set { SetProperty(ref _message, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the name of the user.
+        /// </summary>
+        /// <value>
+        /// The name of the user.
+        /// </value>
         public string UserName
         {
             get { return _userName; }
             set { SetProperty(ref _userName, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the password.
+        /// </summary>
+        /// <value>
+        /// The password.
+        /// </value>
         public string Password
         {
             get { return _password; }
             set { SetProperty(ref _password, value); }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is logged in.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is logged in; otherwise, <c>false</c>.
+        /// </value>
         public bool IsLoggedIn { get; internal set; }
 
         #endregion
@@ -100,59 +132,56 @@ namespace CLog.UI.Main.ViewModels
 
         private void LoginCommand_Execute(object parameter)
         {
-            try
+            ExecuteAnonymous(() =>
             {
-                _mouseService.SetWait(true);
-
-                using (IServiceClient<IAccessService> client = _accessClientFactory.Create())
+                try
                 {
-                    LoginRequest request = new LoginRequest(UserName, Password);
-                    LoginResponse response = client.Proxy.Login(request);
-
-                    IsLoggedIn = response.IsLoggedIn;
-
-                    if (IsLoggedIn)
+                    using (IServiceClient<IAccessService> client = _accessClientFactory.Create())
                     {
-                        User user = new User(response.User.UserName, response.User.Name, response.User.Surname, response.User.Email);
-                        Mediator.NotifyColleagues(MessagingConstants.USER_LOGGED_IN, user);
+                        LoginRequest request = new LoginRequest(UserName, Password);
+                        LoginResponse response = client.Proxy.Login(request);
 
-                        // Ensure the principal is read from the UI thread
-                        Invoke(() =>
+                        IsLoggedIn = response.IsLoggedIn;
+
+                        if (IsLoggedIn)
                         {
-                            ClientPrincipal principal = Thread.CurrentPrincipal as ClientPrincipal;
-                            if (principal == null)
-                                throw new ApplicationException("The application's thread principal has not been configured correctly.");
+                            User user = new User(response.User.UserName, response.User.Name, response.User.Surname, response.User.Email);
+                            Mediator.NotifyColleagues(MessagingConstants.USER_LOGGED_IN, user);
 
-                            principal.Identity = new ClientIdentity(
-                                user.UserName,
-                                string.Format(CultureInfo.CurrentCulture, "{0} {1}", user.Name, user.Surname),
-                                response.Session.Id,
-                                response.Session.SessionKey,
-                                new string[0]);
-                        });
+                            // Ensure the principal is read from the UI thread
+                            Invoke(() =>
+                            {
+                                ClientPrincipal principal = Thread.CurrentPrincipal as ClientPrincipal;
+                                if (principal == null)
+                                    throw new ApplicationException("The application's thread principal has not been configured correctly.");
 
-                        _dialogService.SetDialogResult(true);
-                        return;
+                                principal.Identity = new ClientIdentity(
+                                    user.UserName,
+                                    string.Format(CultureInfo.CurrentCulture, "{0} {1}", user.Name, user.Surname),
+                                    response.Session.Id,
+                                    response.Session.SessionKey,
+                                    new string[0]);
+                            });
+
+                            DialogService.SetDialogResult(true);
+                            return;
+                        }
+
+                        StringBuilder buffer = new StringBuilder();
+                        foreach (var error in response.Errors)
+                        {
+                            buffer.AppendLine(error.Message);
+                        }
+
+                        Message = buffer.ToString();
                     }
-
-                    StringBuilder buffer = new StringBuilder();
-                    foreach (var error in response.Errors)
-                    {
-                        buffer.AppendLine(error.Message);
-                    }
-
-                    Message = buffer.ToString();
                 }
-            }
-            catch (Exception ex)
-            {
-                Message = "An error occurred, please try again later.";
-                LoggerHelper.Exception(Logger, ex, Message);
-            }
-            finally
-            {
-                _mouseService.SetWait(false);
-            }
+                catch (Exception ex)
+                {
+                    Message = "An error occurred, please try again later.";
+                    LoggerHelper.Exception(Logger, ex, Message);
+                }
+            });
         }
 
         private bool LoginCommand_CanExecute(object parameter)

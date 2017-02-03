@@ -1,5 +1,4 @@
-﻿using CLog.Common.Logging;
-using CLog.Services.Models.Timesheets;
+﻿using CLog.Services.Models.Timesheets;
 using CLog.UI.CaptureTime.ViewModels;
 using CLog.UI.Models.Timesheets;
 
@@ -10,7 +9,12 @@ namespace CLog.UI.CaptureTime.Extensions
     /// </summary>
     public static class Mappers
     {
-        public static CaptureTimeDayViewModel Map(this CapturedTimeDto dto, ILogger logger)
+        /// <summary>
+        /// Maps the specified dto to its corresponding model.
+        /// </summary>
+        /// <param name="dto">The dto.</param>
+        /// <returns></returns>
+        public static CaptureTimeDayViewModel Map(this CapturedTimeDto dto)
         {
             if (dto == null)
                 return null;
@@ -22,7 +26,7 @@ namespace CLog.UI.CaptureTime.Extensions
                 dto.IsEnabled,
                 dto.IsPublicHoliday);
 
-            return new CaptureTimeDayViewModel(logger, model);
+            return new CaptureTimeDayViewModel(model);
         }
     }
 }

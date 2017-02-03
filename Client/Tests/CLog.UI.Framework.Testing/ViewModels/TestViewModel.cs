@@ -1,4 +1,5 @@
 ﻿using CLog.Common.Logging;
+using CLog.UI.Common.Services;
 using CLog.UI.Common.ViewModels;
 using CLog.UI.Framework.Testing.Models;
 using System.Collections.ObjectModel;
@@ -18,8 +19,8 @@ namespace CLog.UI.Framework.Testing.ViewModels
 
         #region Constructors
 
-        public TestViewModel(ILogger logger, StatusViewModel status)
-            : base(logger)
+        public TestViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, StatusViewModel status)
+            : base(logger, statusService, dialogService, mouseService)
         {
             Status = status;
 
@@ -66,7 +67,7 @@ namespace CLog.UI.Framework.Testing.ViewModels
                     .ToArray();
 
                 foreach (MethodInfo method in methods)
-                    RunMethodModels.Add(new MethodRunViewModel(Logger, model.ViewModel, method));
+                    RunMethodModels.Add(new MethodRunViewModel(Logger, StatusService, DialogService, MouseService, model.ViewModel, method));
             }
         }
 

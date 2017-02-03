@@ -1,4 +1,5 @@
-﻿using CLog.UI.Common.Services;
+﻿using CLog.UI.Common.Helpers;
+using CLog.UI.Common.Services;
 using System.Windows.Input;
 
 namespace CLog.UI.Main.Services
@@ -11,9 +12,12 @@ namespace CLog.UI.Main.Services
         /// <param name="waiting">if set to <c>true</c> the cursor will display the busy indicator, otherwise the normal cursor will be displayed.</param>
         public void SetWait(bool waiting)
         {
-            Mouse.OverrideCursor = waiting
+            DispatcherHelper.Invoke(() =>
+            {
+                Mouse.OverrideCursor = waiting
                 ? Cursors.Wait
                 : null;
+            });
         }
     }
 }

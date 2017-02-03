@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -7,6 +8,7 @@ namespace CLog.UI.Common.Helpers
     /// <summary>
     /// Represents the dispatcher helper static class.
     /// </summary>
+    [DebuggerNonUserCode]
     public static class DispatcherHelper
     {
         /// <summary>

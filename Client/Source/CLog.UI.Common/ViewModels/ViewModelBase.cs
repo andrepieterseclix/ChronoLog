@@ -1,9 +1,14 @@
 ﻿using CLog.Common.Logging;
-using CLog.UI.Common.Commands;
-using CLog.UI.Common.Helpers;
+using CLog.ServiceClients.Security;
 using CLog.UI.Common.Messaging.Mediator;
+using CLog.UI.Common.Services;
 using System;
-using System.Windows.Input;
+using System.Diagnostics;
+using System.Globalization;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CLog.UI.Common.ViewModels
 {
@@ -12,21 +17,35 @@ namespace CLog.UI.Common.ViewModels
     /// </summary>
     /// <seealso cref="CLog.UI.Common.ViewModels.BindableBase" />
     /// <seealso cref="System.IDisposable" />
-    public abstract class ViewModelBase : BindableBase, IDisposable
+    [DebuggerNonUserCode]
+    public abstract class ViewModelBase : BasicViewModelBase, IDisposable
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ViewModelBase"/> class.
+        /// Initializes a new instance of the <see cref="ViewModelBase" /> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
-        /// <exception cref="System.ArgumentNullException"></exception>
-        public ViewModelBase(ILogger logger)
+        /// <param name="statusService">The status service.</param>
+        /// <param name="dialogService">The dialog service.</param>
+        /// <param name="mouseService">The mouse service.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// </exception>
+        protected ViewModelBase(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService)
         {
             if (logger == null)
                 throw new ArgumentNullException(nameof(logger));
+            if (statusService == null)
+                throw new ArgumentNullException(nameof(statusService));
+            if (dialogService == null)
+                throw new ArgumentNullException(nameof(dialogService));
+            if (mouseService == null)
+                throw new ArgumentNullException(nameof(mouseService));
 
             Logger = logger;
+            StatusService = statusService;
+            DialogService = dialogService;
+            MouseService = mouseService;
 
             // Register all decorated methods to the Mediator
             Mediator.Instance.Register(this);
@@ -45,6 +64,30 @@ namespace CLog.UI.Common.ViewModels
         protected ILogger Logger { get; private set; }
 
         /// <summary>
+        /// Gets the status service.
+        /// </summary>
+        /// <value>
+        /// The status service.
+        /// </value>
+        protected IStatusService StatusService { get; private set; }
+
+        /// <summary>
+        /// Gets the dialog service.
+        /// </summary>
+        /// <value>
+        /// The dialog service.
+        /// </value>
+        protected IDialogService DialogService { get; private set; }
+
+        /// <summary>
+        /// Gets the mouse service.
+        /// </summary>
+        /// <value>
+        /// The mouse service.
+        /// </value>
+        protected IMouseService MouseService { get; private set; }
+
+        /// <summary>
         /// Gets the mediator that implements the messaging pattern.
         /// </summary>
         /// <value>
@@ -60,53 +103,177 @@ namespace CLog.UI.Common.ViewModels
         #region Methods
 
         /// <summary>
-        /// Initialises the view model.
+        /// Executes the specified action as an anonymous identity.
         /// </summary>
-        public virtual void Initialise()
+        /// <param name="action">The action.</param>
+        /// <param name="callingMethod">The calling method.</param>
+        protected void ExecuteAnonymous(Action action, [CallerMemberName]string callingMethod = null)
         {
+            EnsureNotDisposed();
+            Stopwatch stopwatch = new Stopwatch();
+
+            try
+            {
+                stopwatch.Start();
+                MouseService.SetWait(true);
+                LoggerHelper.Debug(Logger, "Started executing '{0}'", GetQualifiedMethodName(callingMethod));
+                StatusService.SetStatus(StatusMessageType.Warning, SplitOnUppercase(callingMethod));
+
+                action?.Invoke();
+            }
+            catch (OutOfMemoryException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.Fatal(Logger, ex, "Unhandled Exception occurred in view model:  {0}", GetQualifiedMethodName(callingMethod));
+
+                StatusService.SetStatus(StatusMessageType.Error, "An unhandled exception has occurred, please see the logs for more detail.");
+            }
+            finally
+            {
+                stopwatch.Stop();
+                MouseService.SetWait(false);
+
+                LoggerHelper.Debug(Logger, "Finished executing '{0}' in {1}", GetQualifiedMethodName(callingMethod), stopwatch.Elapsed);
+            }
         }
 
         /// <summary>
-        /// Clears the context of the view model.
+        /// Executes the action.
         /// </summary>
-        public virtual void ClearContext()
+        /// <param name="action">The action.</param>
+        /// <param name="callingMethod">The caller.</param>
+        /// <exception cref="System.InvalidProgramException">The principal has not been configured correctly!</exception>
+        protected void Execute(Action<ClientPrincipal> action, [CallerMemberName]string callingMethod = null)
         {
+            EnsureNotDisposed();
+            Stopwatch stopwatch = new Stopwatch();
+
+            ClientPrincipal principal = null;
+
+            // Read the principal from the UI thread
+            Invoke(() =>
+            {
+                principal = Thread.CurrentPrincipal as ClientPrincipal;
+                if (principal == null)
+                    throw new InvalidProgramException("The application's thread principal has not been configured correctly.");
+            });
+
+            try
+            {
+                stopwatch.Start();
+                MouseService.SetWait(true);
+                LoggerHelper.Debug(Logger, "Started executing '{0}'", GetQualifiedMethodName(callingMethod));
+                StatusService.SetStatus(StatusMessageType.Warning, SplitOnUppercase(callingMethod));
+
+                action?.Invoke(principal);
+            }
+            catch (OutOfMemoryException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.Fatal(Logger, ex, "Unhandled Exception occurred in view model:  {0}", GetQualifiedMethodName(callingMethod));
+
+                StatusService.SetStatus(StatusMessageType.Error, "An unhandled exception has occurred, please see the logs for more detail.");
+            }
+            finally
+            {
+                stopwatch.Stop();
+                MouseService.SetWait(false);
+
+                LoggerHelper.Debug(Logger, "Finished executing '{0}' in {1}", GetQualifiedMethodName(callingMethod), stopwatch.Elapsed);
+            }
         }
 
         /// <summary>
-        /// Invokes the specified callback on the UI thread.
+        /// Executes the asynchronous.
         /// </summary>
-        /// <param name="callback">The callback.</param>
-        public static void Invoke(Action callback)
+        /// <param name="action">The action.</param>
+        /// <param name="callingMethod">The calling method.</param>
+        protected void ExecuteAsync(Action<ClientPrincipal> action, [CallerMemberName]string callingMethod = null)
         {
-            DispatcherHelper.Invoke(callback);
+            EnsureNotDisposed();
+            Stopwatch stopwatch = new Stopwatch();
+
+            ClientPrincipal principal = null;
+
+            // Read the principal from the UI thread
+            Invoke(() =>
+            {
+                principal = Thread.CurrentPrincipal as ClientPrincipal;
+                if (principal == null)
+                    throw new InvalidProgramException("The application's thread principal has not been configured correctly.");
+            });
+
+            Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    stopwatch.Start();
+                    MouseService.SetWait(true);
+                    LoggerHelper.Debug(Logger, "Started executing '{0}'", GetQualifiedMethodName(callingMethod));
+                    StatusService.SetStatus(StatusMessageType.Warning, SplitOnUppercase(callingMethod));
+
+                    action?.Invoke(principal);
+                }
+                catch (OutOfMemoryException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    LoggerHelper.Fatal(Logger, ex, "Unhandled Exception occurred in view model:  {0}", GetQualifiedMethodName(callingMethod));
+
+                    StatusService.SetStatus(StatusMessageType.Error, "An unhandled exception has occurred, please see the logs for more detail.");
+                }
+                finally
+                {
+                    stopwatch.Stop();
+                    MouseService.SetWait(false);
+
+                    LoggerHelper.Debug(Logger, "Finished executing '{0}' in {1}", GetQualifiedMethodName(callingMethod), stopwatch.Elapsed);
+                }
+            });
         }
 
         /// <summary>
-        /// Creates an <see cref="ICommand"/> object with the specified delegates.
+        /// Gets the qualified name of the method.
         /// </summary>
-        /// <param name="execute">The execute.</param>
-        /// <param name="canExecute">The can execute.</param>
-        /// <returns>A command object.</returns>
-        public static ICommand CreateCommand(Action<object> execute, Func<object, bool> canExecute = null)
+        /// <param name="methodName">Name of the method.</param>
+        /// <returns>The qualified method name.</returns>
+        protected string GetQualifiedMethodName(string methodName)
         {
-            return new DelegateCommand(execute, canExecute);
+            return string.Format(CultureInfo.CurrentCulture, "{0}.{1}", GetType().Name, methodName);
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// Placing a space in front of each uppercase character.
         /// </summary>
-        /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
-        /// </returns>
-        public override string ToString()
+        /// <param name="input">The input.</param>
+        /// <returns>The processed string.</returns>
+        protected string SplitOnUppercase(string input)
         {
-            return GetType().Name;
+            return Regex.Replace(input, "([a-z])([A-Z])", "$1 $2");
         }
 
         #endregion
 
         #region IDisposable Implementation
+
+        /// <summary>
+        /// Keep this private, and create and maintain one for every derived class.
+        /// </summary>
+        private bool _disposed;
+
+        private void EnsureNotDisposed()
+        {
+            if (_disposed)
+                throw new ObjectDisposedException(GetType().Name);
+        }
 
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
@@ -123,6 +290,9 @@ namespace CLog.UI.Common.ViewModels
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
+            if (_disposed)
+                return;
+
             if (disposing)
             {
                 // Release managed resources
@@ -133,6 +303,8 @@ namespace CLog.UI.Common.ViewModels
 
             // Release native resources
             // NOTE:  call Dispose(false); in finalizer if this class contains unmanaged resources.
+
+            _disposed = true;
         }
 
         #endregion

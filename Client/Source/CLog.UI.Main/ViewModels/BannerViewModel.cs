@@ -6,6 +6,7 @@ using CLog.Services.Models.Access.DataTransfer;
 using CLog.Services.Security.Contracts.Access;
 using CLog.UI.Common.Messaging;
 using CLog.UI.Common.Messaging.Mediator;
+using CLog.UI.Common.Services;
 using CLog.UI.Common.ViewModels;
 using CLog.UI.Models.Access;
 using System;
@@ -34,11 +35,16 @@ namespace CLog.UI.Main.ViewModels
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BannerViewModel"/> class.
+        /// Initializes a new instance of the <see cref="BannerViewModel" /> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
-        public BannerViewModel(ILogger logger, IAccessClientFactory accessClientFactory)
-            : base(logger)
+        /// <param name="statusService">The status service.</param>
+        /// <param name="dialogService">The dialog service.</param>
+        /// <param name="mouseService">The mouse service.</param>
+        /// <param name="accessClientFactory">The access client factory.</param>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        public BannerViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, IAccessClientFactory accessClientFactory)
+            : base(logger, statusService, dialogService, mouseService)
         {
             if (accessClientFactory == null)
                 throw new ArgumentNullException(nameof(accessClientFactory));
@@ -52,6 +58,12 @@ namespace CLog.UI.Main.ViewModels
 
         #region Properties
 
+        /// <summary>
+        /// Gets the logout command.
+        /// </summary>
+        /// <value>
+        /// The logout command.
+        /// </value>
         public ICommand LogoutCommand { get; private set; }
 
         /// <summary>
@@ -97,6 +109,9 @@ namespace CLog.UI.Main.ViewModels
 
         #region Methods
 
+        /// <summary>
+        /// Initialises the view model.
+        /// </summary>
         public override void Initialise()
         {
             SelectedDate = DateTime.Now.Date;
@@ -110,18 +125,17 @@ namespace CLog.UI.Main.ViewModels
 
         private void LogoutCommand_Execute(object parameter)
         {
-            ClientPrincipal principal = Thread.CurrentPrincipal as ClientPrincipal;
-            if (principal == null)
-                return;
-
-            using (IServiceClient<IAccessService> client = _accessClientFactory.Create())
+            Execute(principal =>
             {
-                LogoutRequest request = new LogoutRequest(principal.Identity.UserName, principal.Identity.SessionId, principal.Identity.SessionKey);
-                client.Proxy.Logout(request);
+                using (IServiceClient<IAccessService> client = _accessClientFactory.Create())
+                {
+                    LogoutRequest request = new LogoutRequest(principal.Identity.UserName, principal.Identity.SessionId, principal.Identity.SessionKey);
+                    client.Proxy.Logout(request);
 
-                Mediator.NotifyColleaguesAsync(MessagingConstants.USER_LOGGED_OUT, principal.Identity);
-                principal.Identity = null;
-            }
+                    Mediator.NotifyColleaguesAsync(MessagingConstants.USER_LOGGED_OUT, principal.Identity);
+                    principal.Identity = null;
+                }
+            });
         }
 
         #endregion

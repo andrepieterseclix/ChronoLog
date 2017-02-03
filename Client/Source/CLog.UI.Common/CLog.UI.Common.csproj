@@ -72,7 +72,7 @@
     <Compile Include="Messaging\Mediator\Mediator.cs" />
     <Compile Include="Messaging\Mediator\MediatorMessageSinkAttribute.cs" />
     <Compile Include="Messaging\Models\StatusMessage.cs" />
-    <Compile Include="ViewModels\BindableBase.cs" />
+    <Compile Include="Models\BindableBase.cs" />
     <Compile Include="Modules\IDependencyContainer.cs" />
     <Compile Include="Modules\IModuleInitialiser.cs" />
     <Compile Include="Modules\Module.cs" />
@@ -94,6 +94,7 @@
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="Services\IMouseService.cs" />
     <Compile Include="Services\IStatusService.cs" />
+    <Compile Include="ViewModels\BasicViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="WeakEvents\WeakEvent.cs" />
     <Compile Include="WeakEvents\WeakEventHelper.cs" />
@@ -113,6 +114,10 @@
     <ProjectReference Include="..\..\..\Common\CLog.Common\CLog.Common.csproj">
       <Project>{C1C7C56E-18AA-41C2-8051-9FE696F8A3BF}</Project>
       <Name>CLog.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.ServiceClients.Security\CLog.ServiceClients.Security.csproj">
+      <Project>{B683C213-EE65-4425-AB9A-AE9CDC12E4F6}</Project>
+      <Name>CLog.ServiceClients.Security</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

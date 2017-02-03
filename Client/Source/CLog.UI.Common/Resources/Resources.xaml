@@ -14,7 +14,7 @@
     <SolidColorBrush x:Key="TertiaryColour" Color="SlateGray"/>
     <SolidColorBrush x:Key="QuaternaryColour" Color="LightGray"/>
     <SolidColorBrush x:Key="SpecialColour" Color="Purple"/>
-    <SolidColorBrush x:Key="TodayColour" Color="Orange"/>
+    <SolidColorBrush x:Key="TodayColour" Color="OrangeRed"/>
     <SolidColorBrush x:Key="DisabledColour" Color="Gray"/>
     <SolidColorBrush x:Key="LockedColour" Color="DarkRed"/>
     <SolidColorBrush x:Key="Background" Color="WhiteSmoke"/>

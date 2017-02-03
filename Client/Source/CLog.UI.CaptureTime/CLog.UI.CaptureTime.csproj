@@ -106,6 +106,10 @@
       <Project>{6FDEEA1C-53C7-437E-BCF3-6FA64B5A64C6}</Project>
       <Name>CLog.ServiceClients.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CLog.ServiceClients.Security\CLog.ServiceClients.Security.csproj">
+      <Project>{b683c213-ee65-4425-ab9a-ae9cdc12e4f6}</Project>
+      <Name>CLog.ServiceClients.Security</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CLog.UI.Common\CLog.UI.Common.csproj">
       <Project>{a4c0e351-f70f-4738-aa07-e46df0e60374}</Project>
       <Name>CLog.UI.Common</Name>

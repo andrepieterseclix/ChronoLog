@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace CLog.UI.Common.Commands
@@ -7,6 +8,7 @@ namespace CLog.UI.Common.Commands
     /// Represents the delegate command object for handling user interactions.
     /// </summary>
     /// <seealso cref="System.Windows.Input.ICommand" />
+    [DebuggerNonUserCode]
     public class DelegateCommand : ICommand
     {
         #region Fields

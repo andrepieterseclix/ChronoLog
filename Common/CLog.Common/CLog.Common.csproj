@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseClasses\CommonBase.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\LoggerHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

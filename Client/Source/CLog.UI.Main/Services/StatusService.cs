@@ -1,4 +1,5 @@
-﻿using CLog.UI.Common.Messaging;
+﻿using CLog.UI.Common.Helpers;
+using CLog.UI.Common.Messaging;
 using CLog.UI.Common.Messaging.Mediator;
 using CLog.UI.Common.Messaging.Models;
 using CLog.UI.Common.Services;
@@ -24,7 +25,10 @@ namespace CLog.UI.Main.Services
                 ? string.Format(CultureInfo.CurrentCulture, format, args)
                 : format;
 
-            Mediator.Instance.NotifyColleaguesAsync(MessagingConstants.STATUS_UPDATE, new StatusMessage(messageType, message));
+            DispatcherHelper.Invoke(() =>
+            {
+                Mediator.Instance.NotifyColleaguesAsync(MessagingConstants.STATUS_UPDATE, new StatusMessage(messageType, message));
+            });
         }
     }
 }

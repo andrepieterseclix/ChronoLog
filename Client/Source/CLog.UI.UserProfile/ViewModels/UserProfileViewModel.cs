@@ -39,10 +39,6 @@ namespace CLog.UI.UserProfile.ViewModels
 
         private readonly IUserClientFactory _userServiceClient;
 
-        private readonly IDialogService _dialogService;
-
-        private readonly IStatusService _statusService;
-
         #endregion
 
         #region Constructor
@@ -51,26 +47,18 @@ namespace CLog.UI.UserProfile.ViewModels
         /// Initializes a new instance of the <see cref="UserProfileViewModel" /> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
-        /// <param name="dialogService">The dialog service.</param>
         /// <param name="statusService">The status service.</param>
+        /// <param name="dialogService">The dialog service.</param>
+        /// <param name="mouseService">The mouse service.</param>
         /// <param name="userServiceClient">The user service client.</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// </exception>
-        public UserProfileViewModel(ILogger logger, IDialogService dialogService, IStatusService statusService, IUserClientFactory userServiceClient)
-            : base(logger)
+        /// <exception cref="System.ArgumentNullException"></exception>
+        public UserProfileViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, IUserClientFactory userServiceClient)
+            : base(logger, statusService, dialogService, mouseService)
         {
             if (userServiceClient == null)
                 throw new ArgumentNullException(nameof(userServiceClient));
 
-            if (dialogService == null)
-                throw new ArgumentNullException(nameof(dialogService));
-
-            if (statusService == null)
-                throw new ArgumentNullException(nameof(statusService));
-
             _userServiceClient = userServiceClient;
-            _dialogService = dialogService;
-            _statusService = statusService;
 
             SaveCommand = CreateCommand(SaveCommand_Execute, SaveCommand_CanExecute);
             ResetCommand = CreateCommand(ResetCommand_Execute, ResetCommand_CanExecute);
@@ -146,15 +134,10 @@ namespace CLog.UI.UserProfile.ViewModels
 
         private void SaveCommand_Execute(object parameter)
         {
-            try
+            ExecuteAsync(principal =>
             {
                 using (IServiceClient<IUserService> client = _userServiceClient.Create())
                 {
-                    // TODO:  refactor this into base class
-                    ClientPrincipal principal = Thread.CurrentPrincipal as ClientPrincipal;
-                    if (principal == null)
-                        throw new ApplicationException("The application's thread principal has not been configured correctly.");
-
                     ClientIdentity identity = principal.Identity;
                     UserDetailsDto userDetails = new UserDetailsDto(ShadowUser.UserName, ShadowUser.Name, ShadowUser.Surname, ShadowUser.Email);
                     UpdateUserRequest request = new UpdateUserRequest(userDetails);
@@ -165,8 +148,8 @@ namespace CLog.UI.UserProfile.ViewModels
                         LoggerHelper.Error(Logger, UPDATE_PROFILE_ERROR);
                         response.Errors.ForEach(e => LoggerHelper.Error(Logger, e.ToString()));
                         string combinedMessage = string.Join("\r\n", response.Errors.Select(e => string.Format(CultureInfo.CurrentCulture, "{0}:  {1}", e.Code, e.Message)));
-                        _statusService.SetStatus(StatusMessageType.Error, UPDATE_PROFILE_ERROR);
-                        _dialogService.ShowError(combinedMessage, UPDATE_PROFILE_ERROR);
+                        StatusService.SetStatus(StatusMessageType.Error, UPDATE_PROFILE_ERROR);
+                        DialogService.ShowError(combinedMessage, UPDATE_PROFILE_ERROR);
 
                         return;
                     }
@@ -180,17 +163,11 @@ namespace CLog.UI.UserProfile.ViewModels
 
                     identity.UpdateSession(response.Session.Id, response.Session.SessionKey);
 
-                    _statusService.SetStatus(StatusMessageType.Info, UPDATE_PROFILE_SUCCESS);
-                    _dialogService.ShowInfo(UPDATE_PROFILE_SUCCESS);
+                    StatusService.SetStatus(StatusMessageType.Info, UPDATE_PROFILE_SUCCESS);
+                    DialogService.ShowInfo(UPDATE_PROFILE_SUCCESS);
                     LoggerHelper.Info(Logger, UPDATE_PROFILE_SUCCESS);
                 }
-            }
-            catch (Exception ex)
-            {
-                // TODO:  improve exception handling
-                _statusService.SetStatus(StatusMessageType.Error, "An unexpected error occurred, please check the logs.");
-                LoggerHelper.Exception(Logger, ex, nameof(SaveCommand_Execute));
-            }
+            });
         }
 
         private bool SaveCommand_CanExecute(object parameter)

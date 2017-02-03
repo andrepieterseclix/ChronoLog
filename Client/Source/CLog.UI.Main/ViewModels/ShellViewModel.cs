@@ -26,29 +26,28 @@ namespace CLog.UI.Main.ViewModels
 
         private readonly ILoginController _loginController;
 
-        private readonly IDialogService _dialogService;
-
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShellViewModel"/> class.
+        /// Initializes a new instance of the <see cref="ShellViewModel" /> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
+        /// <param name="statusService">The status service.</param>
+        /// <param name="dialogService">The dialog service.</param>
+        /// <param name="mouseService">The mouse service.</param>
         /// <param name="loginController">The login controller.</param>
-        /// <exception cref="System.ArgumentNullException"></exception>
-        public ShellViewModel(ILogger logger, ILoginController loginController, IDialogService dialogService, BannerViewModel bannerViewModel)
-            : base(logger)
+        /// <param name="bannerViewModel">The banner view model.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// </exception>
+        public ShellViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, ILoginController loginController, BannerViewModel bannerViewModel)
+            : base(logger, statusService, dialogService, mouseService)
         {
             if (loginController == null)
                 throw new ArgumentNullException(nameof(loginController));
 
-            if (dialogService == null)
-                throw new ArgumentNullException(nameof(dialogService));
-
             _loginController = loginController;
-            _dialogService = dialogService;
 
             Banner = bannerViewModel;
             TabViewModels = new List<ViewModelBase>();
@@ -122,9 +121,9 @@ namespace CLog.UI.Main.ViewModels
 
             Invoke(() =>
             {
-                _dialogService.SetMainWindowVisible(false);
+                DialogService.SetMainWindowVisible(false);
                 Login();
-                _dialogService.SetMainWindowVisible(true);
+                DialogService.SetMainWindowVisible(true);
             });
         }
 
@@ -153,7 +152,7 @@ namespace CLog.UI.Main.ViewModels
             if (!loggedIn)
                 Application.Current.Shutdown();
 
-            SetStatusMessage("Ready", StatusMessageType.Info);
+            SetStatusMessage("Logged in", StatusMessageType.Info);
         }
 
         #endregion

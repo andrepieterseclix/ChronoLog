@@ -1,4 +1,4 @@
-﻿using CLog.UI.Common.ViewModels;
+﻿using CLog.UI.Common.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 

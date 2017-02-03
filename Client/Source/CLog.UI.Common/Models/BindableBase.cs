@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace CLog.UI.Common.ViewModels
+namespace CLog.UI.Common.Models
 {
     public abstract class BindableBase : INotifyPropertyChanged
     {
@@ -34,6 +34,21 @@ namespace CLog.UI.Common.ViewModels
         /// Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return GetType().Name;
+        }
 
         #endregion
     }

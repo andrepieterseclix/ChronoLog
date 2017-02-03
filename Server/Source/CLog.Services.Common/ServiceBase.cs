@@ -1,10 +1,13 @@
-﻿using CLog.Common.Logging;
+﻿using CLog.Common.BaseClasses;
+using CLog.Common.Logging;
 using CLog.Framework.Business.Messages;
 using CLog.Framework.Security;
 using CLog.Framework.Services.Contracts;
 using CLog.Framework.Services.Extensions;
 using CLog.Framework.Services.Models;
 using System;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.Threading;
 
@@ -13,8 +16,11 @@ namespace CLog.Services.Common
     /// <summary>
     /// Represents the base class for micro service implementations.
     /// </summary>
+    /// <seealso cref="CLog.Common.BaseClasses.CommonBase" />
+    /// <seealso cref="CLog.Framework.Services.Contracts.IService" />
+    [DebuggerNonUserCode]
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, IncludeExceptionDetailInFaults = true)]
-    public abstract class ServiceBase : IService
+    public abstract class ServiceBase : CommonBase, IService
     {
         #region Constructors
 
@@ -22,29 +28,16 @@ namespace CLog.Services.Common
         /// Initializes a new instance of the <see cref="ServiceBase" /> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
-        /// <param name="accessManager">The access manager.</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// </exception>
+        /// <exception cref="System.ArgumentNullException"></exception>
         public ServiceBase(ILogger logger)
+            : base(logger)
         {
-            if (logger == null)
-                throw new ArgumentNullException(nameof(logger));
-
-            Logger = logger;
         }
 
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// Gets the logger.
-        /// </summary>
-        /// <value>
-        /// The logger.
-        /// </value>
-        protected ILogger Logger { get; private set; }
-
+        
         /// <summary>
         /// Gets the identity for the current user.
         /// </summary>
@@ -80,10 +73,11 @@ namespace CLog.Services.Common
         /// </summary>
         /// <typeparam name="TResponse">The type of the response.</typeparam>
         /// <param name="action">The action.</param>
+        /// <param name="callingMethod">The calling method.</param>
         /// <returns>
         /// The response.
         /// </returns>
-        public TResponse Execute<TResponse>(Action<TResponse> action)
+        public TResponse Execute<TResponse>(Action<TResponse> action, [CallerMemberName]string callingMethod = null)
             where TResponse : ResponseBase, new()
         {
             EnsureNotDisposed();
@@ -103,59 +97,18 @@ namespace CLog.Services.Common
 
                 action?.Invoke(response);
             }
+            catch (OutOfMemoryException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
-                response.Errors.Add(ErrorMessages.UnhandledBusinessException.Map());
+                LoggerHelper.Fatal(Logger, ex, "Unhandled Exception occurred in business manager:  {0}", GetQualifiedMethodName(callingMethod));
 
-                LoggerHelper.Fatal(Logger, ex, "Unhandled Exception");
+                response.Errors.Add(ErrorMessages.UnhandledBusinessException.Map());
             }
 
             return response;
-        }
-
-        #endregion
-
-        #region IDisposable Implementation
-
-        /// <summary>
-        /// Keep this private, and create and maintain one for every derived class.
-        /// </summary>
-        private bool _disposed;
-
-        private void EnsureNotDisposed()
-        {
-            if (_disposed)
-                throw new ObjectDisposedException(GetType().Name);
-        }
-
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-                return;
-
-            if (disposing)
-            {
-                // Release managed resources, and set to null
-
-            }
-
-            // Release native resources
-            // NOTE:  call Dispose(false); in finalizer if this class contains unmanaged resources.
-
-            _disposed = true;
         }
 
         #endregion

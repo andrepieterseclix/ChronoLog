@@ -1,4 +1,5 @@
 ﻿using CLog.Common.Logging;
+using CLog.UI.Common.Services;
 using CLog.UI.Common.ViewModels;
 using CLog.UI.Framework.Testing.Models;
 using System;
@@ -19,8 +20,8 @@ namespace CLog.UI.Framework.Testing.ViewModels
 
         #region Constructor
 
-        public SelectModuleViewModel(ILogger logger, IEnumerable<ModuleAssemblyModel> types)
-            : base(logger)
+        public SelectModuleViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, IEnumerable<ModuleAssemblyModel> types)
+            : base(logger, statusService, dialogService, mouseService)
         {
             ModuleInstallers = new ObservableCollection<ModuleAssemblyModel>(types);
             SelectedType = ModuleInstallers.FirstOrDefault();
