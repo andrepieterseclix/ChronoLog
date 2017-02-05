@@ -102,13 +102,13 @@ namespace CLog.Business.Timesheets.Managers
                 // Validate
                 if (capturedTimeItems == null || capturedTimeItems.Length < 1 || capturedTimeItems.Any(x => x == null))
                 {
-                    result.Errors.Add(ErrorMessages.CapturedTimeItemsNotValid);
+                    result.Errors.Add(ErrorMessages.CapturedTimeItemsNotValid());
                     return;
                 }
 
                 if (!capturedTimeItems.All(x => x.UserName == UserIdentity.Name))
                 {
-                    result.Errors.Add(ErrorMessages.InvalidUserRequest);
+                    result.Errors.Add(ErrorMessages.InvalidUserRequest());
                     return;
                 }
 
@@ -144,7 +144,7 @@ namespace CLog.Business.Timesheets.Managers
 
                     if (!updateItem.IsEnabled)
                     {
-                        ErrorMessage CaptureDateNotEnabledMessage = ErrorMessages.CaptureDateNotEnabled;
+                        ErrorMessage CaptureDateNotEnabledMessage = ErrorMessages.CaptureDateNotEnabled();
                         CaptureDateNotEnabledMessage.AdditionalInfo = string.Format(CultureInfo.CurrentCulture, "The date '{0}' is disabled for capturing time.", updateItem.Date);
                         result.Errors.Add(CaptureDateNotEnabledMessage);
                         continue;
@@ -186,7 +186,7 @@ namespace CLog.Business.Timesheets.Managers
             // Validate
             if (fromDate > toDate)
             {
-                result.Errors.Add(ErrorMessages.InvalidFromAndToDate);
+                result.Errors.Add(ErrorMessages.InvalidFromAndToDate());
                 return;
             }
 
@@ -194,7 +194,7 @@ namespace CLog.Business.Timesheets.Managers
 
             if (days > CAPTURED_TIME_QUERY_MAX_DAY_SPAN)
             {
-                result.Errors.Add(ErrorMessages.QueryMaxDaySpan);
+                result.Errors.Add(ErrorMessages.QueryMaxDaySpan());
                 return;
             }
 
@@ -263,7 +263,7 @@ namespace CLog.Business.Timesheets.Managers
             if (items.Select(x => x.Date.Date).Distinct().Count() < items.Length)
             {
                 LoggerHelper.Error(Logger, "User with Id '{0}' has duplicate Captured Time items between '{1}' and '{2}'!", user.Id, fromDate, toDate);
-                result.Errors.Add(ErrorMessages.CapturedTimeDuplicateDates);
+                result.Errors.Add(ErrorMessages.CapturedTimeDuplicateDates());
             }
 
             return items;
@@ -278,7 +278,7 @@ namespace CLog.Business.Timesheets.Managers
             if (dateStates.Select(x => x.Date.Date).Distinct().Count() < dateStates.Length)
             {
                 LoggerHelper.Error(Logger, "Duplicate date found in the date states between '{0}' and '{1}'.", fromDate, toDate);
-                ErrorMessage message = ErrorMessages.DuplicateDateState;
+                ErrorMessage message = ErrorMessages.DuplicateDateState();
                 message.AdditionalInfo = string.Format(CultureInfo.CurrentCulture, "Between {0} and {1}.", fromDate, toDate);
                 result.Errors.Add(message);
 

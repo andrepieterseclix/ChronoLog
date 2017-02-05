@@ -17,13 +17,13 @@ namespace CLog.UI.Main.Managers
         /// <returns>
         /// The business result.
         /// </returns>
-        BusinessResult<LoginResult> Login(string userName, string password);
+        UIBusinessResult<LoginResult> Login(string userName, string password);
 
         /// <summary>
         /// Logs out the specified principal.
         /// </summary>
         /// <param name="principal">The principal.</param>
         /// <returns>The business result.</returns>
-        BusinessResult Logout(ClientPrincipal principal);
+        UIBusinessResult Logout(ClientPrincipal principal);
     }
 }

@@ -65,8 +65,8 @@
     <Compile Include="Behaviors\BindingValidationBehavior.cs" />
     <Compile Include="Behaviors\PasswordBoxBindableBehavior.cs" />
     <Compile Include="Behaviors\SelectedItemTreeViewBehavior.cs" />
-    <Compile Include="Business\BusinessResult.cs" />
-    <Compile Include="Business\BusinessResultGeneric.cs" />
+    <Compile Include="Business\UIBusinessResult.cs" />
+    <Compile Include="Business\UIBusinessResultGeneric.cs" />
     <Compile Include="Business\ErrorMessage.cs" />
     <Compile Include="Business\Extensions.cs" />
     <Compile Include="Business\UIBusinessManager.cs" />

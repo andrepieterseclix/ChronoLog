@@ -25,7 +25,7 @@ namespace CLog.UI.Common.Business
         /// </summary>
         /// <param name="result">The result.</param>
         /// <param name="serviceResponse">The service response.</param>
-        public static void AddMessages(this BusinessResult result, ResponseBase serviceResponse)
+        public static void AddMessages(this UIBusinessResult result, ResponseBase serviceResponse)
         {
             if (result == null || serviceResponse == null)
                 return;

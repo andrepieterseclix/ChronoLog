@@ -191,7 +191,7 @@ namespace CLog.UI.CaptureTime.ViewModels
                     ToDate = toDate;
                 });
 
-                BusinessResult<CaptureTimeDay[]> result =
+                UIBusinessResult<CaptureTimeDay[]> result =
                     _timesheetManager.GetCapturedTime(fromDate, toDate);
 
                 Invoke(() =>
@@ -230,7 +230,7 @@ namespace CLog.UI.CaptureTime.ViewModels
                 CaptureTimeDay[] capturedTimeDays =
                     Days.Select(x => x.Model).ToArray();
 
-                BusinessResult result =
+                UIBusinessResult result =
                     _timesheetManager.SaveCapturedTime(capturedTimeDays, principal.Identity.UserName);
 
                 foreach (ErrorMessage errorMessage in result.Errors)

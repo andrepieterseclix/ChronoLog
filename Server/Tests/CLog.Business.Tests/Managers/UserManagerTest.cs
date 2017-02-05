@@ -98,7 +98,7 @@ namespace CLog.Business.Tests.Managers
             Assert.IsNotNull(result);
             Assert.IsTrue(result.HasErrors);
             Assert.IsFalse(result.HasResult);
-            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.UserNotFound.Message));
+            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.UserNotFound().Message));
             _userRepository.Verify();
         }
 
@@ -123,7 +123,7 @@ namespace CLog.Business.Tests.Managers
             Assert.IsNotNull(result);
             Assert.IsTrue(result.HasErrors);
             Assert.IsFalse(result.HasResult);
-            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.InvalidEmailAddress.Message));
+            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.InvalidEmailAddress().Message));
             _userRepository.Verify();
         }
 
@@ -150,7 +150,7 @@ namespace CLog.Business.Tests.Managers
             Assert.IsNotNull(result);
             Assert.IsTrue(result.HasErrors);
             Assert.IsFalse(result.HasResult);
-            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.InvalidNameOrSurname.Message));
+            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.InvalidNameOrSurname().Message));
             _userRepository.Verify();
         }
 
@@ -177,7 +177,7 @@ namespace CLog.Business.Tests.Managers
             Assert.IsNotNull(result);
             Assert.IsTrue(result.HasErrors);
             Assert.IsFalse(result.HasResult);
-            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.InvalidNameOrSurname.Message));
+            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.InvalidNameOrSurname().Message));
             _userRepository.Verify();
         }
 

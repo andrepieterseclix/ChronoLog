@@ -35,10 +35,10 @@ namespace CLog.UI.Common.Business
         /// <returns>
         /// The business result.
         /// </returns>
-        protected BusinessResult<T> Execute<T>(Action<BusinessResult<T>> action, [CallerMemberName]string callingMethod = null)
+        protected UIBusinessResult<T> Execute<T>(Action<UIBusinessResult<T>> action, [CallerMemberName]string callingMethod = null)
             where T : class
         {
-            BusinessResult<T> result = new BusinessResult<T>();
+            UIBusinessResult<T> result = new UIBusinessResult<T>();
 
             Stopwatch stopwatch = new Stopwatch();
 
@@ -72,9 +72,9 @@ namespace CLog.UI.Common.Business
         /// <param name="action">The action.</param>
         /// <param name="callingMethod">The calling method.</param>
         /// <returns>The business result.</returns>
-        protected BusinessResult Execute(Action<BusinessResult> action, [CallerMemberName]string callingMethod = null)
+        protected UIBusinessResult Execute(Action<UIBusinessResult> action, [CallerMemberName]string callingMethod = null)
         {
-            BusinessResult result = new BusinessResult();
+            UIBusinessResult result = new UIBusinessResult();
 
             Stopwatch stopwatch = new Stopwatch();
 

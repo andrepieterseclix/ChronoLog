@@ -133,7 +133,7 @@ namespace CLog.Business.Tests.Managers
             // Assert
             Assert.IsNotNull(result);
             Assert.IsTrue(result.HasErrors);
-            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.UserNotFound.Message));
+            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.UserNotFound().Message));
             _userRepository.Verify();
         }
 
@@ -165,7 +165,7 @@ namespace CLog.Business.Tests.Managers
             // Assert
             Assert.IsNotNull(result);
             Assert.IsTrue(result.HasErrors);
-            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.IncorrectOldPassword.Message));
+            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.IncorrectOldPassword().Message));
             _userRepository.Verify();
             _passwordHelper.Verify();
         }
@@ -198,7 +198,7 @@ namespace CLog.Business.Tests.Managers
             // Assert
             Assert.IsNotNull(result);
             Assert.IsTrue(result.HasErrors);
-            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.InvalidPassword.Message));
+            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.InvalidPassword().Message));
             _userRepository.Verify();
             _passwordHelper.Verify();
         }
@@ -231,7 +231,7 @@ namespace CLog.Business.Tests.Managers
             // Assert
             Assert.IsNotNull(result);
             Assert.IsTrue(result.HasErrors);
-            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.InvalidPassword.Message));
+            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.InvalidPassword().Message));
             _userRepository.Verify();
             _passwordHelper.Verify();
         }

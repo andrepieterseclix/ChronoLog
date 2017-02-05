@@ -79,7 +79,7 @@ namespace CLog.Business.Users.Managers
                 // Validate request
                 if (userDetails == null)
                 {
-                    result.Errors.Add(ErrorMessages.InvalidRequestArguments);
+                    result.Errors.Add(ErrorMessages.InvalidRequestArguments());
                     return;
                 }
 
@@ -96,9 +96,9 @@ namespace CLog.Business.Users.Managers
                         return;
 
                     // Validate
-                    ValidateText(userDetails.Email, ModelConstants.REGEX_EMAIL, result, ErrorMessages.InvalidEmailAddress);
-                    ValidateText(userDetails.Name, ModelConstants.NAME_REGEX, result, ErrorMessages.InvalidNameOrSurname);
-                    ValidateText(userDetails.Surname, ModelConstants.NAME_REGEX, result, ErrorMessages.InvalidNameOrSurname);
+                    ValidateText(userDetails.Email, ModelConstants.REGEX_EMAIL, result, ErrorMessages.InvalidEmailAddress());
+                    ValidateText(userDetails.Name, ModelConstants.NAME_REGEX, result, ErrorMessages.InvalidNameOrSurname());
+                    ValidateText(userDetails.Surname, ModelConstants.NAME_REGEX, result, ErrorMessages.InvalidNameOrSurname());
 
                     if (result.HasErrors)
                         return;
@@ -134,7 +134,7 @@ namespace CLog.Business.Users.Managers
         {
             if (string.IsNullOrWhiteSpace(userName))
             {
-                result.Errors.Add(ErrorMessages.UserNameNotSpecified);
+                result.Errors.Add(ErrorMessages.UserNameNotSpecified());
                 return false;
             }
 
@@ -147,7 +147,7 @@ namespace CLog.Business.Users.Managers
 
             if (user == null)
             {
-                result.Errors.Add(ErrorMessages.UserNotFound);
+                result.Errors.Add(ErrorMessages.UserNotFound());
                 return false;
             }
 

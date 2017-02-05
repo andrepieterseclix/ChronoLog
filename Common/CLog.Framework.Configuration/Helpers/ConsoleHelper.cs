@@ -33,5 +33,20 @@ namespace CLog.Framework.Configuration.Helpers
             Console.WriteLine(string.Empty.PadLeft(boxLength, '*'));
             Console.WriteLine();
         }
+
+        /// <summary>
+        /// Loops the until key pressed.
+        /// </summary>
+        /// <param name="q">The console key.</param>
+        public static void LoopUntilKeyPressed(ConsoleKey key)
+        {
+            Console.WriteLine("Press '{0}' to quit...\r\n", key);
+
+            ConsoleKeyInfo keyInfo;
+
+            while ((keyInfo = Console.ReadKey(true)).Key != key)
+            {
+            }
+        }
     }
 }

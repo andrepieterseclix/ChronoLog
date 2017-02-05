@@ -130,7 +130,7 @@ namespace CLog.UI.Main.ViewModels
             {
                 try
                 {
-                    BusinessResult<LoginResult> result = _accessManager.Login(UserName, Password);
+                    UIBusinessResult<LoginResult> result = _accessManager.Login(UserName, Password);
 
                     IsLoggedIn = result.Result.IsLoggedIn;
 

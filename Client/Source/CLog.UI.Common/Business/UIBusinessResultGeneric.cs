@@ -4,25 +4,25 @@
     /// Represent the business result that contains a result object.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <seealso cref="CLog.UI.Common.Business.BusinessResult" />
-    public sealed class BusinessResult<T> : BusinessResult
+    /// <seealso cref="CLog.UI.Common.Business.UIBusinessResult" />
+    public sealed class UIBusinessResult<T> : UIBusinessResult
         where T : class
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BusinessResult{T}"/> class.
+        /// Initializes a new instance of the <see cref="UIBusinessResult{T}"/> class.
         /// </summary>
-        public BusinessResult()
+        public UIBusinessResult()
             : this(default(T))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BusinessResult{T}"/> class.
+        /// Initializes a new instance of the <see cref="UIBusinessResult{T}"/> class.
         /// </summary>
         /// <param name="result">The result.</param>
-        public BusinessResult(T result = default(T))
+        public UIBusinessResult(T result = default(T))
         {
             Result = result;
         }

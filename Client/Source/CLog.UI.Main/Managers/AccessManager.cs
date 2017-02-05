@@ -43,7 +43,15 @@ namespace CLog.UI.Main.Managers
             _accessClientFactory = accessClientFactory;
         }
 
-        public BusinessResult<LoginResult> Login(string userName, string password)
+        /// <summary>
+        /// Logins the specified user name.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>
+        /// The business result.
+        /// </returns>
+        public UIBusinessResult<LoginResult> Login(string userName, string password)
         {
             return Execute<LoginResult>(result =>
             {
@@ -83,23 +91,41 @@ namespace CLog.UI.Main.Managers
             });
         }
 
-        public BusinessResult Logout(ClientPrincipal principal)
+        /// <summary>
+        /// Logs out the specified principal.
+        /// </summary>
+        /// <param name="principal">The principal.</param>
+        /// <returns>
+        /// The business result.
+        /// </returns>
+        public UIBusinessResult Logout(ClientPrincipal principal)
         {
             return Execute(result =>
             {
-                LogoutResponse response = null;
-
-                using (IServiceClient<IAccessService> client = _accessClientFactory.Create())
+                try
                 {
-                    LogoutRequest request = new LogoutRequest(
-                        principal.Identity.UserName,
-                        principal.Identity.SessionId,
-                        principal.Identity.SessionKey);
+                    LogoutResponse response = null;
 
-                    response = client.Proxy.Logout(request);
+                    using (IServiceClient<IAccessService> client = _accessClientFactory.Create())
+                    {
+                        LogoutRequest request = new LogoutRequest(
+                            principal.Identity.UserName,
+                            principal.Identity.SessionId,
+                            principal.Identity.SessionKey);
 
-                    // Map Errors
-                    result.AddMessages(response);
+                        response = client.Proxy.Logout(request);
+
+                        // Map Errors
+                        result.AddMessages(response);
+                    }
+                }
+                catch (OutOfMemoryException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    LoggerHelper.Exception(Logger, ex, "Could not log out!");
                 }
             });
         }

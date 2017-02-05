@@ -9,13 +9,13 @@ namespace CLog.Framework.Business.Messages
     {
         #region Constants
 
-        private const string UnhandledBusinessExceptionCode = "GE0001";
+        private const string UNHANDLED_BUSINESS_EXCEPTION_CODE = "GE0001";
 
-        private const string UnhandledBusinessExceptionMessage = "An error was encountered while servicing your request.";
+        private const string UNHANDLED_BUSINESS_EXCEPTION_MESSAGE = "An error was encountered while servicing your request.";
 
-        private const string SessionExpiredCode = "GE0001";
+        private const string SESSION_EXPIRED_CODE = "GE0001";
 
-        private const string SessionExpiredMessage = "The session has expired, please log in again.";
+        private const string SESSION_EXPIRED_MESSAGE = "The session has expired, please log in again.";
 
         #endregion
 
@@ -24,12 +24,18 @@ namespace CLog.Framework.Business.Messages
         /// <summary>
         /// The unhandled business exception error message.
         /// </summary>
-        public static ErrorMessage UnhandledBusinessException = new ErrorMessage(UnhandledBusinessExceptionCode, UnhandledBusinessExceptionMessage);
+        public static ErrorMessage UnhandledBusinessException()
+        {
+            return new ErrorMessage(UNHANDLED_BUSINESS_EXCEPTION_CODE, UNHANDLED_BUSINESS_EXCEPTION_MESSAGE);
+        }
 
         /// <summary>
         /// The session expired error message.
         /// </summary>
-        public static ErrorMessage SessionExpired = new ErrorMessage(SessionExpiredCode, SessionExpiredMessage);
+        public static ErrorMessage SessionExpired()
+        {
+            return new ErrorMessage(SESSION_EXPIRED_CODE, SESSION_EXPIRED_MESSAGE);
+        }
 
         #endregion
     }

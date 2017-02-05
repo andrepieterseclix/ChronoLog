@@ -88,15 +88,15 @@ namespace CLog.Business.Access.Managers
                 if (!FindUser(userName, result, out user))
                     return;
 
-                if (!CheckPassword(user, password, result, ErrorMessages.IncorrectPassword))
+                if (!CheckPassword(user, password, result, ErrorMessages.IncorrectPassword()))
                     return;
 
                 if (user.State == DataState.AwaitingApproval)
-                    result.Errors.Add(ErrorMessages.UserNotApproved);
+                    result.Errors.Add(ErrorMessages.UserNotApproved());
                 else if (user.State == DataState.Suspended)
-                    result.Errors.Add(ErrorMessages.UserSuspended);
+                    result.Errors.Add(ErrorMessages.UserSuspended());
                 else if (user.State != DataState.Active && user.State != DataState.Approved)
-                    result.Errors.Add(ErrorMessages.UserInconsistentState);
+                    result.Errors.Add(ErrorMessages.UserInconsistentState());
 
                 // Log
                 foreach (ErrorMessage error in result.Errors)
@@ -170,8 +170,8 @@ namespace CLog.Business.Access.Managers
 
                 if (session == null)
                 {
-                    result.Errors.Add(ErrorMessages.SessionNotFound);
-                    LoggerHelper.Warning(Logger, ErrorMessages.SessionNotFound.ToString());
+                    result.Errors.Add(ErrorMessages.SessionNotFound());
+                    LoggerHelper.Warning(Logger, ErrorMessages.SessionNotFound().ToString());
 
                     return;
                 }
@@ -181,8 +181,8 @@ namespace CLog.Business.Access.Managers
                 if (session.SessionKey != sessionKey || !_loginTokenHelper.VerifySecurityToken(session, out sessionExpired))
                 {
                     result.Result.IsExpired = sessionExpired;
-                    result.Errors.Add(ErrorMessages.InvalidSession);
-                    LoggerHelper.Warning(Logger, ErrorMessages.InvalidSession.ToString());
+                    result.Errors.Add(ErrorMessages.InvalidSession());
+                    LoggerHelper.Warning(Logger, ErrorMessages.InvalidSession().ToString());
                 }
 
                 session.LastActiveUtc = DateTime.UtcNow;
@@ -214,10 +214,10 @@ namespace CLog.Business.Access.Managers
                 if (!FindUser(userName, result, out user))
                     return;
 
-                if (!CheckPassword(user, oldPassword, result, ErrorMessages.IncorrectOldPassword))
+                if (!CheckPassword(user, oldPassword, result, ErrorMessages.IncorrectOldPassword()))
                     return;
 
-                if (!ValidateText(newPassword, ModelConstants.REGEX_PASSWORD, result, ErrorMessages.InvalidPassword))
+                if (!ValidateText(newPassword, ModelConstants.REGEX_PASSWORD, result, ErrorMessages.InvalidPassword()))
                     return;
 
                 user.Salt = _passwordHelper.GetRandomSalt();
@@ -241,8 +241,8 @@ namespace CLog.Business.Access.Managers
 
             if (user == null)
             {
-                result.Errors.Add(ErrorMessages.UserNotFound);
-                LoggerHelper.Warning(Logger, "{0}:  {1}", caller, ErrorMessages.UserNotFound.ToString());
+                result.Errors.Add(ErrorMessages.UserNotFound());
+                LoggerHelper.Warning(Logger, "{0}:  {1}", caller, ErrorMessages.UserNotFound().ToString());
             }
 
             return (user != null);

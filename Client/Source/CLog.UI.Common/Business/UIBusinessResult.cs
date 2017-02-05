@@ -5,7 +5,7 @@ namespace CLog.UI.Common.Business
     /// <summary>
     /// Represents the business result.
     /// </summary>
-    public class BusinessResult
+    public class UIBusinessResult
     {
         #region Properties
 

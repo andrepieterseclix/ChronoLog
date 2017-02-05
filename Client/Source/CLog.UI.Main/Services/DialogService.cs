@@ -1,11 +1,9 @@
 ﻿using CLog.UI.Common.Helpers;
 using CLog.UI.Common.Services;
-using System.Windows;
-using System;
 using CLog.UI.Main.Views;
-using System.Linq;
-using System.Windows.Shapes;
+using System.Windows;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace CLog.UI.Main.Services
 {
@@ -36,6 +34,8 @@ namespace CLog.UI.Main.Services
                 ShellWindow window = Application.Current.MainWindow as ShellWindow;
                 if (window == null)
                     return;
+
+                window.LayoutRoot.IsEnabled = !showOverlay;
 
                 if (showOverlay && !window.LayoutRoot.Children.Contains(_overlayRectangle))
                     window.LayoutRoot.Children.Add(_overlayRectangle);

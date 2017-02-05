@@ -44,7 +44,7 @@ namespace CLog.UI.UserProfile.Managers
 
         #region Methods
 
-        public BusinessResult<SessionInfo> UpdateUser(User user)
+        public UIBusinessResult<SessionInfo> UpdateUser(User user)
         {
             return Execute<SessionInfo>(result =>
             {

@@ -151,7 +151,7 @@ namespace CLog.UI.UserProfile.ViewModels
         {
             ExecuteAsync(principal =>
             {
-                BusinessResult<SessionInfo> result = _userManager.UpdateUser(ShadowUser);
+                UIBusinessResult<SessionInfo> result = _userManager.UpdateUser(ShadowUser);
                 
                 if (result.HasErrors)
                 {
@@ -184,7 +184,7 @@ namespace CLog.UI.UserProfile.ViewModels
         {
             return
                 HasUnsavedChanges &&
-                string.IsNullOrWhiteSpace(ShadowUser.Error);
+                string.IsNullOrWhiteSpace(ShadowUser?.Error);
         }
 
         private void ResetCommand_Execute(object parameter)

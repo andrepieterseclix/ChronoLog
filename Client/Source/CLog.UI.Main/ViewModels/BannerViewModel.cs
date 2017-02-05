@@ -126,7 +126,7 @@ namespace CLog.UI.Main.ViewModels
         {
             Execute(principal =>
             {
-                BusinessResult result = _accessManager.Logout(principal);
+                UIBusinessResult result = _accessManager.Logout(principal);
 
                 Mediator.NotifyColleaguesAsync(MessagingConstants.USER_LOGGED_OUT, principal.Identity);
                 principal.Identity = null;

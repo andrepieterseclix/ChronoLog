@@ -46,13 +46,20 @@ namespace CLog.UI.Framework.Testing.Helpers
 
             foreach (string assemblyFile in assemblyFiles)
             {
-                Assembly assembly = LoadFile(assemblyFile);
+                try
+                {
+                    Assembly assembly = LoadFile(assemblyFile);
 
-                var types = assembly
-                    .GetTypes()
-                    .Where(t => type.IsAssignableFrom(t) && predicate(t));
+                    var types = assembly
+                        .GetTypes()
+                        .Where(t => type.IsAssignableFrom(t) && predicate(t));
 
-                result.AddRange(types.Select(t => new ModuleAssemblyModel(t.FullName, assemblyFile)));
+                    result.AddRange(types.Select(t => new ModuleAssemblyModel(t.FullName, assemblyFile)));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
             }
 
             return result.ToArray();

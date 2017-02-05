@@ -6,6 +6,7 @@ using CLog.Services.Users;
 using System;
 using System.Linq;
 using Unity.Wcf;
+using CLog.Framework.Configuration.Helpers;
 
 namespace ChronoLog.Host.Configuration
 {
@@ -28,8 +29,11 @@ namespace ChronoLog.Host.Configuration
             // Host the services
             WcfHostBase hostApp = new WcfHostBase(serviceTypes.Select(t => new UnityServiceHost(Container, t)));
             hostApp.Start();
-            Console.WriteLine("\r\nPress 'Return' to quit...\r\n");
-            Console.ReadLine();
+
+            Console.WriteLine();
+            ConsoleHelper.LoopUntilKeyPressed(ConsoleKey.Q);
+            Console.WriteLine();
+
             hostApp.Stop();
         }
     }

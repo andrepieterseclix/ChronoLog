@@ -9,37 +9,37 @@ namespace CLog.Business.Access.Messages
     {
         #region Constants
 
-        private const string IncorrectUserOrPasswordCode = "AM0001";
+        private const string INCORRECT_USER_OR_PASSWORD_CODE = "AM0001";
 
-        private const string IncorrectUserOrPasswordMessage = "Incorrect user name or password!";
+        private const string INCORRECT_USER_OR_PASSWORD_MESSAGE = "Incorrect user name or password!";
 
-        private const string UserNotApprovedCode = "AM0002";
+        private const string USER_NOT_APPROVED_CODE = "AM0002";
 
-        private const string UserNotApprovedMessage = "The specified user has not been approved, please contact the system administrator.";
+        private const string USER_NOT_APPROVED_MESSAGE = "The specified user has not been approved, please contact the system administrator.";
 
-        private const string UserSuspendedCode = "AM0003";
+        private const string USER_SUSPENDED_CODE = "AM0003";
 
-        private const string UserSuspendedMessage = "The user has been suspended, please contact the system administrator.";
+        private const string USER_SUSPENDED_MESSAGE = "The user has been suspended, please contact the system administrator.";
 
-        private const string UserInconsistentStateCode = "AM0004";
+        private const string USER_INCONSISTENT_STATE_CODE = "AM0004";
 
-        private const string UserInconsistentStateMessage = "The user is in an invalid state, please contact the system administrator.";
+        private const string USER_INCONSISTENT_STATE_MESSAGE = "The user is in an invalid state, please contact the system administrator.";
 
-        private const string SessionNotFoundCode = "AM0005";
+        private const string SESSION_NOT_FOUND_CODE = "AM0005";
 
-        private const string SessionNotFoundMessage = "The specified session could not be found.";
+        private const string SESSION_NOT_FOUND_MESSAGE = "The specified session could not be found.";
 
-        private const string InvalidSessionCode = "AM0006";
+        private const string INVALID_SESSION_CODE = "AM0006";
 
-        private const string InvalidSessionMessage = "The specified session is invalid, please log in again.";
+        private const string INVALID_SESSION_MESSAGE = "The specified session is invalid, please log in again.";
 
-        private const string IncorrectOldPasswordCode = "AM0007";
+        private const string INCORRECT_OLD_PASSWORD_CODE = "AM0007";
 
-        private const string IncorrectOldPasswordMessage = "The specified old password is incorrect.";
+        private const string INCORRECT_OLD_PASSWORD_MESSAGE = "The specified old password is incorrect.";
 
-        private const string InvalidPasswordCode = "AM0008";
+        private const string INVALID_PASSWORD_CODE = "AM0008";
 
-        private const string InvalidPasswordMessage = "The specified new password is invalid.";
+        private const string INVALID_PASSWORD_MESSAGE = "The specified new password is invalid.";
 
         #endregion
 
@@ -48,47 +48,74 @@ namespace CLog.Business.Access.Messages
         /// <summary>
         /// The user not found error message.
         /// </summary>
-        public static ErrorMessage UserNotFound = new ErrorMessage(IncorrectUserOrPasswordCode, IncorrectUserOrPasswordMessage);
+        public static ErrorMessage UserNotFound()
+        {
+            return new ErrorMessage(INCORRECT_USER_OR_PASSWORD_CODE, INCORRECT_USER_OR_PASSWORD_MESSAGE);
+        }
 
         /// <summary>
         /// The incorrect password error message.
         /// </summary>
-        public static ErrorMessage IncorrectPassword = new ErrorMessage(IncorrectUserOrPasswordCode, IncorrectUserOrPasswordMessage);
+        public static ErrorMessage IncorrectPassword()
+        {
+            return new ErrorMessage(INCORRECT_USER_OR_PASSWORD_CODE, INCORRECT_USER_OR_PASSWORD_MESSAGE);
+        }
 
         /// <summary>
         /// Gets the user not approved error message.
         /// </summary>
-        public static ErrorMessage UserNotApproved = new ErrorMessage(UserNotApprovedCode, UserNotApprovedMessage);
+        public static ErrorMessage UserNotApproved()
+        {
+            return new ErrorMessage(USER_NOT_APPROVED_CODE, USER_NOT_APPROVED_MESSAGE);
+        }
 
         /// <summary>
         /// The user suspended error message.
         /// </summary>
-        public static ErrorMessage UserSuspended = new ErrorMessage(UserSuspendedCode, UserSuspendedMessage);
+        public static ErrorMessage UserSuspended()
+        {
+            return new ErrorMessage(USER_SUSPENDED_CODE, USER_SUSPENDED_MESSAGE);
+        }
 
         /// <summary>
         /// Gets the user inconsistent state error message.
         /// </summary>
-        public static ErrorMessage UserInconsistentState = new ErrorMessage(UserInconsistentStateCode, UserInconsistentStateMessage);
+        public static ErrorMessage UserInconsistentState()
+        {
+            return new ErrorMessage(USER_INCONSISTENT_STATE_CODE, USER_INCONSISTENT_STATE_MESSAGE);
+        }
 
         /// <summary>
         /// Gets the session not found error message.
         /// </summary>
-        public static ErrorMessage SessionNotFound = new ErrorMessage(SessionNotFoundCode, SessionNotFoundMessage);
+        public static ErrorMessage SessionNotFound()
+        {
+            return new ErrorMessage(SESSION_NOT_FOUND_CODE, SESSION_NOT_FOUND_MESSAGE);
+        }
 
         /// <summary>
         /// Gets the invalid session error message.
         /// </summary>
-        public static ErrorMessage InvalidSession = new ErrorMessage(InvalidSessionCode, InvalidSessionMessage);
+        public static ErrorMessage InvalidSession()
+        {
+            return new ErrorMessage(INVALID_SESSION_CODE, INVALID_SESSION_MESSAGE);
+        }
 
         /// <summary>
         /// The incorrect old password error message.
         /// </summary>
-        public static ErrorMessage IncorrectOldPassword = new ErrorMessage(IncorrectOldPasswordCode, IncorrectOldPasswordMessage);
+        public static ErrorMessage IncorrectOldPassword()
+        {
+            return new ErrorMessage(INCORRECT_OLD_PASSWORD_CODE, INCORRECT_OLD_PASSWORD_MESSAGE);
+        }
 
         /// <summary>
         /// The invalid password error message.
         /// </summary>
-        public static ErrorMessage InvalidPassword = new ErrorMessage(InvalidPasswordCode, InvalidPasswordMessage);
+        public static ErrorMessage InvalidPassword()
+        {
+            return new ErrorMessage(INVALID_PASSWORD_CODE, INVALID_PASSWORD_MESSAGE);
+        }
 
         #endregion
     }

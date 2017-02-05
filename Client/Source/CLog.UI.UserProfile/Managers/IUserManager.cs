@@ -8,6 +8,6 @@ namespace CLog.UI.UserProfile.Managers
     /// </summary>
     public interface IUserManager
     {
-        BusinessResult<SessionInfo> UpdateUser(User user);
+        UIBusinessResult<SessionInfo> UpdateUser(User user);
     }
 }

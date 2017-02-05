@@ -59,7 +59,7 @@ namespace CLog.Business.Tests.Managers
             Assert.IsNotNull(result);
             Assert.IsFalse(result.HasResult);
             Assert.IsTrue(result.HasErrors);
-            Assert.IsTrue(result.Errors.Any(e => e.Message == ErrorMessages.InvalidFromAndToDate.Message));
+            Assert.IsTrue(result.Errors.Any(e => e.Message == ErrorMessages.InvalidFromAndToDate().Message));
         }
 
         [TestMethod]
@@ -77,7 +77,7 @@ namespace CLog.Business.Tests.Managers
             Assert.IsNotNull(result);
             Assert.IsFalse(result.HasResult);
             Assert.IsTrue(result.HasErrors);
-            Assert.IsTrue(result.Errors.Any(e => e.Message == ErrorMessages.QueryMaxDaySpan.Message));
+            Assert.IsTrue(result.Errors.Any(e => e.Message == ErrorMessages.QueryMaxDaySpan().Message));
         }
 
         [TestMethod]
@@ -119,7 +119,7 @@ namespace CLog.Business.Tests.Managers
             Assert.IsNotNull(result);
             Assert.IsFalse(result.HasResult);
             Assert.IsTrue(result.HasErrors);
-            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.CapturedTimeDuplicateDates.Message));
+            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.CapturedTimeDuplicateDates().Message));
             _userRepository.Verify();
         }
 
@@ -303,7 +303,7 @@ namespace CLog.Business.Tests.Managers
             // Assert
             Assert.IsNotNull(result);
             Assert.IsTrue(result.HasErrors);
-            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.CapturedTimeItemsNotValid.Message));
+            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.CapturedTimeItemsNotValid().Message));
         }
 
         [TestMethod]
@@ -323,7 +323,7 @@ namespace CLog.Business.Tests.Managers
             // Assert
             Assert.IsNotNull(result);
             Assert.IsTrue(result.HasErrors);
-            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.InvalidUserRequest.Message));
+            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.InvalidUserRequest().Message));
         }
 
         [TestMethod]
@@ -419,7 +419,7 @@ namespace CLog.Business.Tests.Managers
             // Assert
             Assert.IsNotNull(result);
             Assert.IsTrue(result.HasErrors);
-            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.DuplicateDateState.Message));
+            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.DuplicateDateState().Message));
             _userRepository.Verify();
             _capturedTimeRepository.Verify();
         }
@@ -482,7 +482,7 @@ namespace CLog.Business.Tests.Managers
             // Assert
             Assert.IsNotNull(result);
             Assert.IsTrue(result.HasErrors);
-            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.CaptureDateNotEnabled.Message));
+            Assert.IsTrue(result.Errors.Any(x => x.Message == ErrorMessages.CaptureDateNotEnabled().Message));
             Assert.AreEqual(saved, pastAndTodayDays - 1);
             Assert.IsFalse(saveChangesCalled);
             _userRepository.Verify();

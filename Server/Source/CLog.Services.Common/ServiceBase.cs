@@ -90,7 +90,7 @@ namespace CLog.Services.Common
                 if (!IsAnonymous && identity.SessionExpired)
                 {
                     response.SessionExpired = identity.SessionExpired;
-                    response.Errors.Add(ErrorMessages.SessionExpired.Map());
+                    response.Errors.Add(ErrorMessages.SessionExpired().Map());
 
                     return response;
                 }
@@ -105,7 +105,7 @@ namespace CLog.Services.Common
             {
                 LoggerHelper.Fatal(Logger, ex, "Unhandled Exception occurred in service:  {0}", GetQualifiedMethodName(callingMethod));
 
-                response.Errors.Add(ErrorMessages.UnhandledBusinessException.Map());
+                response.Errors.Add(ErrorMessages.UnhandledBusinessException().Map());
             }
 
             return response;

@@ -50,7 +50,7 @@ namespace CLog.UI.CaptureTime.Managers
         /// <returns>
         /// The captured time items.
         /// </returns>
-        public BusinessResult<CaptureTimeDay[]> GetCapturedTime(DateTime fromDate, DateTime toDate)
+        public UIBusinessResult<CaptureTimeDay[]> GetCapturedTime(DateTime fromDate, DateTime toDate)
         {
             return Execute<CaptureTimeDay[]>(result =>
             {
@@ -76,7 +76,7 @@ namespace CLog.UI.CaptureTime.Managers
         /// <param name="models">The models.</param>
         /// <param name="userName">Name of the user.</param>
         /// <returns>The business result.</returns>
-        public BusinessResult SaveCapturedTime(CaptureTimeDay[] models, string userName)
+        public UIBusinessResult SaveCapturedTime(CaptureTimeDay[] models, string userName)
         {
             return Execute(result =>
             {

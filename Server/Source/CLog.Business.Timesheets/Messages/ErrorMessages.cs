@@ -45,78 +45,57 @@ namespace CLog.Business.Timesheets.Messages
         /// <summary>
         /// The invalid from and to date error message.
         /// </summary>
-        /// <value>
-        /// The invalid from and to date.
-        /// </value>
-        public static ErrorMessage InvalidFromAndToDate
+        public static ErrorMessage InvalidFromAndToDate()
         {
-            get { return new ErrorMessage(INVALID_FROM_AND_TO_DATE_CODE, INVALID_FROM_AND_TO_DATE_MESSAGE); }
+            return new ErrorMessage(INVALID_FROM_AND_TO_DATE_CODE, INVALID_FROM_AND_TO_DATE_MESSAGE);
         }
 
         /// <summary>
         /// The query maximum day span error message.
         /// </summary>
-        /// <value>
-        /// The query maximum day span.
-        /// </value>
-        public static ErrorMessage QueryMaxDaySpan
+        public static ErrorMessage QueryMaxDaySpan()
         {
-            get { return new ErrorMessage(QUERY_MAX_DAY_SPAN_CODE, QUERY_MAX_DAY_SPAN_MESSAGE, string.Format("The number of days between the from-date and the to-date must be less than {0} days.", TimesheetManager.CAPTURED_TIME_QUERY_MAX_DAY_SPAN)); }
+            return new ErrorMessage(QUERY_MAX_DAY_SPAN_CODE, QUERY_MAX_DAY_SPAN_MESSAGE, string.Format("The number of days between the from-date and the to-date must be less than {0} days.", TimesheetManager.CAPTURED_TIME_QUERY_MAX_DAY_SPAN));
         }
 
         /// <summary>
         /// The captured time duplicate dates error message.
         /// </summary>
-        /// <value>
-        /// The captured time duplicate dates.
-        /// </value>
-        public static ErrorMessage CapturedTimeDuplicateDates
+        public static ErrorMessage CapturedTimeDuplicateDates()
         {
-            get { return new ErrorMessage(CAPTURED_TIME_DUPLICATE_DATES_CODE, CAPTURED_TIME_DUPLICATE_DATES_MESSAGE); }
+            return new ErrorMessage(CAPTURED_TIME_DUPLICATE_DATES_CODE, CAPTURED_TIME_DUPLICATE_DATES_MESSAGE);
         }
 
         /// <summary>
         /// The captured time items not specified error message.
         /// </summary>
-        /// <value>
-        /// The captured time items not valid.
-        /// </value>
-        public static ErrorMessage CapturedTimeItemsNotValid
+        public static ErrorMessage CapturedTimeItemsNotValid()
         {
-            get { return new ErrorMessage(CAPTURED_TIME_ITEMS_NOT_SPECIFIED_CODE, CAPTURED_TIME_ITEMS_NOT_SPECIFIED_MESSAGE); ; }
+            return new ErrorMessage(CAPTURED_TIME_ITEMS_NOT_SPECIFIED_CODE, CAPTURED_TIME_ITEMS_NOT_SPECIFIED_MESSAGE);
         }
 
         /// <summary>
         /// The invalid user request error message.
         /// </summary>
-        /// <value>
-        /// The invalid user request.
-        /// </value>
-        public static ErrorMessage InvalidUserRequest
+        public static ErrorMessage InvalidUserRequest()
         {
-            get { return new ErrorMessage(INVALID_USER_REQUEST_CODE, INVALID_USER_REQUEST_MESSAGE); }
+            return new ErrorMessage(INVALID_USER_REQUEST_CODE, INVALID_USER_REQUEST_MESSAGE);
         }
 
         /// <summary>
         /// The capture date not enabled error message.
         /// </summary>
-        /// <value>
-        /// The capture date not enabled.
-        /// </value>
-        public static ErrorMessage CaptureDateNotEnabled
+        public static ErrorMessage CaptureDateNotEnabled()
         {
-            get { return new ErrorMessage(CAPTURE_DATE_NOT_ENABLED_CODE, CAPTURE_DATE_NOT_ENABLED_MESSAGE); }
+            return new ErrorMessage(CAPTURE_DATE_NOT_ENABLED_CODE, CAPTURE_DATE_NOT_ENABLED_MESSAGE);
         }
 
         /// <summary>
         /// Gets the state of the duplicate date error message.
         /// </summary>
-        /// <value>
-        /// The state of the duplicate date.
-        /// </value>
-        public static ErrorMessage DuplicateDateState
+        public static ErrorMessage DuplicateDateState()
         {
-            get { return new ErrorMessage(DUPLICATE_DATE_STATE_CODE, DUPLICATE_DATE_STATE_MESSAGE); }
+            return new ErrorMessage(DUPLICATE_DATE_STATE_CODE, DUPLICATE_DATE_STATE_MESSAGE);
         }
 
         #endregion

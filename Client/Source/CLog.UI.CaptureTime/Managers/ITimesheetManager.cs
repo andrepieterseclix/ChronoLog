@@ -17,7 +17,7 @@ namespace CLog.UI.CaptureTime.Managers
         /// <returns>
         /// The business result containing the captured time items.
         /// </returns>
-        BusinessResult<CaptureTimeDay[]> GetCapturedTime(DateTime fromDate, DateTime toDate);
+        UIBusinessResult<CaptureTimeDay[]> GetCapturedTime(DateTime fromDate, DateTime toDate);
 
         /// <summary>
         /// Saves the captured time.
@@ -27,6 +27,6 @@ namespace CLog.UI.CaptureTime.Managers
         /// <returns>
         /// The business result.
         /// </returns>
-        BusinessResult SaveCapturedTime(CaptureTimeDay[] models, string userName);
+        UIBusinessResult SaveCapturedTime(CaptureTimeDay[] models, string userName);
     }
 }
