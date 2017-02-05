@@ -83,7 +83,13 @@ namespace CLog.UI.Framework.Testing.ViewModels
                 ParameterInfo[] parameters = Method.GetParameters();
                 foreach (ParameterInfo param in parameters)
                 {
-                    object value = Activator.CreateInstance(param.ParameterType);
+                    object value = null;
+
+                    if (param.ParameterType == typeof(string))
+                        value = string.Empty;
+                    else
+                        value = Activator.CreateInstance(param.ParameterType);
+
                     ValueModel valueModel = null;
 
                     if (param.ParameterType.FullName.StartsWith("System"))

@@ -5,6 +5,7 @@
         xmlns:c="clr-namespace:CLog.UI.Framework.Testing.Controls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:beh="clr-namespace:CLog.UI.Common.Behaviors;assembly=CLog.UI.Common"
+        xmlns:beh_local="clr-namespace:CLog.UI.Framework.Testing.Behaviors"
         xmlns:local="clr-namespace:CLog.UI.Framework.Testing.Views"
         Title="ChronoLog UI Test Bench" WindowStartupLocation="CenterScreen"
         Height="720" Width="1400" MinWidth="400" MinHeight="300">
@@ -19,7 +20,11 @@
                 <Expander.Header>
                     <TextBlock Text="Status Messages" />
                 </Expander.Header>
-                <ListBox ItemsSource="{Binding Status.Messages}" Height="200"/>
+                <ListBox ItemsSource="{Binding Status.Messages}" Height="200" ItemTemplate="{StaticResource StatusItemStyle}">
+                    <i:Interaction.Behaviors>
+                        <beh_local:AutoScrollListBoxBehavior/>
+                    </i:Interaction.Behaviors>
+                </ListBox>
             </Expander>
         </Border>
         <Grid>

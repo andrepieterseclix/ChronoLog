@@ -1,17 +1,15 @@
 ﻿using CLog.Common.Logging;
-using CLog.Framework.ServiceClients;
-using CLog.ServiceClients.Contracts.Timesheets;
-using CLog.Services.Contracts.Timesheets;
-using CLog.Services.Models.Timesheets;
-using CLog.Services.Models.Timesheets.DataTransfer;
-using CLog.UI.CaptureTime.Extensions;
+using CLog.UI.CaptureTime.Managers;
+using CLog.UI.Common.Business;
 using CLog.UI.Common.Messaging;
 using CLog.UI.Common.Messaging.Mediator;
 using CLog.UI.Common.Services;
 using CLog.UI.Common.ViewModels;
+using CLog.UI.Models;
+using CLog.UI.Models.Timesheets;
 using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Windows.Input;
 
 namespace CLog.UI.CaptureTime.ViewModels
@@ -32,7 +30,9 @@ namespace CLog.UI.CaptureTime.ViewModels
 
         private string _description;
 
-        private readonly ITimesheetClientFactory _timesheetClientFactory;
+        private int _totalHours;
+
+        private readonly ITimesheetManager _timesheetManager;
 
         #endregion
 
@@ -45,20 +45,19 @@ namespace CLog.UI.CaptureTime.ViewModels
         /// <param name="statusService">The status service.</param>
         /// <param name="dialogService">The dialog service.</param>
         /// <param name="mouseService">The mouse service.</param>
-        /// <param name="timesheetClientFactory">The timesheet client factory.</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// </exception>
-        public CaptureTimeViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, ITimesheetClientFactory timesheetClientFactory)
+        /// <param name="timesheetManager">The timesheet manager.</param>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        public CaptureTimeViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, ITimesheetManager timesheetManager)
             : base(logger, statusService, dialogService, mouseService)
         {
-            if (timesheetClientFactory == null)
-                throw new ArgumentNullException(nameof(timesheetClientFactory));
+            if (timesheetManager == null)
+                throw new ArgumentNullException(nameof(timesheetManager));
 
-            _timesheetClientFactory = timesheetClientFactory;
+            _timesheetManager = timesheetManager;
 
             Days = new ObservableCollection<CaptureTimeDayViewModel>();
 
-            SaveCommand = CreateCommand(SaveCommand_Execute);
+            SaveCommand = CreateCommand(SaveCommand_Execute, SaveCommand_CanExecute);
         }
 
         #endregion
@@ -114,6 +113,18 @@ namespace CLog.UI.CaptureTime.ViewModels
         }
 
         /// <summary>
+        /// Gets or sets the total hours.
+        /// </summary>
+        /// <value>
+        /// The total hours.
+        /// </value>
+        public int TotalHours
+        {
+            get { return _totalHours; }
+            set { SetProperty(ref _totalHours, value); }
+        }
+
+        /// <summary>
         /// Gets the days.
         /// </summary>
         /// <value>
@@ -133,9 +144,22 @@ namespace CLog.UI.CaptureTime.ViewModels
 
         #region Methods
 
+        /// <summary>
+        /// Clears the context of the view model.
+        /// </summary>
+        public override void ClearContext()
+        {
+            base.ClearContext();
+
+            Invoke(Days.Clear);
+        }
+
         [MediatorMessageSink(MessagingConstants.DATE_CHANGED)]
         private void SelectedDateChanged(DateTime selectedDate)
         {
+            if (selectedDate == DateTime.MinValue)
+                return;
+
             bool sameWeekSelected = false;
 
             Invoke(() =>
@@ -145,12 +169,14 @@ namespace CLog.UI.CaptureTime.ViewModels
             });
 
             if (sameWeekSelected && Days.Count == DAYS_IN_WEEK)
+            {
+                StatusService.SetStatus(StatusMessageType.Info, "Selected {0} (same week)", SelectedDate.ToString(ModelConstants.DATE_FORMAT));
                 return;
+            }
 
-            // Get data from server
             ExecuteAsync(principal =>
             {
-                Invoke(Days.Clear);
+                ClearContext();
 
                 DateTime fromDate = selectedDate;
 
@@ -165,30 +191,68 @@ namespace CLog.UI.CaptureTime.ViewModels
                     ToDate = toDate;
                 });
 
-                GetCapturedTimeResponse response = null;
+                BusinessResult<CaptureTimeDay[]> result =
+                    _timesheetManager.GetCapturedTime(fromDate, toDate);
 
-                using (IServiceClient<ITimesheetService> client = _timesheetClientFactory.Create())
+                Invoke(() =>
                 {
-                    GetCapturedTimeRequest request = new GetCapturedTimeRequest(fromDate, toDate);
-                    response = client.Proxy.GetCapturedTime(request);
-                }
+                    foreach (CaptureTimeDay model in result.Result)
+                        Days.Add(new CaptureTimeDayViewModel(model, StatusService));
+                });
 
-                // Map
-                foreach (CapturedTimeDto item in response.CapturedTimeItems)
-                {
-                    CaptureTimeDayViewModel itemViewModel = item.Map();
-                    if (itemViewModel != null)
-                        Invoke(() => Days.Add(itemViewModel));
-                }
+                UpdateTotalHours();
 
-                StatusService.SetStatus(StatusMessageType.Info, "Selected {0}.", SelectedDate.ToString("yyyy/MM/dd"));
+                StatusService.SetStatus(StatusMessageType.Info, "Selected {0}", SelectedDate.ToString(ModelConstants.DATE_FORMAT));
             });
+        }
+
+        [MediatorMessageSink(MessagingConstants.HOURS_CHANGED)]
+        private void UpdateTotalHours(CaptureTimeDayViewModel viewModel = null)
+        {
+            if (viewModel != null)
+                StatusService.SetStatus(StatusMessageType.Warning, "Captured {0} hours for {1}", viewModel.Model.Hours, viewModel.Model.Date.ToString(ModelConstants.DATE_FORMAT));
+
+            int totalHours = 0;
+
+            foreach (CaptureTimeDayViewModel captureTimeViewModel in Days)
+                totalHours += captureTimeViewModel.Model.Hours;
+
+            TotalHours = totalHours;
         }
 
         private void SaveCommand_Execute(object parameter)
         {
-            StatusService.SetStatus(StatusMessageType.Warning, "Save has not yet been implemented!");
-            throw new NotImplementedException();
+            if (!SaveCommand_CanExecute(parameter))
+                return;
+
+            ExecuteAsync(principal =>
+            {
+                CaptureTimeDay[] capturedTimeDays =
+                    Days.Select(x => x.Model).ToArray();
+
+                BusinessResult result =
+                    _timesheetManager.SaveCapturedTime(capturedTimeDays, principal.Identity.UserName);
+
+                foreach (ErrorMessage errorMessage in result.Errors)
+                    LoggerHelper.Error(Logger, "{0}", errorMessage);
+
+                if (result.HasErrors)
+                {
+                    if (result.Errors.Count > 1)
+                        StatusService.SetStatus(StatusMessageType.Error, "Multiple errors have occurred, see the logs for more detail.");
+                    else
+                        StatusService.SetStatus(StatusMessageType.Error, "{0}", result.Errors.First());
+                }
+                else
+                {
+                    StatusService.SetStatus(StatusMessageType.Info, "Your time has been saved.");
+                }
+            });
+        }
+
+        private bool SaveCommand_CanExecute(object parameter)
+        {
+            return Days?.All(d => d.IsModelValid) ?? false;
         }
 
         #endregion

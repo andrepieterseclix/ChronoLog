@@ -213,6 +213,8 @@ namespace CLog.UI.Common.ViewModels
             {
                 try
                 {
+                    DialogService.ApplyMainWindowOverlay(true);
+
                     stopwatch.Start();
                     MouseService.SetWait(true);
                     LoggerHelper.Debug(Logger, "Started executing '{0}'", GetQualifiedMethodName(callingMethod));
@@ -234,6 +236,7 @@ namespace CLog.UI.Common.ViewModels
                 {
                     stopwatch.Stop();
                     MouseService.SetWait(false);
+                    DialogService.ApplyMainWindowOverlay(false);
 
                     LoggerHelper.Debug(Logger, "Finished executing '{0}' in {1}", GetQualifiedMethodName(callingMethod), stopwatch.Elapsed);
                 }
@@ -257,7 +260,7 @@ namespace CLog.UI.Common.ViewModels
         /// <returns>The processed string.</returns>
         protected string SplitOnUppercase(string input)
         {
-            return Regex.Replace(input, "([a-z])([A-Z])", "$1 $2");
+            return Regex.Replace(input.Replace("_", ""), "([a-z])([A-Z])", "$1 $2");
         }
 
         #endregion

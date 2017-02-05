@@ -12,9 +12,17 @@
         void Register<T>();
 
         /// <summary>
+        /// Registers this instance.
+        /// </summary>
+        /// <typeparam name="T">The contract.</typeparam>
+        /// <typeparam name="U">The implementation.</typeparam>
+        void Register<T, U>()
+            where U : T;
+
+        /// <summary>
         /// Resolves the type from the container.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type.</typeparam>
         /// <returns>The resolved instance.</returns>
         T Resolve<T>();
     }

@@ -62,9 +62,16 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\BindingValidationBehavior.cs" />
     <Compile Include="Behaviors\PasswordBoxBindableBehavior.cs" />
     <Compile Include="Behaviors\SelectedItemTreeViewBehavior.cs" />
+    <Compile Include="Business\BusinessResult.cs" />
+    <Compile Include="Business\BusinessResultGeneric.cs" />
+    <Compile Include="Business\ErrorMessage.cs" />
+    <Compile Include="Business\Extensions.cs" />
+    <Compile Include="Business\UIBusinessManager.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
+    <Compile Include="CommonConstants.cs" />
     <Compile Include="Controls\TextPath.cs" />
     <Compile Include="Converters\StatusTypeColourConverter.cs" />
     <Compile Include="Helpers\DispatcherHelper.cs" />
@@ -114,6 +121,10 @@
     <ProjectReference Include="..\..\..\Common\CLog.Common\CLog.Common.csproj">
       <Project>{C1C7C56E-18AA-41C2-8051-9FE696F8A3BF}</Project>
       <Name>CLog.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Framework.Services.Models\CLog.Framework.Services.Models.csproj">
+      <Project>{43E08E22-C9CB-471C-90D7-1FDAB177823A}</Project>
+      <Name>CLog.Framework.Services.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\CLog.ServiceClients.Security\CLog.ServiceClients.Security.csproj">
       <Project>{B683C213-EE65-4425-AB9A-AE9CDC12E4F6}</Project>

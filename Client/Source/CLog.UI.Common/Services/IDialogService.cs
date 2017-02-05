@@ -8,6 +8,12 @@ namespace CLog.UI.Common.Services
     public interface IDialogService
     {
         /// <summary>
+        /// Applies the main window overlay.
+        /// </summary>
+        /// <param name="showOverlay">if set to <c>true</c>, show overlay.</param>
+        void ApplyMainWindowOverlay(bool showOverlay);
+
+        /// <summary>
         /// Sets the dialog result of the window with the specified name.
         /// </summary>
         /// <param name="dialogResult">The dialog result to set.</param>

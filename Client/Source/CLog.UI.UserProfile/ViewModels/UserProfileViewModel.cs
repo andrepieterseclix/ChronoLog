@@ -5,11 +5,13 @@ using CLog.ServiceClients.Security;
 using CLog.Services.Contracts.Users;
 using CLog.Services.Models.Users;
 using CLog.Services.Models.Users.DataTransfer;
+using CLog.UI.Common.Business;
 using CLog.UI.Common.Messaging;
 using CLog.UI.Common.Messaging.Mediator;
 using CLog.UI.Common.Services;
 using CLog.UI.Common.ViewModels;
 using CLog.UI.Models.Access;
+using CLog.UI.UserProfile.Managers;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -37,7 +39,7 @@ namespace CLog.UI.UserProfile.ViewModels
 
         private User _shadowUser;
 
-        private readonly IUserClientFactory _userServiceClient;
+        private readonly IUserManager _userManager;
 
         #endregion
 
@@ -50,15 +52,15 @@ namespace CLog.UI.UserProfile.ViewModels
         /// <param name="statusService">The status service.</param>
         /// <param name="dialogService">The dialog service.</param>
         /// <param name="mouseService">The mouse service.</param>
-        /// <param name="userServiceClient">The user service client.</param>
+        /// <param name="userManager">The user service client.</param>
         /// <exception cref="System.ArgumentNullException"></exception>
-        public UserProfileViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, IUserClientFactory userServiceClient)
+        public UserProfileViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, IUserManager userManager)
             : base(logger, statusService, dialogService, mouseService)
         {
-            if (userServiceClient == null)
-                throw new ArgumentNullException(nameof(userServiceClient));
+            if (userManager == null)
+                throw new ArgumentNullException(nameof(userManager));
 
-            _userServiceClient = userServiceClient;
+            _userManager = userManager;
 
             SaveCommand = CreateCommand(SaveCommand_Execute, SaveCommand_CanExecute);
             ResetCommand = CreateCommand(ResetCommand_Execute, ResetCommand_CanExecute);
@@ -106,6 +108,19 @@ namespace CLog.UI.UserProfile.ViewModels
 
         #region Methods
 
+        /// <summary>
+        /// Clears the context of the view model.
+        /// </summary>
+        public override void ClearContext()
+        {
+            base.ClearContext();
+
+            _currentUser = null;
+            if (ShadowUser != null)
+                ShadowUser.PropertyChanged -= ShadowUser_PropertyChanged;
+            ShadowUser = null;
+        }
+
         [MediatorMessageSink(MessagingConstants.USER_LOGGED_IN)]
         private void HandleLogin(User user)
         {
@@ -136,37 +151,32 @@ namespace CLog.UI.UserProfile.ViewModels
         {
             ExecuteAsync(principal =>
             {
-                using (IServiceClient<IUserService> client = _userServiceClient.Create())
+                BusinessResult<SessionInfo> result = _userManager.UpdateUser(ShadowUser);
+                
+                if (result.HasErrors)
                 {
-                    ClientIdentity identity = principal.Identity;
-                    UserDetailsDto userDetails = new UserDetailsDto(ShadowUser.UserName, ShadowUser.Name, ShadowUser.Surname, ShadowUser.Email);
-                    UpdateUserRequest request = new UpdateUserRequest(userDetails);
-                    UpdateUserResponse response = client.Proxy.UpdateUser(request);
+                    LoggerHelper.Error(Logger, UPDATE_PROFILE_ERROR);
+                    result.Errors.ForEach(x => LoggerHelper.Error(Logger, x.ToString()));
+                    string combinedMessage = string.Join("\r\n", result.Errors.Select(e => e.ToString()));
+                    StatusService.SetStatus(StatusMessageType.Error, UPDATE_PROFILE_ERROR);
+                    DialogService.ShowError(combinedMessage, UPDATE_PROFILE_ERROR);
 
-                    if (response.Errors != null && response.Errors.Count > 0)
-                    {
-                        LoggerHelper.Error(Logger, UPDATE_PROFILE_ERROR);
-                        response.Errors.ForEach(e => LoggerHelper.Error(Logger, e.ToString()));
-                        string combinedMessage = string.Join("\r\n", response.Errors.Select(e => string.Format(CultureInfo.CurrentCulture, "{0}:  {1}", e.Code, e.Message)));
-                        StatusService.SetStatus(StatusMessageType.Error, UPDATE_PROFILE_ERROR);
-                        DialogService.ShowError(combinedMessage, UPDATE_PROFILE_ERROR);
-
-                        return;
-                    }
-
-                    _currentUser.UserName = ShadowUser.UserName;
-                    _currentUser.Name = ShadowUser.Name;
-                    _currentUser.Surname = ShadowUser.Surname;
-                    _currentUser.Email = ShadowUser.Email;
-
-                    HasUnsavedChanges = false;
-
-                    identity.UpdateSession(response.Session.Id, response.Session.SessionKey);
-
-                    StatusService.SetStatus(StatusMessageType.Info, UPDATE_PROFILE_SUCCESS);
-                    DialogService.ShowInfo(UPDATE_PROFILE_SUCCESS);
-                    LoggerHelper.Info(Logger, UPDATE_PROFILE_SUCCESS);
+                    return;
                 }
+
+                _currentUser.UserName = ShadowUser.UserName;
+                _currentUser.Name = ShadowUser.Name;
+                _currentUser.Surname = ShadowUser.Surname;
+                _currentUser.Email = ShadowUser.Email;
+
+                HasUnsavedChanges = false;
+
+                ClientIdentity identity = principal.Identity;
+                identity.UpdateSession(result.Result.RefId, result.Result.SessionKey);
+
+                StatusService.SetStatus(StatusMessageType.Info, UPDATE_PROFILE_SUCCESS);
+                DialogService.ShowInfo(UPDATE_PROFILE_SUCCESS);
+                LoggerHelper.Info(Logger, UPDATE_PROFILE_SUCCESS);
             });
         }
 

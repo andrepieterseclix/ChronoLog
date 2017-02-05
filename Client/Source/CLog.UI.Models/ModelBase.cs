@@ -41,6 +41,11 @@ namespace CLog.UI.Models
         {
             get
             {
+                /* NOTE:  This won't run for exceptions, for example converting string to number exceptions...
+                 * See CLog.UI.Common.Behaviors.BindingValidationBehavior (catches this validation and exceptions)
+                 * Can't use Error property alone, since it doesn't contain exceptions.
+                 */
+
                 string result = ValidateProperty(columnName);
 
                 if (result == null)
@@ -90,6 +95,10 @@ namespace CLog.UI.Models
             return true;
         }
 
+        /// <summary>
+        /// Raises the property changed.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
         protected void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

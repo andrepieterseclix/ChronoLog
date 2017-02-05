@@ -1,12 +1,16 @@
 ﻿using CLog.Common.Logging;
-using CLog.ServiceClients.Contracts.Access;
 using CLog.UI.Common.Services;
+using CLog.UI.Main.Managers;
 using CLog.UI.Main.ViewModels;
 using CLog.UI.Main.Views;
 using System;
 
 namespace CLog.UI.Main.Controllers
 {
+    /// <summary>
+    /// Represents the Login controller.
+    /// </summary>
+    /// <seealso cref="CLog.UI.Main.Controllers.ILoginController" />
     public sealed class LoginController : ILoginController
     {
         #region Fields
@@ -19,23 +23,23 @@ namespace CLog.UI.Main.Controllers
 
         private readonly IMouseService _mouseService;
 
-        private readonly IAccessClientFactory _accessClientFactory;
+        private readonly IAccessManager _accessManager;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoginController"/> class.
+        /// Initializes a new instance of the <see cref="LoginController" /> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="statusService">The status service.</param>
         /// <param name="dialogService">The dialog service.</param>
         /// <param name="mouseService">The mouse service.</param>
-        /// <param name="accessClientFactory">The access client factory.</param>
+        /// <param name="accessManager">The access manager.</param>
         /// <exception cref="System.ArgumentNullException">
         /// </exception>
-        public LoginController(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, IAccessClientFactory accessClientFactory)
+        public LoginController(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, IAccessManager accessManager)
         {
             if (logger == null)
                 throw new ArgumentNullException(nameof(logger));
@@ -49,23 +53,27 @@ namespace CLog.UI.Main.Controllers
             if (mouseService == null)
                 throw new ArgumentNullException(nameof(mouseService));
 
-            if (accessClientFactory == null)
-                throw new ArgumentNullException(nameof(accessClientFactory));
+            if (accessManager == null)
+                throw new ArgumentNullException(nameof(accessManager));
 
             _dialogService = dialogService;
             _statusService = statusService;
             _mouseService = mouseService;
             _logger = logger;
-            _accessClientFactory = accessClientFactory;
+            _accessManager = accessManager;
         }
 
         #endregion
 
         #region Methods
 
+        /// <summary>
+        /// Log in
+        /// </summary>
+        /// <returns><c>true</c> when the user logged in successfully, otherwise <c>false</c>.</returns>
         public bool Login()
         {
-            LoginViewModel viewModel = new LoginViewModel(_logger, _statusService, _dialogService, _mouseService, _accessClientFactory);
+            LoginViewModel viewModel = new LoginViewModel(_logger, _statusService, _dialogService, _mouseService, _accessManager);
             viewModel.Initialise();
 
             return !_dialogService.ShowDialog<LoginWindow>(viewModel)

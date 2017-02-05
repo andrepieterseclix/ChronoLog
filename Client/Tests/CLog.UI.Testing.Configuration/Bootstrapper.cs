@@ -2,6 +2,8 @@
 using CLog.Framework.Configuration.Bootstrap;
 using CLog.ServiceClients.Security;
 using CLog.Services.Models;
+using CLog.UI.Common;
+using CLog.UI.Common.Messaging.Mediator;
 using CLog.UI.Common.Modules;
 using CLog.UI.Common.Services;
 using CLog.UI.Framework.Testing.Helpers;
@@ -14,6 +16,7 @@ using Microsoft.Practices.Unity;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -112,16 +115,32 @@ namespace CLog.UI.Testing.Configuration
 
             // Create Wpf Application
             Application app = new Application();
+            Thread.CurrentThread.Name = CommonConstants.UI_THREAD_NAME;
             app.DispatcherUnhandledException += App_DispatcherUnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            app.Activated += App_Activated;
             app.Run(window);
+        }
+
+        private void App_Activated(object sender, EventArgs e)
+        {
+            Application app = sender as Application;
+            app.Activated -= App_Activated;
+
+            Mediator.Instance.NotifyColleaguesAsync(Common.Messaging.MessagingConstants.DATE_CHANGED, DateTime.Now);
         }
 
         public void Register<T>()
         {
             Container.RegisterType<T>();
+        }
+
+        public void Register<T, U>()
+            where U : T
+        {
+            Container.RegisterType<T, U>();
         }
 
         public T Resolve<T>()

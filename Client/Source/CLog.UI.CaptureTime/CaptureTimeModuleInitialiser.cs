@@ -1,4 +1,5 @@
-﻿using CLog.UI.CaptureTime.ViewModels;
+﻿using CLog.UI.CaptureTime.Managers;
+using CLog.UI.CaptureTime.ViewModels;
 using CLog.UI.CaptureTime.Views;
 using CLog.UI.Common.Modules;
 
@@ -22,7 +23,9 @@ namespace CLog.UI.CaptureTime
         /// </returns>
         public Module Initialise(IDependencyContainer container)
         {
+            container.Register<ITimesheetManager, TimesheetManager>();
             container.Register<CaptureTimeViewModel>();
+
             CaptureTimeViewModel viewModel = container.Resolve<CaptureTimeViewModel>();
 
             return new Module("Capture Time", new CaptureTimeView(), viewModel);

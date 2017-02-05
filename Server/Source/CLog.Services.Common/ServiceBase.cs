@@ -103,7 +103,7 @@ namespace CLog.Services.Common
             }
             catch (Exception ex)
             {
-                LoggerHelper.Fatal(Logger, ex, "Unhandled Exception occurred in business manager:  {0}", GetQualifiedMethodName(callingMethod));
+                LoggerHelper.Fatal(Logger, ex, "Unhandled Exception occurred in service:  {0}", GetQualifiedMethodName(callingMethod));
 
                 response.Errors.Add(ErrorMessages.UnhandledBusinessException.Map());
             }

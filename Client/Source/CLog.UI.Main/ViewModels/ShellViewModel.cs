@@ -109,8 +109,6 @@ namespace CLog.UI.Main.ViewModels
         public override void Initialise()
         {
             Invoke(Login);
-
-            Banner.Initialise();
         }
 
         [MediatorMessageSink(MessagingConstants.USER_LOGGED_OUT)]
@@ -118,6 +116,7 @@ namespace CLog.UI.Main.ViewModels
         {
             foreach (ViewModelBase viewModel in TabViewModels)
                 viewModel.ClearContext();
+            Banner.ClearContext();
 
             Invoke(() =>
             {
@@ -153,6 +152,7 @@ namespace CLog.UI.Main.ViewModels
                 Application.Current.Shutdown();
 
             SetStatusMessage("Logged in", StatusMessageType.Info);
+            Banner.Initialise();
         }
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿using CLog.Framework.Configuration.Bootstrap;
 using CLog.UI.Common.Modules;
+using CLog.UI.Main.Managers;
 using CLog.UI.Main.ViewModels;
 using CLog.UI.Main.Views;
 using Microsoft.Practices.Unity;
@@ -22,9 +23,20 @@ namespace ChronoLog.Configuration
         }
 
         /// <summary>
+        /// Registers this instance.
+        /// </summary>
+        /// <typeparam name="T">The contract.</typeparam>
+        /// <typeparam name="U">The implementation.</typeparam>
+        public void Register<T, U>()
+            where U : T
+        {
+            Container.RegisterType<T, U>();
+        }
+
+        /// <summary>
         /// Resolves the type from the container.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type.</typeparam>
         /// <returns>
         /// The resolved instance.
         /// </returns>
@@ -41,8 +53,13 @@ namespace ChronoLog.Configuration
         {
             base.DoRegistration();
 
+            // Views
             Container.RegisterType<ShellWindow>();
 
+            // Business
+            Container.RegisterType<IAccessManager, AccessManager>();
+
+            // View Models
             Container.RegisterType<BannerViewModel>();
             Container.RegisterType<ShellViewModel>();
         }

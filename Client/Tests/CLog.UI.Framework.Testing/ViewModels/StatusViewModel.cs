@@ -1,5 +1,6 @@
 ﻿using CLog.UI.Common.Services;
 using CLog.UI.Common.ViewModels;
+using System;
 using System.Collections.ObjectModel;
 
 namespace CLog.UI.Framework.Testing.ViewModels
@@ -9,12 +10,15 @@ namespace CLog.UI.Framework.Testing.ViewModels
         public void SetStatus(StatusMessageType messageType, string format, params object[] args)
         {
             string message = (args.Length > 0) ? string.Format(format, args) : format;
-            Invoke(() => Messages.Add(string.Format("({0}) - {1}", messageType, message)));
+            Invoke(() => Messages.Add(new StatusItemViewModel(
+                messageType,
+                DateTime.Now,
+                message)));
         }
 
         #region Properties
 
-        public ObservableCollection<string> Messages { get; } = new ObservableCollection<string>();
+        public ObservableCollection<StatusItemViewModel> Messages { get; } = new ObservableCollection<StatusItemViewModel>();
 
         #endregion
     }

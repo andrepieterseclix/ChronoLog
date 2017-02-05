@@ -1,4 +1,5 @@
 ﻿using CLog.UI.Common.Modules;
+using CLog.UI.UserProfile.Managers;
 using CLog.UI.UserProfile.ViewModels;
 using CLog.UI.UserProfile.Views;
 
@@ -20,7 +21,9 @@ namespace CLog.UI.UserProfile
         /// </returns>
         public Module Initialise(IDependencyContainer container)
         {
+            container.Register<IUserManager, UserManager>();
             container.Register<UserProfileViewModel>();
+
             UserProfileViewModel viewModel = container.Resolve<UserProfileViewModel>();
 
             return new Module("User Profile", new UserProfileView(), viewModel);

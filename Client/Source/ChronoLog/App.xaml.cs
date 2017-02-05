@@ -1,5 +1,6 @@
 ﻿using ChronoLog.Configuration;
 using CLog.ServiceClients.Security;
+using CLog.UI.Common;
 using CLog.UI.Common.Modules;
 using CLog.UI.Main;
 using CLog.UI.Main.ViewModels;
@@ -19,7 +20,7 @@ namespace ChronoLog
         protected override void OnStartup(StartupEventArgs e)
         {
             AppDomain.CurrentDomain.SetThreadPrincipal(new ClientPrincipal());
-            Thread.CurrentThread.Name = "UI Thread";
+            Thread.CurrentThread.Name = CommonConstants.UI_THREAD_NAME;
 
             base.OnStartup(e);
 

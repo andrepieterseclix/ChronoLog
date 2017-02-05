@@ -1,5 +1,11 @@
-﻿using CLog.UI.Common.Services;
+﻿using CLog.UI.Common.Helpers;
+using CLog.UI.Common.Services;
 using System.Windows;
+using System;
+using CLog.UI.Main.Views;
+using System.Linq;
+using System.Windows.Shapes;
+using System.Windows.Media;
 
 namespace CLog.UI.Main.Services
 {
@@ -9,6 +15,35 @@ namespace CLog.UI.Main.Services
     /// <seealso cref="CLog.UI.Common.Services.IDialogService" />
     public class DialogService : IDialogService
     {
+        #region Fields
+
+        private readonly Rectangle _overlayRectangle = new Rectangle()
+        {
+            Fill = Brushes.Gray,
+            Opacity = 0.4d
+        };
+
+        #endregion
+
+        /// <summary>
+        /// Applies the main window overlay.
+        /// </summary>
+        /// <param name="showOverlay">if set to <c>true</c>, show overlay.</param>
+        public void ApplyMainWindowOverlay(bool showOverlay)
+        {
+            DispatcherHelper.Invoke(() =>
+            {
+                ShellWindow window = Application.Current.MainWindow as ShellWindow;
+                if (window == null)
+                    return;
+
+                if (showOverlay && !window.LayoutRoot.Children.Contains(_overlayRectangle))
+                    window.LayoutRoot.Children.Add(_overlayRectangle);
+                else if (!showOverlay && window.LayoutRoot.Children.Contains(_overlayRectangle))
+                    window.LayoutRoot.Children.Remove(_overlayRectangle);
+            });
+        }
+
         /// <summary>
         /// Sets the dialog result of the window with the specified name.
         /// </summary>
@@ -61,6 +96,10 @@ namespace CLog.UI.Main.Services
                 DataContext = dataContext
             };
 
+            Window mainWindow = Application.Current.MainWindow;
+            if (mainWindow.IsVisible)
+                window.Owner = mainWindow;
+
             return window.ShowDialog().Value;
         }
 
@@ -71,7 +110,7 @@ namespace CLog.UI.Main.Services
         /// <param name="caption">The caption.</param>
         public void ShowError(string message, string caption = "Error")
         {
-            MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            DispatcherHelper.Invoke(() => MessageBox.Show(Application.Current.MainWindow, message, "Error", MessageBoxButton.OK, MessageBoxImage.Error));
         }
 
         /// <summary>
@@ -81,7 +120,7 @@ namespace CLog.UI.Main.Services
         /// <param name="caption">The caption.</param>
         public void ShowInfo(string message, string caption = "Info")
         {
-            MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Information);
+            DispatcherHelper.Invoke(() => MessageBox.Show(Application.Current.MainWindow, message, caption, MessageBoxButton.OK, MessageBoxImage.Information));
         }
     }
 }

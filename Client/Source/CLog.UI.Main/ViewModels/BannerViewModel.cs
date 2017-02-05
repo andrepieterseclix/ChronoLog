@@ -1,17 +1,13 @@
 ﻿using CLog.Common.Logging;
-using CLog.Framework.ServiceClients;
-using CLog.ServiceClients.Contracts.Access;
-using CLog.ServiceClients.Security;
-using CLog.Services.Models.Access.DataTransfer;
-using CLog.Services.Security.Contracts.Access;
+using CLog.UI.Common.Business;
 using CLog.UI.Common.Messaging;
 using CLog.UI.Common.Messaging.Mediator;
 using CLog.UI.Common.Services;
 using CLog.UI.Common.ViewModels;
+using CLog.UI.Main.Managers;
 using CLog.UI.Models.Access;
 using System;
 using System.Reflection;
-using System.Threading;
 using System.Windows.Input;
 
 namespace CLog.UI.Main.ViewModels
@@ -24,7 +20,7 @@ namespace CLog.UI.Main.ViewModels
     {
         #region Fields
 
-        private readonly IAccessClientFactory _accessClientFactory;
+        private readonly IAccessManager _accessManager;
 
         private User _user;
 
@@ -41,15 +37,15 @@ namespace CLog.UI.Main.ViewModels
         /// <param name="statusService">The status service.</param>
         /// <param name="dialogService">The dialog service.</param>
         /// <param name="mouseService">The mouse service.</param>
-        /// <param name="accessClientFactory">The access client factory.</param>
+        /// <param name="accessManager">The access manager.</param>
         /// <exception cref="System.ArgumentNullException"></exception>
-        public BannerViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, IAccessClientFactory accessClientFactory)
+        public BannerViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, IAccessManager accessManager)
             : base(logger, statusService, dialogService, mouseService)
         {
-            if (accessClientFactory == null)
-                throw new ArgumentNullException(nameof(accessClientFactory));
+            if (accessManager == null)
+                throw new ArgumentNullException(nameof(accessManager));
 
-            _accessClientFactory = accessClientFactory;
+            _accessManager = accessManager;
 
             LogoutCommand = CreateCommand(LogoutCommand_Execute);
         }
@@ -110,31 +106,30 @@ namespace CLog.UI.Main.ViewModels
         #region Methods
 
         /// <summary>
-        /// Initialises the view model.
+        /// Clears the context of the view model.
         /// </summary>
-        public override void Initialise()
+        public override void ClearContext()
         {
-            SelectedDate = DateTime.Now.Date;
+            base.ClearContext();
+
+            SelectedDate = DateTime.MinValue;
         }
 
         [MediatorMessageSink(MessagingConstants.USER_LOGGED_IN)]
         private void HandleLogin(User user)
         {
             User = user;
+            SelectedDate = DateTime.Now.Date;
         }
 
         private void LogoutCommand_Execute(object parameter)
         {
             Execute(principal =>
             {
-                using (IServiceClient<IAccessService> client = _accessClientFactory.Create())
-                {
-                    LogoutRequest request = new LogoutRequest(principal.Identity.UserName, principal.Identity.SessionId, principal.Identity.SessionKey);
-                    client.Proxy.Logout(request);
+                BusinessResult result = _accessManager.Logout(principal);
 
-                    Mediator.NotifyColleaguesAsync(MessagingConstants.USER_LOGGED_OUT, principal.Identity);
-                    principal.Identity = null;
-                }
+                Mediator.NotifyColleaguesAsync(MessagingConstants.USER_LOGGED_OUT, principal.Identity);
+                principal.Identity = null;
             });
         }
 

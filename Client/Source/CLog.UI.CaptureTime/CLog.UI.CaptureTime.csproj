@@ -32,8 +32,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -50,6 +58,8 @@
   <ItemGroup>
     <Compile Include="CaptureTimeModuleInitialiser.cs" />
     <Compile Include="Extensions\Mappers.cs" />
+    <Compile Include="Managers\ITimesheetManager.cs" />
+    <Compile Include="Managers\TimesheetManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -75,6 +85,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -89,6 +100,10 @@
     <ProjectReference Include="..\..\..\Server\Source\CLog.Framework.ServiceClients\CLog.Framework.ServiceClients.csproj">
       <Project>{9111B9F4-2F57-43F1-A596-D24D7C3CD816}</Project>
       <Name>CLog.Framework.ServiceClients</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Server\Source\CLog.Framework.Services.Models\CLog.Framework.Services.Models.csproj">
+      <Project>{43e08e22-c9cb-471c-90d7-1fdab177823a}</Project>
+      <Name>CLog.Framework.Services.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Server\Source\CLog.Framework.Services\CLog.Framework.Services.csproj">
       <Project>{E8F5210D-AC3C-481D-B018-51193DBAEFF5}</Project>

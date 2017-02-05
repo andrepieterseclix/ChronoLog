@@ -59,6 +59,8 @@
     <Compile Include="CompositeModule.cs" />
     <Compile Include="Controllers\ILoginController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Managers\AccessManager.cs" />
+    <Compile Include="Managers\IAccessManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -1,18 +1,13 @@
 ﻿using CLog.Common.Logging;
-using CLog.Framework.ServiceClients;
-using CLog.ServiceClients.Contracts.Access;
-using CLog.ServiceClients.Security;
-using CLog.Services.Security.Contracts.Access;
-using CLog.Services.Models.Access.DataTransfer;
+using CLog.UI.Common.Business;
 using CLog.UI.Common.Messaging;
 using CLog.UI.Common.Services;
 using CLog.UI.Common.ViewModels;
+using CLog.UI.Main.Managers;
 using CLog.UI.Models.Access;
 using System;
 using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using System.Threading;
+using System.Linq;
 using System.Windows.Input;
 
 namespace CLog.UI.Main.ViewModels
@@ -25,7 +20,7 @@ namespace CLog.UI.Main.ViewModels
     {
         #region Fields
 
-        private readonly IAccessClientFactory _accessClientFactory;
+        private readonly IAccessManager _accessManager;
 
         private string _message;
 
@@ -38,22 +33,21 @@ namespace CLog.UI.Main.ViewModels
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoginViewModel"/> class.
+        /// Initializes a new instance of the <see cref="LoginViewModel" /> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="statusService">The status service.</param>
         /// <param name="dialogService">The dialog service.</param>
         /// <param name="mouseService">The mouse service.</param>
-        /// <param name="accessClientFactory">The access client factory.</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// </exception>
-        public LoginViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, IAccessClientFactory accessClientFactory)
+        /// <param name="accessManager">The access manager.</param>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        public LoginViewModel(ILogger logger, IStatusService statusService, IDialogService dialogService, IMouseService mouseService, IAccessManager accessManager)
             : base(logger, statusService, dialogService, mouseService)
         {
-            if (accessClientFactory == null)
-                throw new ArgumentNullException(nameof(accessClientFactory));
+            if (accessManager == null)
+                throw new ArgumentNullException(nameof(accessManager));
 
-            _accessClientFactory = accessClientFactory;
+            _accessManager = accessManager;
             LoginCommand = CreateCommand(LoginCommand_Execute, LoginCommand_CanExecute);
 
             PropertyChanged += LoginViewModel_PropertyChanged;
@@ -136,44 +130,22 @@ namespace CLog.UI.Main.ViewModels
             {
                 try
                 {
-                    using (IServiceClient<IAccessService> client = _accessClientFactory.Create())
+                    BusinessResult<LoginResult> result = _accessManager.Login(UserName, Password);
+
+                    IsLoggedIn = result.Result.IsLoggedIn;
+
+                    if (result.HasErrors)
                     {
-                        LoginRequest request = new LoginRequest(UserName, Password);
-                        LoginResponse response = client.Proxy.Login(request);
+                        string combinedErrors = string.Join("  ", result.Errors.Select(x => x.ToString()));
 
-                        IsLoggedIn = response.IsLoggedIn;
-
-                        if (IsLoggedIn)
-                        {
-                            User user = new User(response.User.UserName, response.User.Name, response.User.Surname, response.User.Email);
-                            Mediator.NotifyColleagues(MessagingConstants.USER_LOGGED_IN, user);
-
-                            // Ensure the principal is read from the UI thread
-                            Invoke(() =>
-                            {
-                                ClientPrincipal principal = Thread.CurrentPrincipal as ClientPrincipal;
-                                if (principal == null)
-                                    throw new ApplicationException("The application's thread principal has not been configured correctly.");
-
-                                principal.Identity = new ClientIdentity(
-                                    user.UserName,
-                                    string.Format(CultureInfo.CurrentCulture, "{0} {1}", user.Name, user.Surname),
-                                    response.Session.Id,
-                                    response.Session.SessionKey,
-                                    new string[0]);
-                            });
-
-                            DialogService.SetDialogResult(true);
-                            return;
-                        }
-
-                        StringBuilder buffer = new StringBuilder();
-                        foreach (var error in response.Errors)
-                        {
-                            buffer.AppendLine(error.Message);
-                        }
-
-                        Message = buffer.ToString();
+                        if (!string.IsNullOrWhiteSpace(combinedErrors))
+                            Message = combinedErrors;
+                    }
+                    
+                    if (IsLoggedIn)
+                    {
+                        Mediator.NotifyColleagues(MessagingConstants.USER_LOGGED_IN, result.Result.User);
+                        DialogService.SetDialogResult(true);
                     }
                 }
                 catch (Exception ex)

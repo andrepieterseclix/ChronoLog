@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace CLog.UI.Models.Timesheets
 {
@@ -118,6 +119,31 @@ namespace CLog.UI.Models.Timesheets
         {
             get { return _isToday; }
             set { SetProperty(ref _isToday, value); }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Validates the specified property when overridden in an inherited class.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>
+        /// The error string, or <code>null</code> if the property has a valid value.
+        /// </returns>
+        /// <remarks>
+        /// The property is deemed valid if this method returns null.
+        /// </remarks>
+        protected override string ValidateProperty(string propertyName)
+        {
+            if(propertyName == nameof(Hours))
+            {
+                if (Hours < 0 || Hours > 24)
+                    return (string.Format(CultureInfo.CurrentCulture, "Invalid Hours captured for {0}", Date.ToString(ModelConstants.DATE_FORMAT)));
+            }
+
+            return base.ValidateProperty(propertyName);
         }
 
         #endregion

@@ -12,5 +12,7 @@
         public const string DATE_CHANGED = "Date Changed";
 
         public const string STATUS_UPDATE = "Status Bar Update";
+
+        public const string HOURS_CHANGED = "Hours Was Captured";
     }
 }

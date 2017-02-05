@@ -42,7 +42,25 @@ namespace CLog.UI.Framework.Testing.Helpers
 
         public static List<Project> GetSolutionProjects()
         {
-            Projects projects = GetActiveIDE().Solution.Projects;
+            int retrySleepIncrement = 100;
+
+            Projects projects = null;
+
+            for (int retries = 0; ; retries++)
+            {
+                try
+                {
+                    System.Threading.Thread.Sleep(retries * retrySleepIncrement);
+                    projects = GetActiveIDE().Solution.Projects;
+                    break;
+                }
+                catch (COMException)
+                {
+                    if (retries > 5)
+                        throw;
+                }
+            }
+
             List<Project> list = new List<Project>();
             IEnumerator item = projects.GetEnumerator();
 

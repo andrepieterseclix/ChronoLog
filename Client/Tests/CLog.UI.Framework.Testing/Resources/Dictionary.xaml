@@ -6,7 +6,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/CLog.UI.Common;component/Resources/Resources.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-    
+
     <!--Data Templates-->
     <HierarchicalDataTemplate DataType="{x:Type m:TestParameterModelBase}" ItemsSource="{Binding Children}">
         <TextBlock Text="{Binding Text}"/>
@@ -23,7 +23,32 @@
             </TextBlock>
         </DockPanel>
     </DataTemplate>
-    
+
+    <DataTemplate x:Key="StatusItemStyle">
+        <TextBlock>
+            <Run Text="{Binding StatusType, Mode=OneWay}">
+                <Run.Style>
+                    <Style TargetType="Run">
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding StatusType, Mode=OneWay}" Value="Info">
+                                <Setter Property="Foreground" Value="Green"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding StatusType, Mode=OneWay}" Value="Warning">
+                                <Setter Property="Foreground" Value="Orange"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding StatusType, Mode=OneWay}" Value="Error">
+                                <Setter Property="Foreground" Value="Red"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Run.Style>
+            </Run>
+            <Run Text="{Binding Timestamp, Mode=OneWay}" Foreground="DarkRed"/>
+            <Run Text="{Binding Message, Mode=OneWay}"/>
+        </TextBlock>
+    </DataTemplate>
+
     <!--Converters-->
     <c:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
 
