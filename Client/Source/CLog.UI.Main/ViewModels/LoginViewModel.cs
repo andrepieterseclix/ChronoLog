@@ -144,8 +144,8 @@ namespace CLog.UI.Main.ViewModels
                     
                     if (IsLoggedIn)
                     {
-                        Mediator.NotifyColleagues(MessagingConstants.USER_LOGGED_IN, result.Result.User);
                         DialogService.SetDialogResult(true);
+                        Mediator.NotifyColleagues(MessagingConstants.USER_LOGGED_IN, result.Result.User);
                     }
                 }
                 catch (Exception ex)

@@ -85,13 +85,17 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationClient" />
     <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Automation\AutomationAction.cs" />
+    <Compile Include="Automation\AutomationSet.cs" />
     <Compile Include="Behaviors\AutoScrollListBoxBehavior.cs" />
     <Compile Include="Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Exceptions\CancelException.cs" />

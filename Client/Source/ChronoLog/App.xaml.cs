@@ -19,6 +19,8 @@ namespace ChronoLog
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            ShutdownMode = ShutdownMode.OnMainWindowClose;
+
             AppDomain.CurrentDomain.SetThreadPrincipal(new ClientPrincipal());
             Thread.CurrentThread.Name = CommonConstants.UI_THREAD_NAME;
 

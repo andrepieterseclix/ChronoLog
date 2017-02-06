@@ -66,7 +66,9 @@ namespace CLog.UI.Main.Services
             }
 
             if (activeWindow != null)
+            {
                 activeWindow.DialogResult = dialogResult;
+            }
         }
 
         /// <summary>

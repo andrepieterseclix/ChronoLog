@@ -6,7 +6,8 @@
         UseLayoutRounding="True" SnapsToDevicePixels="True"
         Title="ChronoLog"
         Height="640" Width="1022" MinHeight="600" MinWidth="700"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        AutomationProperties.AutomationId="Shell_Window">
 
     <Grid x:FieldModifier="public" x:Name="LayoutRoot">
         <DockPanel Margin="2">

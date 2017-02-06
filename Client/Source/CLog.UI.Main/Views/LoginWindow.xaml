@@ -10,7 +10,9 @@
         AllowsTransparency="True" WindowStyle="None"
         FocusManager.FocusedElement="{Binding ElementName=nameTextBox}"
         Background="Transparent"
-        Topmost="True">
+        Topmost="True"
+        Name="LogInWindow"
+        AutomationProperties.AutomationId="Login_Window">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="{Binding ElementName=box, Path=ActualHeight}" GlassFrameThickness="0 0 0 1" ResizeBorderThickness="0" />
@@ -69,16 +71,16 @@
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="User Name:" Style="{StaticResource FieldTextBlock}"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Password:" Style="{StaticResource FieldTextBlock}"/>
-                    <TextBox x:Name="nameTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
-                    <PasswordBox x:Name="pwBox" Grid.Row="1" Grid.Column="1" Margin="2">
+                    <TextBox AutomationProperties.AutomationId="User_Name_Box" x:Name="nameTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+                    <PasswordBox AutomationProperties.AutomationId="Password_Box" x:Name="pwBox" Grid.Row="1" Grid.Column="1" Margin="2">
                         <i:Interaction.Behaviors>
                             <beh:PasswordBoxBindableBehavior PasswordText="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </i:Interaction.Behaviors>
                     </PasswordBox>
                 </Grid>
                 <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Grid.Row="2" Margin="0, 10">
-                    <Button IsDefault="True" Command="{Binding LoginCommand}" Margin="2" Width="100" >_Login</Button>
-                    <Button IsCancel="True" Margin="2" Width="80">Close</Button>
+                    <Button AutomationProperties.AutomationId="Login_Button" IsDefault="True" Command="{Binding LoginCommand}" Margin="2" Width="100" >_Login</Button>
+                    <Button AutomationProperties.AutomationId="Close_Button" IsCancel="True" Margin="2" Width="80">Close</Button>
                 </StackPanel>
             </Grid>
         </DockPanel>

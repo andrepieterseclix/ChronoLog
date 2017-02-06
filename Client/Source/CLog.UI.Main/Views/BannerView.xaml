@@ -29,8 +29,8 @@
             </Canvas>
             <Border Background="{StaticResource PanelBackground}" Padding="3, 3, 5, 0" CornerRadius="0, 5, 0, 0" BorderThickness="0, 1, 1, 0" BorderBrush="{StaticResource BorderColour}">
                 <StackPanel Orientation="Horizontal">
-                    <DatePicker FirstDayOfWeek="Monday" SelectedDate="{Binding SelectedDate, Mode=TwoWay}" Width="180" VerticalAlignment="Center" Background="{StaticResource Background}"/>
-                    <Button Command="{Binding LogoutCommand}" Background="DarkRed" Foreground="White" Margin="5, 0, 0, 0" Width="60" VerticalAlignment="Center">Logout</Button>
+                    <DatePicker AutomationProperties.AutomationId="Selected_Date" FirstDayOfWeek="Monday" SelectedDate="{Binding SelectedDate, Mode=TwoWay}" Width="180" VerticalAlignment="Center" Background="{StaticResource Background}"/>
+                    <Button AutomationProperties.AutomationId="Logout_Button" Command="{Binding LogoutCommand}" Background="DarkRed" Foreground="White" Margin="5, 0, 0, 0" Width="60" VerticalAlignment="Center">Logout</Button>
                 </StackPanel>
             </Border>
         </StackPanel>

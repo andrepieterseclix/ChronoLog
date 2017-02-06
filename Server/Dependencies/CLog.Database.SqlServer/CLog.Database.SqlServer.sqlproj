@@ -74,5 +74,6 @@
   <ItemGroup>
     <None Include="ChronoLog-Local.publish.xml" />
     <None Include="ChronoLog-Test.publish.xml" />
+    <None Include="ChronoLog-IntegrationTest.publish.xml" />
   </ItemGroup>
 </Project>

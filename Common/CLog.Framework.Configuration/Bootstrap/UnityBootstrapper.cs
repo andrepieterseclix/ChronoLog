@@ -2,6 +2,7 @@
 using Microsoft.Practices.Unity;
 using System;
 using System.Linq;
+using System.Threading;
 
 namespace CLog.Framework.Configuration.Bootstrap
 {
@@ -13,6 +14,8 @@ namespace CLog.Framework.Configuration.Bootstrap
         #region Fields
 
         private bool _ran;
+
+        private ManualResetEvent _waitToClose = new ManualResetEvent(false);
 
         #endregion
 
@@ -69,6 +72,17 @@ namespace CLog.Framework.Configuration.Bootstrap
             DoRegistration();
             PostRegistration();
             _ran = true;
+
+            // Signal caller that the bootstrapper has stopped.
+            _waitToClose.Set();
+        }
+
+        /// <summary>
+        /// Blocks the calling thread until the bootstrapper has stopped.
+        /// </summary>
+        public void Wait()
+        {
+            _waitToClose.WaitOne();
         }
 
         /// <summary>
