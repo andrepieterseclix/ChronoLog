@@ -13,21 +13,25 @@ using System.Windows.Automation;
 
 namespace ChronoLog.Tests.Integration
 {
-    public abstract class IntegrationTestBase
+    public abstract class IntegrationTestBase : IDisposable
     {
         #region Fields
-
-        private readonly string EXE_FILE = "ChronoLog.exe";
-
+        
         private readonly Bootstrapper _servicesHostBootstrapper = new Bootstrapper();
 
         private readonly ManualTerminationStrategy _servicesTerminationStrategy = new ManualTerminationStrategy();
 
         private string _uiProcessName;
 
+        private readonly string EXE_FILE = "ChronoLog.exe";
+
         public const string MAIN_WINDOW_ID = "Shell_Window";
 
         public const string LOGIN_WINDOW_ID = "Login_Window";
+
+        public const string USER_NAME_ID = "User_Name_Box";
+
+        public const string PASSWORD_ID = "Password_Box";
 
         public const string LOGIN_BUTTON_ID = "Login_Button";
 
@@ -38,6 +42,10 @@ namespace ChronoLog.Tests.Integration
         public const string SELECTED_DATE_ID = "Selected_Date";
 
         public const string CAPTURE_DATE_ID_FORMAT = "CaptureDate_{0:yyyyMMdd}";
+
+        public const string USER_NAME = "Joe";
+
+        public const string PASSWORD = "P@ssw0rd123";
 
         #endregion
 
@@ -124,7 +132,10 @@ namespace ChronoLog.Tests.Integration
             AutomationElement mainWindow =
                 AutomationElement.RootElement.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.AutomationIdProperty, windowId));
 
-            return mainWindow?.FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.AutomationIdProperty, elementId));
+            AutomationElement element =
+                mainWindow?.FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.AutomationIdProperty, elementId));
+
+            return element;
         }
 
         protected void EnqueueLogin(AutomationSet set)
@@ -186,6 +197,11 @@ namespace ChronoLog.Tests.Integration
 
                     return true;
                 }));
+        }
+
+        public void Dispose()
+        {
+            
         }
 
         #endregion

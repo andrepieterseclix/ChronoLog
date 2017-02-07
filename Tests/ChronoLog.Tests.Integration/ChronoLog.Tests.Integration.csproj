@@ -56,6 +56,7 @@
     <Compile Include="LogInLogOut.cs" />
     <Compile Include="IntegrationTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TodayDateEnabled.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

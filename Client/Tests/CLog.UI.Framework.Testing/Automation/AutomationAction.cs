@@ -42,7 +42,8 @@ namespace CLog.UI.Framework.Testing.Automation
 
         internal void Invoke()
         {
-            AutomationElement element = GetElement();
+            // Give element some time to load (sleep on first try), UI Automation Framework is finicky :(
+            AutomationElement element = null;
 
             for (int i = 0; i < Retries; i++)
             {
