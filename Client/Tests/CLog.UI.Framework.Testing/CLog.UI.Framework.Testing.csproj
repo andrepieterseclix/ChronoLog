@@ -102,6 +102,7 @@
     <Compile Include="Helpers\ComponentModelHelper.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Helpers\ReflectionHelperMarshalByRef.cs" />
+    <Compile Include="Helpers\RetryHelper.cs" />
     <Compile Include="Helpers\VisualStudioHelper.cs" />
     <Compile Include="Models\GroupModel.cs" />
     <Compile Include="Models\MethodModel.cs" />

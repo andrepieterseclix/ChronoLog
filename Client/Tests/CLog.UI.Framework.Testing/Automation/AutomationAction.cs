@@ -6,9 +6,15 @@ namespace CLog.UI.Framework.Testing.Automation
 {
     public class AutomationAction
     {
+        #region Fields
+
+        private const int SLEEP = 500;
+
+        #endregion
+
         #region Constructors
 
-        public AutomationAction(Func<AutomationElement> getElement, Action<AutomationElement> action, int retries = 10)
+        public AutomationAction(Func<AutomationElement> getElement, Predicate<AutomationElement> action, int retries = 10)
         {
             if (getElement == null)
                 throw new ArgumentNullException(nameof(getElement));
@@ -28,7 +34,7 @@ namespace CLog.UI.Framework.Testing.Automation
 
         public Func<AutomationElement> GetElement { get; private set; }
 
-        public Action<AutomationElement> Action { get; private set; }
+        public Predicate<AutomationElement> Action { get; private set; }
 
         #endregion
 
@@ -43,21 +49,23 @@ namespace CLog.UI.Framework.Testing.Automation
                 if (element != null)
                     break;
 
-                Thread.Sleep(500);
+                Thread.Sleep(SLEEP);
                 element = GetElement();
             }
 
             if (element == null)
-                throw new ElementNotAvailableException();
+                throw new Exception("The automation element could not be obtained.");
 
-            try
+            // Execute action
+            for (int i = 0; i < Retries; i++)
             {
-                Action(element);
+                if (Action(element))
+                    return;
+
+                Thread.Sleep(SLEEP);
             }
-            catch (Exception)
-            {
-                throw;
-            }
+
+            throw new Exception("The automation action could not be executed.");
         }
 
         #endregion

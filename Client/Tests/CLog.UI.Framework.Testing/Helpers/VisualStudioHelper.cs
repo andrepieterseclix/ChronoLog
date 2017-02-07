@@ -42,24 +42,8 @@ namespace CLog.UI.Framework.Testing.Helpers
 
         public static List<Project> GetSolutionProjects()
         {
-            int retrySleepIncrement = 100;
-
             Projects projects = null;
-
-            for (int retries = 0; ; retries++)
-            {
-                try
-                {
-                    System.Threading.Thread.Sleep(retries * retrySleepIncrement);
-                    projects = GetActiveIDE().Solution.Projects;
-                    break;
-                }
-                catch (COMException)
-                {
-                    if (retries > 5)
-                        throw;
-                }
-            }
+            RetryHelper.Retry(5, 100, () => projects = GetActiveIDE().Solution.Projects);
 
             List<Project> list = new List<Project>();
             IEnumerator item = projects.GetEnumerator();
@@ -104,11 +88,17 @@ namespace CLog.UI.Framework.Testing.Helpers
             if (project.Kind != PROJECT_KIND_CSHARP_PROJECT)
                 return null;
 
-            string fullPath = project.Properties.Item("FullPath").Value.ToString();
-            string outputPath = project.ConfigurationManager.ActiveConfiguration.Properties.Item("OutputPath").Value.ToString();
-            string outputDir = Path.Combine(fullPath, outputPath);
-            string outputFileName = project.Properties.Item("OutputFileName").Value.ToString();
-            string assemblyPath = Path.Combine(outputDir, outputFileName);
+            string assemblyPath = null;
+
+            RetryHelper.Retry(5, 100, () =>
+            {
+                string fullPath = project.Properties.Item("FullPath").Value.ToString();
+                string outputPath = project.ConfigurationManager.ActiveConfiguration.Properties.Item("OutputPath").Value.ToString();
+                string outputDir = Path.Combine(fullPath, outputPath);
+                string outputFileName = project.Properties.Item("OutputFileName").Value.ToString();
+
+                assemblyPath = Path.Combine(outputDir, outputFileName);
+            });
 
             return assemblyPath;
         }

@@ -15,7 +15,7 @@ namespace CLog.UI.Framework.Testing.Automation
 
         #region Constructors
 
-        public AutomationSet(Action callback)
+        public AutomationSet(Action callback = null)
         {
             _callback = callback;
         }
@@ -43,10 +43,6 @@ namespace CLog.UI.Framework.Testing.Automation
                     action = _actionQueue.Dequeue();
                     action.Invoke();
                 }
-            }
-            catch (Exception)
-            {
-                throw;
             }
             finally
             {
