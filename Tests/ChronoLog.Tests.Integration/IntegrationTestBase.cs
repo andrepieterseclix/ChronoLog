@@ -37,6 +37,8 @@ namespace ChronoLog.Tests.Integration
 
         public const string SELECTED_DATE_ID = "Selected_Date";
 
+        public const string CAPTURE_DATE_ID_FORMAT = "CaptureDate_{0:yyyyMMdd}";
+
         #endregion
 
         #region Test Initialisation and Cleanup
@@ -117,7 +119,7 @@ namespace ChronoLog.Tests.Integration
             _servicesHostBootstrapper.Run();
         }
 
-        protected AutomationElement GetElement(string windowId, string elementId)
+        protected AutomationElement GetAutomationElement(string windowId, string elementId)
         {
             AutomationElement mainWindow =
                 AutomationElement.RootElement.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.AutomationIdProperty, windowId));
@@ -128,7 +130,7 @@ namespace ChronoLog.Tests.Integration
         protected void EnqueueLogin(AutomationSet set)
         {
             set.Enqueue(new AutomationAction(
-                () => GetElement(LOGIN_WINDOW_ID, LOGIN_BUTTON_ID),
+                () => GetAutomationElement(LOGIN_WINDOW_ID, LOGIN_BUTTON_ID),
                 loginButton =>
                 {
                     if (!loginButton.Current.IsEnabled)
@@ -143,7 +145,7 @@ namespace ChronoLog.Tests.Integration
         protected void EnqueueChangeDate(AutomationSet set, DateTime date)
         {
             set.Enqueue(new AutomationAction(
-                () => GetElement(MAIN_WINDOW_ID, SELECTED_DATE_ID),
+                () => GetAutomationElement(MAIN_WINDOW_ID, SELECTED_DATE_ID),
                 selectedDate =>
                 {
                     if (!selectedDate.Current.IsEnabled)
@@ -159,7 +161,7 @@ namespace ChronoLog.Tests.Integration
         protected void EnqueueLogout(AutomationSet set)
         {
             set.Enqueue(new AutomationAction(
-                () => GetElement(MAIN_WINDOW_ID, LOGOUT_BUTTON_ID),
+                () => GetAutomationElement(MAIN_WINDOW_ID, LOGOUT_BUTTON_ID),
                 logoutButton =>
                 {
                     if (!logoutButton.Current.IsEnabled)
@@ -174,7 +176,7 @@ namespace ChronoLog.Tests.Integration
         protected void EnqueueCloseLogoutWindow(AutomationSet set)
         {
             set.Enqueue(new AutomationAction(
-                () => GetElement(LOGIN_WINDOW_ID, CLOSE_BUTTON),
+                () => GetAutomationElement(LOGIN_WINDOW_ID, CLOSE_BUTTON),
                 closeButton =>
                 {
                     if (!closeButton.Current.IsEnabled)

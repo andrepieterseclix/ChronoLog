@@ -28,7 +28,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Hours:" Margin="4, 4, 2, 4" VerticalAlignment="Center" Style="{StaticResource DisableableLabelStyle}"/>
-                <TextBox AutomationProperties.AutomationId="{Binding Model.Date, StringFormat={}CaptureDate_{yyyyMMdd}}" Grid.Column="1" IsEnabled="{Binding Model.IsEnabled}" Text="{Binding Model.Hours, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, NotifyOnValidationError=True}" Margin="2, 4, 4, 4" VerticalAlignment="Center">
+                <TextBox AutomationProperties.AutomationId="{Binding Model.Date, StringFormat={}CaptureDate_{0:yyyyMMdd}}" Grid.Column="1" IsEnabled="{Binding Model.IsEnabled}" Text="{Binding Model.Hours, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, NotifyOnValidationError=True}" Margin="2, 4, 4, 4" VerticalAlignment="Center">
                     <i:Interaction.Behaviors>
                         <beh:BindingValidationBehavior ValidationErrors="{Binding ValidationErrors, Mode=OneWay}"/>
                     </i:Interaction.Behaviors>

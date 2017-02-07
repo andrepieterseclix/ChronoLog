@@ -52,8 +52,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="TestFutureDateDisabled.cs" />
-    <Compile Include="TestLogInLogOut.cs" />
+    <Compile Include="FutureDateDisabled.cs" />
+    <Compile Include="LogInLogOut.cs" />
     <Compile Include="IntegrationTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
