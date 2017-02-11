@@ -46,7 +46,7 @@
                 <Run Text="{Binding TotalHours, FallbackValue=[Hours]}" Foreground="{StaticResource SecondaryColour}"/>
             </TextBlock>
             
-            <Button Grid.Row="3" Width="80" HorizontalAlignment="Left" Margin="0, 10" Command="{Binding SaveCommand}">Save</Button>
+            <Button AutomationProperties.AutomationId="Save_Captured_Time_Button" Grid.Row="3" Width="80" HorizontalAlignment="Left" Margin="0, 10" Command="{Binding SaveCommand}">Save</Button>
             
         </Grid>
     </DockPanel>

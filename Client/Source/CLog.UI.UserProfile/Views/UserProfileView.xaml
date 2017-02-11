@@ -30,13 +30,13 @@
             <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource FieldTextBlock}" Text="E-mail:"/>
 
             <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource TextField}" Text="{Binding ShadowUser.UserName, Mode=OneWay}" IsReadOnly="True" Foreground="{StaticResource QuaternaryColour}"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextField}" Text="{Binding ShadowUser.Name, ValidatesOnDataErrors=true, NotifyOnValidationError=true, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource TextField}" Text="{Binding ShadowUser.Surname, ValidatesOnDataErrors=true, NotifyOnValidationError=true, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource TextField}" Text="{Binding ShadowUser.Email, ValidatesOnDataErrors=true, NotifyOnValidationError=true, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox AutomationProperties.AutomationId="Name_InputText" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextField}" Text="{Binding ShadowUser.Name, ValidatesOnDataErrors=true, NotifyOnValidationError=true, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox AutomationProperties.AutomationId="Surname_InputText" Grid.Row="2" Grid.Column="1" Style="{StaticResource TextField}" Text="{Binding ShadowUser.Surname, ValidatesOnDataErrors=true, NotifyOnValidationError=true, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox AutomationProperties.AutomationId="Email_InputText" Grid.Row="3" Grid.Column="1" Style="{StaticResource TextField}" Text="{Binding ShadowUser.Email, ValidatesOnDataErrors=true, NotifyOnValidationError=true, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" Margin="0, 10">
-                <Button Style="{StaticResource ButtonStyle}" Command="{Binding SaveCommand}">Save</Button>
-                <Button Style="{StaticResource ButtonStyle}" Command="{Binding ResetCommand}">Reset</Button>
+                <Button AutomationProperties.AutomationId="Save_Profile_Button" Style="{StaticResource ButtonStyle}" Command="{Binding SaveCommand}">Save</Button>
+                <Button AutomationProperties.AutomationId="Reset_Profile_Button" Style="{StaticResource ButtonStyle}" Command="{Binding ResetCommand}">Reset</Button>
             </StackPanel>
         </Grid>
     </DockPanel>

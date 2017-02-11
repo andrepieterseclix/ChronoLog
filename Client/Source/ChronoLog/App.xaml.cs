@@ -8,6 +8,7 @@ using CLog.UI.Main.Views;
 using System;
 using System.Threading;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 
 namespace ChronoLog
@@ -45,6 +46,8 @@ namespace ChronoLog
                         Header = module.Name,
                         Content = module.Control,
                     };
+
+                    AutomationProperties.SetAutomationId(tabItem, module.Name.Replace(" ", "_"));
 
                     module.Control.Padding = new Thickness(5d);
                     module.Control.DataContext = module.ViewModel;

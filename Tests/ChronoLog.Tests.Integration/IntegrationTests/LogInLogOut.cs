@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 
-namespace ChronoLog.Tests.Integration
+namespace ChronoLog.Tests.Integration.IntegrationTests
 {
     [TestClass]
     public class LogInLogOut : IntegrationTestBase
@@ -15,6 +15,8 @@ namespace ChronoLog.Tests.Integration
             Process applicationShellProcess = StartApplicationShellProcess(GetApplicationPath());
             AutomationSet set = new AutomationSet(() => applicationShellProcess.Kill());
 
+            EnqueueEnterUserName(set);
+            EnqueueEnterPassword(set);
             EnqueueLogin(set);
             EnqueueLogout(set);
             EnqueueCloseLogoutWindow(set);

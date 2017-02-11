@@ -4,23 +4,28 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace ChronoLog.Tests.Integration
+namespace ChronoLog.Tests.Integration.IntegrationTests
 {
     [TestClass]
-    public class TodayDateEnabled : IntegrationTestBase
+    public class FutureDateDisabled : IntegrationTestBase
     {
         [TestMethod]
         [TestCategory("End-to-end Integration Tests")]
-        public void ChronoLog_Integration_TodayEnabled()
+        public void ChronoLog_Integration_FutureDateDisabled()
         {
             // Arrange
             Process applicationShellProcess = StartApplicationShellProcess(GetApplicationPath());
             AutomationSet set = new AutomationSet(() => applicationShellProcess.Kill());
 
-            DateTime testDate = DateTime.Now;
+            DateTime testDate = new DateTime(2200, 1, 1);
+            if (testDate <= DateTime.Now)
+                throw new ArgumentException();
+
             string captureDateId = string.Format(CultureInfo.CurrentCulture, CAPTURE_DATE_ID_FORMAT, testDate);
             bool? captureDateEnabled = null;
 
+            EnqueueEnterUserName(set);
+            EnqueueEnterPassword(set);
             EnqueueLogin(set);
             EnqueueChangeDate(set, testDate);
 
@@ -40,7 +45,7 @@ namespace ChronoLog.Tests.Integration
 
             // Assert
             Assert.IsNotNull(captureDateEnabled);
-            Assert.IsTrue(captureDateEnabled.Value);
+            Assert.IsFalse(captureDateEnabled.Value);
         }
     }
 }
