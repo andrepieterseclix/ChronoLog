@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<!--------------------------------------------------------------------------->  
+<!--                           INTRODUCTION                                
+
+ The CodeProject article submission template (HTML version)
+
+Using this template will help us post your article sooner. To use, just 
+follow the 3 easy steps below:
+ 
+     1. Fill in the article description details
+     2. Add links to your images and downloads
+     3. Include the main article text
+
+That's all there is to it! All formatting will be done by our submission
+scripts and style sheets. 
+
+-->  
+<!--------------------------------------------------------------------------->  
+<!--                        IGNORE THIS SECTION                            -->
+<html>
+<head>
+<title>CodeProject</title>
+<Style>
+BODY, P, TD { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt }
+H2,H3,H4,H5 { color: #ff9900; font-weight: bold; }
+H2 { font-size: 13pt; }
+H3 { font-size: 12pt; }
+H4 { font-size: 10pt; color: black; }
+PRE { BACKGROUND-COLOR: #FBEDBB; FONT-FAMILY: "Courier New", Courier, mono; WHITE-SPACE: pre; }
+CODE { COLOR: #990000; FONT-FAMILY: "Courier New", Courier, mono; }
+</style>
+<link type="text/css" rel="stylesheet" 
+      href="https://codeproject.global.ssl.fastly.net/App_Themes/CodeProject/Css/Main.min.css">
+</head>
+<body bgcolor="#FFFFFF" color=#000000>
+<!--------------------------------------------------------------------------->  
+
+
+<!-------------------------------     STEP 1      --------------------------->
+<!--  Fill in the details (CodeProject will reformat this section for you) -->
+
+<pre>
+Title:       Systems Architecture Overview (WPF, WCF)
+Author:      Andre-Pieterse
+Email:       andre.pieterse.clix@gmail.com
+Language:    C#, XAML, T-SQL
+Platform:    Windows
+Technology:  .Net 4.5.2, WPF, WCF, Entity Framework, SQL Server, Unity Application Block 
+Level:       Intermediate
+Description: This article is about describing the whole architecture of a system that may be used in the real world, based on sound principles and practices.
+Section      General Programming
+SubSection   Architecture
+License:     CPOL
+</pre>
+
+<!-------------------------------     STEP 2      --------------------------->
+<!--  Include download and sample image information.                       --> 
+
+<ul class=download>
+<li><a href="Article_demo.zip">Download demo project - XXX Kb </a></li>
+<li><a href="Article_src.zip">Download source - XXX Kb</a></li>
+</ul>
+
+<p><img src="Article.gif" alt="Sample Image - maximum width is 600 pixels" style="width:400px; height:200px"></p>
+
+<!-------------------------------     STEP 3      --------------------------->
+
+<!--  Add the article text. Please use simple formatting (<h2>, <p> etc)   -->
+
+<h2>Introduction</h2>
+
+<p>There are a lot of introductory articles on the internet.  Although these write-ups are useful to get you started, it usually leaves you in a state of uncertainty.  Take for example the Model-View-ViewModel pattern, since it started gaining momentum a couple of years ago there has been hundreds of "Introduction to MVVM" articles popping up around the web, still to this day.  They all claim to be different, but it usually boils down to something like this:  "The views are the visual elements like windows and data templates, the view models are abstractions of the views and encapsulates the presentation logic, while the model is the data and the business logic of your application".  This can leave you with all sorts of unknowns.  If the model is the data, we can define POCO classes and use an ORM to map them to a database, right?  Sure, this will be fine for a single-user application where the database lives on the same computer, but what if you want to hide the data access and business logic behind a service layer?  The MVVM pattern is a front-end architectural pattern, does this mean that we are dealing with _VVM when we move the M to the back-end?  It was quite evident from reading the comments of those articles that a lot of less experienced developers were left confused and frustrated.</p>
+
+<p>Look at it this way, my article and example code will give you an overview of the architecture for the entire end-to-end application.  I wanted to present a production-ready real world example, following all the best practises and patterns.  I've tried to implement commonly used technologies, but obviously I can't go into detail about every technology, but that's what the introductory articles are for!</p>
+
+<h2>Background</h2>
+<p>I have developed the entire system from scratch using Visual Studio 2015 Community Edition, based on the .NET Framework version 4.5.2.  For data storage and queries I use a SQL Server 2014 database.  The following technologies were used to develop the solution:</p>
+<ul>
+	<li><strong>Windows Presentation Foundation (WPF)</strong> - The front-end application.</li>
+	<li><strong>Windows Communication Foundation (WCF)</strong> - Enables communication between processes or tiers.</li>
+	<li><strong>Unity Application Block</strong> - Dependency Injection Container that facilitates loose coupling of components, and coding against contracts instead of concrete implementations.</li>
+	<li><strong>Entity Framework</strong> - The Object Relational Mapper (ORM) that maps our Models to database objects, and takes care of the data storage implementation details.</li>
+	<li><strong>Log4Net</strong> - A very sophisticated logging library.</li>
+	<li><strong>Visual Studio Unit Testing</strong> - The standard Unit-testing framework that ships with Visual Studio.</li>
+	<li><strong>UI Automation Framework</strong> - The Microsoft-provided framework for automation that we use to write scripted UI test scenario's.</li>
+	<li><strong>Moq</strong> - The powerful mocking library used in testing to mock dependencies.</li>
+</ul>
+
+<p>The following patterns and principles can be spotted throughout the solution:</p>
+<ul>
+	<li><strong>SOLID Principles</strong> - Separation of Concerns, Open-Closed principle, Liskov Substitution, Interface Segregation, and Dependency Inversion.</li>
+	<li><strong>Model-View-ViewModel</strong> - Front-end architectural pattern.</li>
+	<li><strong>Repository Pattern</strong> - Decoupling the data storage infrastructure from the business logic, making the code Data Storage agnostic.</li>
+	<li><strong>Factory Method</strong></li>
+	<li><strong>Layered Architecture</strong> - The code will be broken up into layers in accordance with the separation of concerns principle.</li>
+	<li><strong>Service Oriented Architecture</strong> - The front-end application will communicate with a couple of microservices to access the Application Programming Interface of the system.</li>
+</ul>
+
+<p>Next let's define some terminology.</p>
+<h3>Framework</h3>
+<p>A framework can be classified as anything.</p>
+
+<h2>Using the code</h2>
+
+<p>A brief description of how to use the article or code. The class names, the 
+methods and properties, any tricks or tips. </p>
+
+<p>Blocks of code should be set as style &quot;Formatted&quot; like this: </p>
+
+<pre>//
+// Any source code blocks look like this
+//
+var i = 0;
+...</pre>
+
+<p>Remember to set the Language of your code snippet using the Language dropdown. </p>
+
+<p>Use the &quot;var&quot; button to wrap Variable or class names in &amp;lt;code&amp;gt; 
+tags like <code>this</code>. </p>
+
+<h2>Points of Interest</h2>
+
+<p>Did you learn anything interesting/fun/annoying while writing the code? Did you do 
+anything particularly clever or wild or zany? </p>
+
+<h2>History</h2>
+
+<p>Keep a running update of any changes or improvements you've made here. </p>
+
+<!-------------------------------    That's it!   --------------------------->
+</body>
+
+</html>

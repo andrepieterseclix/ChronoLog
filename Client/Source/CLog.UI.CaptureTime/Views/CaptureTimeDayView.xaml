@@ -31,6 +31,7 @@
                 <TextBox AutomationProperties.AutomationId="{Binding Model.Date, StringFormat={}CaptureDate_{0:yyyyMMdd}}" Grid.Column="1" IsEnabled="{Binding Model.IsEnabled}" Text="{Binding Model.Hours, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, NotifyOnValidationError=True}" Margin="2, 4, 4, 4" VerticalAlignment="Center">
                     <i:Interaction.Behaviors>
                         <beh:BindingValidationBehavior ValidationErrors="{Binding ValidationErrors, Mode=OneWay}"/>
+                        <beh:SelectTextOnFocusBehavior/>
                     </i:Interaction.Behaviors>
                 </TextBox>
             </Grid>

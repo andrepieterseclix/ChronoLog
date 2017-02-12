@@ -136,7 +136,7 @@ namespace CLog.UI.Main.ViewModels
 
                     if (result.HasErrors)
                     {
-                        string combinedErrors = string.Join("  ", result.Errors.Select(x => x.ToString()));
+                        string combinedErrors = string.Join("  ", result.Errors.Select(x => x.Message));
 
                         if (!string.IsNullOrWhiteSpace(combinedErrors))
                             Message = combinedErrors;
