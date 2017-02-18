@@ -112,8 +112,8 @@ namespace CLog.UI.Main.Managers
                             principal.Identity.UserName,
                             principal.Identity.SessionId,
                             principal.Identity.SessionKey);
-
-                        response = client.Proxy.Logout(request);
+                        
+                        response = GetServiceResponse(client.Proxy.Logout, request);
 
                         // Map Errors
                         result.AddMessages(response);

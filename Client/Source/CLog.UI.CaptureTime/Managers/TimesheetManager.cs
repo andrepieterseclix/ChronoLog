@@ -55,11 +55,11 @@ namespace CLog.UI.CaptureTime.Managers
             return Execute<CaptureTimeDay[]>(result =>
             {
                 GetCapturedTimeResponse response = null;
+                GetCapturedTimeRequest request = new GetCapturedTimeRequest(fromDate, toDate);
 
                 using (IServiceClient<ITimesheetService> client = _timesheetClientFactory.Create())
                 {
-                    GetCapturedTimeRequest request = new GetCapturedTimeRequest(fromDate, toDate);
-                    response = client.Proxy.GetCapturedTime(request);
+                    response = GetServiceResponse(client.Proxy.GetCapturedTime, request);
                 }
 
                 // Map Errors
@@ -85,7 +85,7 @@ namespace CLog.UI.CaptureTime.Managers
 
                 using (IServiceClient<ITimesheetService> client = _timesheetClientFactory.Create())
                 {
-                    response = client.Proxy.SaveCapturedTime(request);
+                    response = GetServiceResponse(client.Proxy.SaveCapturedTime, request);
                 }
 
                 // Map Errors

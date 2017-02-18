@@ -1,5 +1,7 @@
 ﻿using CLog.Common.Logging;
 using CLog.ServiceClients.Security;
+using CLog.UI.Common.Exceptions;
+using CLog.UI.Common.Messaging;
 using CLog.UI.Common.Messaging.Mediator;
 using CLog.UI.Common.Services;
 using System;
@@ -174,6 +176,11 @@ namespace CLog.UI.Common.ViewModels
             {
                 throw;
             }
+            catch (SessionExpiredException)
+            {
+                Mediator.NotifyColleaguesAsync(MessagingConstants.USER_LOGGED_OUT, principal.Identity);
+                principal.Identity = null;
+            }
             catch (Exception ex)
             {
                 LoggerHelper.Fatal(Logger, ex, "Unhandled Exception occurred in view model:  {0}", GetQualifiedMethodName(callingMethod));
@@ -221,6 +228,11 @@ namespace CLog.UI.Common.ViewModels
                     StatusService.SetStatus(StatusMessageType.Warning, SplitOnUppercase(callingMethod));
 
                     action?.Invoke(principal);
+                }
+                catch (SessionExpiredException)
+                {
+                    Mediator.NotifyColleaguesAsync(MessagingConstants.USER_LOGGED_OUT, principal.Identity);
+                    principal.Identity = null;
                 }
                 catch (OutOfMemoryException)
                 {

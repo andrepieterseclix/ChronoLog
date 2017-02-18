@@ -75,6 +75,7 @@
     <Compile Include="CommonConstants.cs" />
     <Compile Include="Controls\TextPath.cs" />
     <Compile Include="Converters\StatusTypeColourConverter.cs" />
+    <Compile Include="Exceptions\SessionExpiredException.cs" />
     <Compile Include="Helpers\DispatcherHelper.cs" />
     <Compile Include="Messaging\MessagingConstants.cs" />
     <Compile Include="Messaging\Mediator\Mediator.cs" />

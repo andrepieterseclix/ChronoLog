@@ -1,7 +1,10 @@
 ﻿using CLog.Common.BaseClasses;
 using CLog.Common.Logging;
+using CLog.Framework.Services.Models;
+using CLog.UI.Common.Exceptions;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CLog.UI.Common.Business
@@ -100,6 +103,32 @@ namespace CLog.UI.Common.Business
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets the service response, and checks whether the session has expired on the server.
+        /// </summary>
+        /// <typeparam name="TRequest">The type of the request.</typeparam>
+        /// <typeparam name="TResponse">The type of the response.</typeparam>
+        /// <param name="serviceCall">The service call.</param>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        /// <exception cref="CLog.UI.Common.Exceptions.SessionExpiredException"></exception>
+        protected TResponse GetServiceResponse<TRequest, TResponse>(Func<TRequest, TResponse> serviceCall, TRequest request)
+            where TRequest : RequestBase
+            where TResponse : ResponseBase
+        {
+            if (serviceCall == null || request == null)
+                return null;
+
+            TResponse response = serviceCall(request);
+            if (response == null)
+                return null;
+
+            if (response.SessionExpired)
+                throw new SessionExpiredException(response.Errors.FirstOrDefault()?.Message);
+
+            return response;
         }
 
         #endregion

@@ -1,14 +1,13 @@
-﻿using System;
-using CLog.Common.Logging;
-using CLog.UI.Common.Business;
-using CLog.UI.Models.Access;
+﻿using CLog.Common.Logging;
+using CLog.Framework.ServiceClients;
 using CLog.ServiceClients.Contracts.Users;
 using CLog.Services.Contracts.Users;
-using CLog.Framework.ServiceClients;
-using CLog.ServiceClients.Security;
 using CLog.Services.Models.Users;
-using CLog.UI.UserProfile.Extensions;
 using CLog.Services.Models.Users.DataTransfer;
+using CLog.UI.Common.Business;
+using CLog.UI.Models.Access;
+using CLog.UI.UserProfile.Extensions;
+using System;
 
 namespace CLog.UI.UserProfile.Managers
 {
@@ -54,7 +53,7 @@ namespace CLog.UI.UserProfile.Managers
 
                 using (IServiceClient<IUserService> client = _userServiceClient.Create())
                 {
-                    response = client.Proxy.UpdateUser(request);
+                    response = GetServiceResponse(client.Proxy.UpdateUser, request);
                 }
 
                 // Map Errors
