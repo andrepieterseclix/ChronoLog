@@ -1,6 +1,7 @@
 ﻿using CLog.Business.Security.Contracts.Access;
 using CLog.Common.Logging;
 using CLog.Framework.Business.Models.Results;
+using CLog.Framework.Models;
 using CLog.Framework.Security;
 using CLog.Framework.Services.Wcf.MessageInspectors;
 using CLog.Models.Access;
@@ -126,7 +127,7 @@ namespace CLog.Services.Tests.MessageInspectors
             };
 
             BusinessResult<SessionState> result = new BusinessResult<SessionState>(sessionState);
-            result.Errors.Add(new ErrorMessage("Code", "Message"));
+            result.Errors.Add(new ErrorMessage(ErrorCategory.InvalidRequest, "Code", "Message"));
 
             _accessManager
                 .Setup(x => x.ValidateSession(It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<string>()))

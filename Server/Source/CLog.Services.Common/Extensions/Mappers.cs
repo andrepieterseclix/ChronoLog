@@ -21,6 +21,7 @@ namespace CLog.Framework.Services.Extensions
                 return null;
 
             return new ErrorDto(
+                model.Category,
                 model.Code,
                 model.Message,
                 model.AdditionalInfo);

@@ -1,5 +1,6 @@
 ﻿using CLog.Business.Contracts.Timesheets;
 using CLog.Framework.Business.Models.Results;
+using CLog.Framework.Models;
 using CLog.Models.Access;
 using CLog.Models.Mocks.Access;
 using CLog.Models.Mocks.Timesheets;
@@ -46,7 +47,7 @@ namespace CLog.Services.Tests.ServiceImplementations
             User user = AccessDataHelper.GetUser1();
 
             BusinessResult<CapturedTime[]> result = new BusinessResult<CapturedTime[]>();
-            result.Errors.Add(new ErrorMessage("Code", "Message"));
+            result.Errors.Add(new ErrorMessage(ErrorCategory.General, "Code", "Message"));
 
             _timesheetManager
                 .Setup(x => x.GetCapturedTime(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -105,7 +106,7 @@ namespace CLog.Services.Tests.ServiceImplementations
             SaveCapturedTimeRequest request = new SaveCapturedTimeRequest(items);
 
             BusinessResult result = new BusinessResult();
-            result.Errors.Add(new ErrorMessage("Code", "Message"));
+            result.Errors.Add(new ErrorMessage(ErrorCategory.General, "Code", "Message"));
 
             _timesheetManager
                 .Setup(x => x.SaveCapturedTime(It.IsAny<CapturedTimeDetail[]>()))

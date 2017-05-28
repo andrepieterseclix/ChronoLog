@@ -13,4 +13,14 @@
         Inactive = 5,
         Suspended = 6
     }
+
+    /// <summary>
+    /// Represents the error category.
+    /// </summary>
+    public enum ErrorCategory
+    {
+        General = 0,
+        ResourceNotFound = 1,
+        InvalidRequest = 2
+    }
 }

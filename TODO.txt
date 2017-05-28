@@ -1,0 +1,1 @@
+Encryption when sending requests, for instance, how to encrypt UpdateUserPassword request?  How does it differ between SOAP and REST?

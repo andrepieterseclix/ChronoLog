@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using CLog.Framework.Models;
+using System.Globalization;
+using System.Runtime.Serialization;
 
 namespace CLog.Framework.Services.Models
 {
@@ -18,13 +20,15 @@ namespace CLog.Framework.Services.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ErrorDto"/> class.
+        /// Initializes a new instance of the <see cref="ErrorDto" /> class.
         /// </summary>
+        /// <param name="category">The category.</param>
         /// <param name="code">The code.</param>
         /// <param name="message">The message.</param>
         /// <param name="additionalInfo">The additional information.</param>
-        public ErrorDto(string code, string message, string additionalInfo)
+        public ErrorDto(ErrorCategory category, string code, string message, string additionalInfo)
         {
+            Category = category;
             Code = code;
             Message = message;
             AdditionalInfo = additionalInfo;
@@ -33,6 +37,15 @@ namespace CLog.Framework.Services.Models
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the category.
+        /// </summary>
+        /// <value>
+        /// The category.
+        /// </value>
+        [DataMember]
+        public ErrorCategory Category { get; set; }
 
         /// <summary>
         /// Gets or sets the code.
@@ -60,6 +73,26 @@ namespace CLog.Framework.Services.Models
         /// </value>
         [DataMember]
         public string AdditionalInfo { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            string message = string.Format(CultureInfo.CurrentCulture, "({0}) {1}", Code, Message);
+
+            if (!string.IsNullOrWhiteSpace(AdditionalInfo))
+                message = string.Format(CultureInfo.CurrentCulture, "{0} {1}", AdditionalInfo);
+
+            return message;
+        }
 
         #endregion
     }

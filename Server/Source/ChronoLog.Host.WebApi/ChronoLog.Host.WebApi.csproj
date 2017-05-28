@@ -125,9 +125,11 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccessController.cs" />
+    <Compile Include="Controllers\TimesheetController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Access\UserDetailsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SwaggerOperationFilters\AuthHeadersOperationFilter.cs" />
   </ItemGroup>
@@ -155,6 +157,10 @@
     <ProjectReference Include="..\ChronoLog.Host.Configuration\ChronoLog.Host.Configuration.csproj">
       <Project>{11eacba2-c510-4728-ae64-de17a6d609c8}</Project>
       <Name>ChronoLog.Host.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLog.Framework.Services.Models\CLog.Framework.Services.Models.csproj">
+      <Project>{43e08e22-c9cb-471c-90d7-1fdab177823a}</Project>
+      <Name>CLog.Framework.Services.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\CLog.Framework.Services.WebApi\CLog.Framework.Services.WebApi.csproj">
       <Project>{8add4b6f-f6c4-4ef7-a4d4-ad9caaa99b80}</Project>

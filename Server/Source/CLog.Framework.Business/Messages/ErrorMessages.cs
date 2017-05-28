@@ -1,4 +1,5 @@
 ﻿using CLog.Framework.Business.Models.Results;
+using CLog.Framework.Models;
 
 namespace CLog.Framework.Business.Messages
 {
@@ -26,7 +27,7 @@ namespace CLog.Framework.Business.Messages
         /// </summary>
         public static ErrorMessage UnhandledBusinessException()
         {
-            return new ErrorMessage(UNHANDLED_BUSINESS_EXCEPTION_CODE, UNHANDLED_BUSINESS_EXCEPTION_MESSAGE);
+            return new ErrorMessage(ErrorCategory.General, UNHANDLED_BUSINESS_EXCEPTION_CODE, UNHANDLED_BUSINESS_EXCEPTION_MESSAGE);
         }
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace CLog.Framework.Business.Messages
         /// </summary>
         public static ErrorMessage SessionExpired()
         {
-            return new ErrorMessage(SESSION_EXPIRED_CODE, SESSION_EXPIRED_MESSAGE);
+            return new ErrorMessage(ErrorCategory.General, SESSION_EXPIRED_CODE, SESSION_EXPIRED_MESSAGE);
         }
 
         #endregion

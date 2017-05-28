@@ -1,5 +1,6 @@
 ﻿using CLog.Business.Timesheets.Managers;
 using CLog.Framework.Business.Models.Results;
+using CLog.Framework.Models;
 
 namespace CLog.Business.Timesheets.Messages
 {
@@ -47,7 +48,7 @@ namespace CLog.Business.Timesheets.Messages
         /// </summary>
         public static ErrorMessage InvalidFromAndToDate()
         {
-            return new ErrorMessage(INVALID_FROM_AND_TO_DATE_CODE, INVALID_FROM_AND_TO_DATE_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, INVALID_FROM_AND_TO_DATE_CODE, INVALID_FROM_AND_TO_DATE_MESSAGE);
         }
 
         /// <summary>
@@ -55,7 +56,11 @@ namespace CLog.Business.Timesheets.Messages
         /// </summary>
         public static ErrorMessage QueryMaxDaySpan()
         {
-            return new ErrorMessage(QUERY_MAX_DAY_SPAN_CODE, QUERY_MAX_DAY_SPAN_MESSAGE, string.Format("The number of days between the from-date and the to-date must be less than {0} days.", TimesheetManager.CAPTURED_TIME_QUERY_MAX_DAY_SPAN));
+            return new ErrorMessage(
+                ErrorCategory.InvalidRequest,
+                QUERY_MAX_DAY_SPAN_CODE,
+                QUERY_MAX_DAY_SPAN_MESSAGE,
+                string.Format("The number of days between the from-date and the to-date must be less than {0} days.", TimesheetManager.CAPTURED_TIME_QUERY_MAX_DAY_SPAN));
         }
 
         /// <summary>
@@ -63,7 +68,7 @@ namespace CLog.Business.Timesheets.Messages
         /// </summary>
         public static ErrorMessage CapturedTimeDuplicateDates()
         {
-            return new ErrorMessage(CAPTURED_TIME_DUPLICATE_DATES_CODE, CAPTURED_TIME_DUPLICATE_DATES_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, CAPTURED_TIME_DUPLICATE_DATES_CODE, CAPTURED_TIME_DUPLICATE_DATES_MESSAGE);
         }
 
         /// <summary>
@@ -71,7 +76,7 @@ namespace CLog.Business.Timesheets.Messages
         /// </summary>
         public static ErrorMessage CapturedTimeItemsNotValid()
         {
-            return new ErrorMessage(CAPTURED_TIME_ITEMS_NOT_SPECIFIED_CODE, CAPTURED_TIME_ITEMS_NOT_SPECIFIED_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, CAPTURED_TIME_ITEMS_NOT_SPECIFIED_CODE, CAPTURED_TIME_ITEMS_NOT_SPECIFIED_MESSAGE);
         }
 
         /// <summary>
@@ -79,7 +84,7 @@ namespace CLog.Business.Timesheets.Messages
         /// </summary>
         public static ErrorMessage InvalidUserRequest()
         {
-            return new ErrorMessage(INVALID_USER_REQUEST_CODE, INVALID_USER_REQUEST_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, INVALID_USER_REQUEST_CODE, INVALID_USER_REQUEST_MESSAGE);
         }
 
         /// <summary>
@@ -87,7 +92,7 @@ namespace CLog.Business.Timesheets.Messages
         /// </summary>
         public static ErrorMessage CaptureDateNotEnabled()
         {
-            return new ErrorMessage(CAPTURE_DATE_NOT_ENABLED_CODE, CAPTURE_DATE_NOT_ENABLED_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, CAPTURE_DATE_NOT_ENABLED_CODE, CAPTURE_DATE_NOT_ENABLED_MESSAGE);
         }
 
         /// <summary>
@@ -95,7 +100,7 @@ namespace CLog.Business.Timesheets.Messages
         /// </summary>
         public static ErrorMessage DuplicateDateState()
         {
-            return new ErrorMessage(DUPLICATE_DATE_STATE_CODE, DUPLICATE_DATE_STATE_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, DUPLICATE_DATE_STATE_CODE, DUPLICATE_DATE_STATE_MESSAGE);
         }
 
         #endregion

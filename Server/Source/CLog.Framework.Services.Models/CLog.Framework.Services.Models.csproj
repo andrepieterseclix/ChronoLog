@@ -46,6 +46,12 @@
     <Compile Include="RequestBase.cs" />
     <Compile Include="ResponseBase.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CLog.Framework.Models\CLog.Framework.Models.csproj">
+      <Project>{AF965730-D7B2-4174-B0E7-A3B431EA5532}</Project>
+      <Name>CLog.Framework.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

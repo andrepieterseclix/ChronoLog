@@ -58,6 +58,10 @@
       <Project>{9559A4A8-5060-4C31-99BC-453E30B506DA}</Project>
       <Name>CLog.Framework.Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CLog.Framework.Models\CLog.Framework.Models.csproj">
+      <Project>{AF965730-D7B2-4174-B0E7-A3B431EA5532}</Project>
+      <Name>CLog.Framework.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CLog.Framework.Security\CLog.Framework.Security.csproj">
       <Project>{6A92F35D-3D0F-4356-A309-7DAAF54C7C3E}</Project>
       <Name>CLog.Framework.Security</Name>

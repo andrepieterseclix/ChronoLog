@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CLog.Framework.Models;
+using System;
 using System.Globalization;
 
 namespace CLog.Framework.Business.Models.Results
@@ -8,52 +9,59 @@ namespace CLog.Framework.Business.Models.Results
     /// </summary>
     public class ErrorMessage
     {
+        private string v1;
+        private string v2;
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ErrorMessage"/> class.
+        /// Initializes a new instance of the <see cref="ErrorMessage" /> class.
         /// </summary>
+        /// <param name="category">The category.</param>
         /// <param name="code">The code.</param>
         /// <param name="message">The message.</param>
-        public ErrorMessage(string code, string message)
+        public ErrorMessage(ErrorCategory category, string code, string message)
         {
+            Category = category;
             Code = code;
             Message = message;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ErrorMessage"/> class.
+        /// Initializes a new instance of the <see cref="ErrorMessage" /> class.
         /// </summary>
+        /// <param name="category">The category.</param>
         /// <param name="code">The code.</param>
         /// <param name="message">The message.</param>
         /// <param name="ex">The ex.</param>
-        public ErrorMessage(string code, string message, Exception ex)
-            : this(code, message)
+        public ErrorMessage(ErrorCategory category, string code, string message, Exception ex)
+            : this(category, code, message)
         {
             Exception = ex;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ErrorMessage"/> class.
+        /// Initializes a new instance of the <see cref="ErrorMessage" /> class.
         /// </summary>
+        /// <param name="category">The category.</param>
         /// <param name="code">The code.</param>
         /// <param name="message">The message.</param>
         /// <param name="additionalInfo">The additional information.</param>
-        public ErrorMessage(string code, string message, string additionalInfo)
-            : this(code, message)
+        public ErrorMessage(ErrorCategory category, string code, string message, string additionalInfo)
+            : this(category, code, message)
         {
             AdditionalInfo = additionalInfo;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ErrorMessage"/> class.
+        /// Initializes a new instance of the <see cref="ErrorMessage" /> class.
         /// </summary>
+        /// <param name="category">The category.</param>
         /// <param name="code">The code.</param>
         /// <param name="message">The message.</param>
         /// <param name="additionalInfo">The additional information.</param>
         /// <param name="ex">The ex.</param>
-        public ErrorMessage(string code, string message, string additionalInfo, Exception ex)
-            : this(code, message, additionalInfo)
+        public ErrorMessage(ErrorCategory category, string code, string message, string additionalInfo, Exception ex)
+            : this(category, code, message, additionalInfo)
         {
             Exception = ex;
         }
@@ -61,6 +69,14 @@ namespace CLog.Framework.Business.Models.Results
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the category.
+        /// </summary>
+        /// <value>
+        /// The category.
+        /// </value>
+        public ErrorCategory Category { get; set; }
 
         /// <summary>
         /// Gets the code.

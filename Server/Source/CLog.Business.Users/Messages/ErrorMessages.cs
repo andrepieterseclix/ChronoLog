@@ -1,4 +1,5 @@
 ﻿using CLog.Framework.Business.Models.Results;
+using CLog.Framework.Models;
 
 namespace CLog.Business.Users.Messages
 {
@@ -42,7 +43,7 @@ namespace CLog.Business.Users.Messages
         /// </summary>
         public static ErrorMessage InvalidRequestArguments()
         {
-            return new ErrorMessage(INVALID_REQUEST_ARGUMENTS_CODE, INVALID_REQUEST_ARGUMENTS_MESSAGE); ;
+            return new ErrorMessage(ErrorCategory.InvalidRequest, INVALID_REQUEST_ARGUMENTS_CODE, INVALID_REQUEST_ARGUMENTS_MESSAGE); ;
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace CLog.Business.Users.Messages
         /// </summary>
         public static ErrorMessage UserNameNotSpecified()
         {
-            return new ErrorMessage(USER_NAME_NOT_SPECIFIED_CODE, USER_NAME_NOT_SPECIFIED_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, USER_NAME_NOT_SPECIFIED_CODE, USER_NAME_NOT_SPECIFIED_MESSAGE);
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace CLog.Business.Users.Messages
         /// </summary>
         public static ErrorMessage UserNotFound()
         {
-            return new ErrorMessage(USER_NOT_FOUND_CODE, USER_NOT_FOUND_MESSAGE);
+            return new ErrorMessage(ErrorCategory.ResourceNotFound, USER_NOT_FOUND_CODE, USER_NOT_FOUND_MESSAGE);
         }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace CLog.Business.Users.Messages
         /// </summary>
         public static ErrorMessage InvalidEmailAddress()
         {
-            return new ErrorMessage(INVALID_EMAIL_ADDRESS_CODE, INVALID_EMAIL_ADDRESS_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, INVALID_EMAIL_ADDRESS_CODE, INVALID_EMAIL_ADDRESS_MESSAGE);
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace CLog.Business.Users.Messages
         /// </summary>
         public static ErrorMessage InvalidNameOrSurname()
         {
-            return new ErrorMessage(INVALID_NAME_OR_SURNAME_CODE, INVALID_NAME_OR_SURNAME_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, INVALID_NAME_OR_SURNAME_CODE, INVALID_NAME_OR_SURNAME_MESSAGE);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace CLog.Business.Users.Messages
         /// </summary>
         public static ErrorMessage CannotUpdateTwoUsers()
         {
-            return new ErrorMessage(CANNOT_UPDATE_TWO_USERS_CODE, CANNOT_UPDATE_TWO_USERS_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, CANNOT_UPDATE_TWO_USERS_CODE, CANNOT_UPDATE_TWO_USERS_MESSAGE);
         }
 
         #endregion

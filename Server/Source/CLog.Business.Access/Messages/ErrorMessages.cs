@@ -1,4 +1,5 @@
 ﻿using CLog.Framework.Business.Models.Results;
+using CLog.Framework.Models;
 
 namespace CLog.Business.Access.Messages
 {
@@ -50,7 +51,8 @@ namespace CLog.Business.Access.Messages
         /// </summary>
         public static ErrorMessage UserNotFound()
         {
-            return new ErrorMessage(INCORRECT_USER_OR_PASSWORD_CODE, INCORRECT_USER_OR_PASSWORD_MESSAGE);
+            // Cannot be "NotFound" category!
+            return new ErrorMessage(ErrorCategory.InvalidRequest, INCORRECT_USER_OR_PASSWORD_CODE, INCORRECT_USER_OR_PASSWORD_MESSAGE);
         }
 
         /// <summary>
@@ -58,7 +60,7 @@ namespace CLog.Business.Access.Messages
         /// </summary>
         public static ErrorMessage IncorrectPassword()
         {
-            return new ErrorMessage(INCORRECT_USER_OR_PASSWORD_CODE, INCORRECT_USER_OR_PASSWORD_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, INCORRECT_USER_OR_PASSWORD_CODE, INCORRECT_USER_OR_PASSWORD_MESSAGE);
         }
 
         /// <summary>
@@ -66,7 +68,7 @@ namespace CLog.Business.Access.Messages
         /// </summary>
         public static ErrorMessage UserNotApproved()
         {
-            return new ErrorMessage(USER_NOT_APPROVED_CODE, USER_NOT_APPROVED_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, USER_NOT_APPROVED_CODE, USER_NOT_APPROVED_MESSAGE);
         }
 
         /// <summary>
@@ -74,7 +76,7 @@ namespace CLog.Business.Access.Messages
         /// </summary>
         public static ErrorMessage UserSuspended()
         {
-            return new ErrorMessage(USER_SUSPENDED_CODE, USER_SUSPENDED_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, USER_SUSPENDED_CODE, USER_SUSPENDED_MESSAGE);
         }
 
         /// <summary>
@@ -82,7 +84,7 @@ namespace CLog.Business.Access.Messages
         /// </summary>
         public static ErrorMessage UserInconsistentState()
         {
-            return new ErrorMessage(USER_INCONSISTENT_STATE_CODE, USER_INCONSISTENT_STATE_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, USER_INCONSISTENT_STATE_CODE, USER_INCONSISTENT_STATE_MESSAGE);
         }
 
         /// <summary>
@@ -90,7 +92,7 @@ namespace CLog.Business.Access.Messages
         /// </summary>
         public static ErrorMessage SessionNotFound()
         {
-            return new ErrorMessage(SESSION_NOT_FOUND_CODE, SESSION_NOT_FOUND_MESSAGE);
+            return new ErrorMessage(ErrorCategory.ResourceNotFound, SESSION_NOT_FOUND_CODE, SESSION_NOT_FOUND_MESSAGE);
         }
 
         /// <summary>
@@ -98,7 +100,7 @@ namespace CLog.Business.Access.Messages
         /// </summary>
         public static ErrorMessage InvalidSession()
         {
-            return new ErrorMessage(INVALID_SESSION_CODE, INVALID_SESSION_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, INVALID_SESSION_CODE, INVALID_SESSION_MESSAGE);
         }
 
         /// <summary>
@@ -106,7 +108,7 @@ namespace CLog.Business.Access.Messages
         /// </summary>
         public static ErrorMessage IncorrectOldPassword()
         {
-            return new ErrorMessage(INCORRECT_OLD_PASSWORD_CODE, INCORRECT_OLD_PASSWORD_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, INCORRECT_OLD_PASSWORD_CODE, INCORRECT_OLD_PASSWORD_MESSAGE);
         }
 
         /// <summary>
@@ -114,7 +116,7 @@ namespace CLog.Business.Access.Messages
         /// </summary>
         public static ErrorMessage InvalidPassword()
         {
-            return new ErrorMessage(INVALID_PASSWORD_CODE, INVALID_PASSWORD_MESSAGE);
+            return new ErrorMessage(ErrorCategory.InvalidRequest, INVALID_PASSWORD_CODE, INVALID_PASSWORD_MESSAGE);
         }
 
         #endregion
