@@ -46,9 +46,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptedTest.cs" />
+    <Compile Include="ScriptedTests\AccessServiceTestDoubleLogout.cs" />
     <Compile Include="ScriptedTests\AccessServiceTesUserSuspended.cs" />
     <Compile Include="ScriptedTests\AccessServiceTestSuccess.cs" />
     <Compile Include="ScriptedTests\AccessServiceTestInvalidUser.cs" />
+    <Compile Include="SkipTestAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -77,6 +79,10 @@
     <ProjectReference Include="..\..\..\Server\Source\CLog.Services.Security.Contracts\CLog.Services.Security.Contracts.csproj">
       <Project>{9391BD19-C666-4BB5-8264-58AB71F4DD21}</Project>
       <Name>CLog.Services.Security.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\CLog.ServiceClients.Security\CLog.ServiceClients.Security.csproj">
+      <Project>{B683C213-EE65-4425-AB9A-AE9CDC12E4F6}</Project>
+      <Name>CLog.ServiceClients.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Source\CLog.ServiceClients\CLog.ServiceClients.csproj">
       <Project>{C86BAF0D-FA21-4D30-BA75-03DDF97D3B9A}</Project>

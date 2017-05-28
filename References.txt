@@ -25,6 +25,7 @@ WCF Token Security
 
 Unity.WCF
 	http://www.devtrends.co.uk/blog/introducing-unity.wcf-providing-easy-ioc-integration-for-your-wcf-services
+	- Note:  Had to download the source and recompile targeting new .Net framework and update Unity to be in sync with other packages!
 
 Unity Lifetime Managers (RegisterType -> use Transient by default if no LifetimeManager specified)
 	https://msdn.microsoft.com/en-us/library/ff660872%28v=pandp.20%29.aspx?f=255&MSPPError=-2147217396
@@ -35,6 +36,9 @@ What is a framework?
 WPF Custom Authentication and Authorization
 	https://blog.magnusmontin.net/2013/03/24/custom-authorization-in-wpf/
 
+WebApi intercepting requests (similar to above for security...)
+	https://docs.microsoft.com/en-us/aspnet/web-api/overview/advanced/http-message-handlers
+
 Unity tricks:  building a composite
 	http://sharpfellows.com/post/Unity-IoC-Container-
 
@@ -44,6 +48,8 @@ Email Regex :D
 Validating User Input
 	http://www.codearsenal.net/2012/06/wpf-textbox-validation-idataerrorinfo.html#.WHvMBFV95QK
 
+Swagger UI Setup and Configuration
+	http://www.wmpratt.com/swagger-and-asp-net-web-api-part-1/
 
 
 http://www.wwwlicious.com/2011/03/29/envdte-getting-all-projects-html/

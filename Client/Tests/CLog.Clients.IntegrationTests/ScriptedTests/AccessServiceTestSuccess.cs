@@ -7,6 +7,7 @@ using System;
 
 namespace CLog.Clients.IntegrationTests.ScriptedTests
 {
+    [SkipTest]
     class AccessServiceTestSuccess : ScriptedTest
     {
         private readonly AccessClientFactory factory = new AccessClientFactory();

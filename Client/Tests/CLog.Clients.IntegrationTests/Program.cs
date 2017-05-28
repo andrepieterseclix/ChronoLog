@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 
 namespace CLog.Clients.IntegrationTests
@@ -17,7 +18,10 @@ namespace CLog.Clients.IntegrationTests
                 var tests = typeof(Program)
                     .Assembly
                     .GetTypes()
-                    .Where(t => typeof(ScriptedTest).IsAssignableFrom(t) && !t.IsAbstract)
+                    .Where(t =>
+                        typeof(ScriptedTest).IsAssignableFrom(t)
+                        && !t.IsAbstract
+                        && t.GetCustomAttribute<SkipTestAttribute>(true) == null)
                     .Select(t => Activator.CreateInstance(t))
                     .ToArray();
 

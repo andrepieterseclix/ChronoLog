@@ -9,7 +9,7 @@ namespace ChronoLog.Host
         {
             ConsoleHelper.PrintIntroductionBox("ChronoLog", "Services Host");
 
-            Bootstrapper bootstrapper = new Bootstrapper();
+            WcfConsoleBootstrapper bootstrapper = new WcfConsoleBootstrapper();
             bootstrapper.Run();
         }
     }

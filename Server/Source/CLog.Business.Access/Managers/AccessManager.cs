@@ -9,7 +9,6 @@ using CLog.Infrastructure.Contracts.Security;
 using CLog.Models;
 using CLog.Models.Access;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Permissions;
@@ -178,7 +177,7 @@ namespace CLog.Business.Access.Managers
 
                 bool sessionExpired = false;
 
-                if (session.SessionKey != sessionKey || !_loginTokenHelper.VerifySecurityToken(session, out sessionExpired))
+                if (session.SessionKey != sessionKey || !_loginTokenHelper.VerifySecurityToken(session, out sessionExpired) || !session.IsActive)
                 {
                     result.Result.IsExpired = sessionExpired;
                     result.Errors.Add(ErrorMessages.InvalidSession());
@@ -186,7 +185,7 @@ namespace CLog.Business.Access.Managers
                 }
 
                 session.LastActiveUtc = DateTime.UtcNow;
-                session.IsActive = !result.HasErrors;
+                session.IsActive = (session.IsActive && !result.HasErrors);
                 _sessionRepository.Update(session);
 
                 LoggerHelper.Info(Logger, "Session '{0}' is {1} at {2} (UTC).", session.RefId, (session.IsActive ? "still active" : "inactivated"), session.LastActiveUtc);

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{5AC7A2A4-80A8-4A92-8F35-722FF985D73F}"
 EndProject
@@ -166,6 +166,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLog.Framework.Services.Wcf", "Server\Source\CLog.Framework.Services.Wcf\CLog.Framework.Services.Wcf.csproj", "{9AF3C6CE-07C1-4014-91CC-3EB085EB1593}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLog.Services.Common", "Server\Source\CLog.Services.Common\CLog.Services.Common.csproj", "{6835493E-F8D1-47F7-985D-DA2D5C40EC9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoLog.Host.WebApi", "Server\Source\ChronoLog.Host.WebApi\ChronoLog.Host.WebApi.csproj", "{FFBF1395-C21B-4D5B-92D9-979EB254F3A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Wcf", "Server\Dependencies\Unity.Wcf\Unity.Wcf.csproj", "{8D78E387-BD71-4399-8A8E-6AE0DC8600F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLog.Framework.Services.WebApi", "Server\Source\CLog.Framework.Services.WebApi\CLog.Framework.Services.WebApi.csproj", "{8ADD4B6F-F6C4-4EF7-A4D4-AD9CAAA99B80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLog.Framework.Services.Common", "Server\Source\CLog.Framework.Services.Common\CLog.Framework.Services.Common.csproj", "{B23ADD48-A4DE-488A-8FC3-29897471F608}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -367,6 +375,22 @@ Global
 		{6835493E-F8D1-47F7-985D-DA2D5C40EC9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6835493E-F8D1-47F7-985D-DA2D5C40EC9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6835493E-F8D1-47F7-985D-DA2D5C40EC9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFBF1395-C21B-4D5B-92D9-979EB254F3A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFBF1395-C21B-4D5B-92D9-979EB254F3A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFBF1395-C21B-4D5B-92D9-979EB254F3A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFBF1395-C21B-4D5B-92D9-979EB254F3A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D78E387-BD71-4399-8A8E-6AE0DC8600F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D78E387-BD71-4399-8A8E-6AE0DC8600F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D78E387-BD71-4399-8A8E-6AE0DC8600F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D78E387-BD71-4399-8A8E-6AE0DC8600F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8ADD4B6F-F6C4-4EF7-A4D4-AD9CAAA99B80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ADD4B6F-F6C4-4EF7-A4D4-AD9CAAA99B80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ADD4B6F-F6C4-4EF7-A4D4-AD9CAAA99B80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ADD4B6F-F6C4-4EF7-A4D4-AD9CAAA99B80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B23ADD48-A4DE-488A-8FC3-29897471F608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B23ADD48-A4DE-488A-8FC3-29897471F608}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B23ADD48-A4DE-488A-8FC3-29897471F608}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B23ADD48-A4DE-488A-8FC3-29897471F608}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -445,6 +469,10 @@ Global
 		{26C1D61B-F746-4D2B-BDAF-72E8A6A315FC} = {ADF84F65-0A03-4A1D-953D-787EBBDB4A88}
 		{9AF3C6CE-07C1-4014-91CC-3EB085EB1593} = {18B18911-A973-43C6-9F53-DEEA49D26297}
 		{6835493E-F8D1-47F7-985D-DA2D5C40EC9C} = {7E6FA043-C91C-4546-ADF1-EC207329BEDE}
+		{FFBF1395-C21B-4D5B-92D9-979EB254F3A3} = {B51A4324-796E-4FC5-86E7-18DEF9011CB6}
+		{8D78E387-BD71-4399-8A8E-6AE0DC8600F6} = {563B1F9A-E5ED-4216-BAE1-A44738DACA65}
+		{8ADD4B6F-F6C4-4EF7-A4D4-AD9CAAA99B80} = {18B18911-A973-43C6-9F53-DEEA49D26297}
+		{B23ADD48-A4DE-488A-8FC3-29897471F608} = {18B18911-A973-43C6-9F53-DEEA49D26297}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35

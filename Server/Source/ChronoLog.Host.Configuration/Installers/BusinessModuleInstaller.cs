@@ -8,7 +8,7 @@ using CLog.Common.Logging;
 using CLog.DataAccess;
 using CLog.DataAccess.Repositories.Access;
 using CLog.Framework.Configuration.Bootstrap;
-using CLog.Framework.Services.Wcf.MessageInspectors;
+using CLog.Framework.Services.Common.RequestInterception;
 using CLog.Infrastructure.Contracts.Security;
 using Microsoft.Practices.Unity;
 
@@ -35,7 +35,7 @@ namespace CLog.Host.Configuration.Installers
 
             container
                 .RegisterType<IAccessManager>(
-                ServerMessageSessionInspector.INTERCEPTOR_ACCESS_MANAGER_INSTANCE_NAME,
+                HttpMessageSessionInterceptionHandler.INTERCEPTOR_ACCESS_MANAGER_INSTANCE_NAME,
                 new InjectionFactory(c =>
                 {
                     DataContext dc = new DataContext();

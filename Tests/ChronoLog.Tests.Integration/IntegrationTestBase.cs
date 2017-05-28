@@ -55,7 +55,7 @@ namespace ChronoLog.Tests.Integration
 
         protected DbConnection Connection { get; private set; }
 
-        private readonly Bootstrapper _servicesHostBootstrapper = new Bootstrapper();
+        private readonly WcfConsoleBootstrapper _servicesHostBootstrapper = new WcfConsoleBootstrapper();
 
         private readonly ManualTerminationStrategy _servicesTerminationStrategy = new ManualTerminationStrategy();
 

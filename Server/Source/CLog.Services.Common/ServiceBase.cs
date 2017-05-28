@@ -6,7 +6,6 @@ using CLog.Framework.Services.Contracts;
 using CLog.Framework.Services.Extensions;
 using CLog.Framework.Services.Models;
 using System;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.Threading;
@@ -18,7 +17,7 @@ namespace CLog.Services.Common
     /// </summary>
     /// <seealso cref="CLog.Common.BaseClasses.CommonBase" />
     /// <seealso cref="CLog.Framework.Services.Contracts.IService" />
-    [DebuggerNonUserCode]
+    //[DebuggerNonUserCode]
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, IncludeExceptionDetailInFaults = true)]
     public abstract class ServiceBase : CommonBase, IService
     {

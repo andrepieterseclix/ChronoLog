@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CLog.ServiceClients.Security;
+using System;
 
 namespace CLog.Clients.IntegrationTests
 {
@@ -8,6 +9,8 @@ namespace CLog.Clients.IntegrationTests
         {
             try
             {
+                AppDomain.CurrentDomain.SetThreadPrincipal(new ClientPrincipal());
+
                 Setup();
                 Console.WriteLine("\r\n-- Running {0} --", GetType().Name);
                 Run();

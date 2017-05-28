@@ -11,10 +11,10 @@ using Unity.Wcf;
 namespace ChronoLog.Host.Configuration
 {
     /// <summary>
-    /// Represents the bootstrapper for the Service Host.
+    /// Represents the bootstrapper for the Wcf SOAP console services host.
     /// </summary>
     /// <seealso cref="CLog.Framework.Configuration.Bootstrap.UnityBootstrapper" />
-    public sealed class Bootstrapper : UnityBootstrapper
+    public sealed class WcfConsoleBootstrapper : UnityBootstrapper
     {
         #region Fields
 
@@ -25,9 +25,9 @@ namespace ChronoLog.Host.Configuration
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Bootstrapper"/> class.
+        /// Initializes a new instance of the <see cref="WcfConsoleBootstrapper"/> class.
         /// </summary>
-        public Bootstrapper()
+        public WcfConsoleBootstrapper()
         {
             TerminationStrategy = new ConsoleTerminationStrategy();
         }

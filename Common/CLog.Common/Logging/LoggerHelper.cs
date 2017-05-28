@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
+using System.Reflection;
 
 namespace CLog.Common.Logging
 {
@@ -54,6 +56,10 @@ namespace CLog.Common.Logging
                 Console.WriteLine(message, parameters);
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.StackTrace);
+
+                EventLog.WriteEntry(Assembly.GetEntryAssembly()?.GetName()?.Name ?? "ChronoLog", ex.ToString(), EventLogEntryType.Error);
+
+                return;
             }
 
             logger.Exception(
@@ -77,6 +83,10 @@ namespace CLog.Common.Logging
                 Console.WriteLine(message, parameters);
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.StackTrace);
+
+                EventLog.WriteEntry(Assembly.GetEntryAssembly()?.GetName()?.Name ?? "ChronoLog", ex.ToString(), EventLogEntryType.Error);
+
+                return;
             }
 
             logger.Fatal(
