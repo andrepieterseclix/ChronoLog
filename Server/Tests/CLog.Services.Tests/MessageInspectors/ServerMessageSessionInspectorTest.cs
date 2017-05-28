@@ -138,7 +138,7 @@ namespace CLog.Services.Tests.MessageInspectors
 
         [TestMethod]
         [TestCategory("Services - Message Inspectors - Access")]
-        public void ServerMessageSessionInspector_AfterReceiveRequest_ExpiredSession_Failure()
+        public void ServerMessageSessionInspector_AfterReceiveRequest_ExpiredSession_Success()
         {
             // Arrange
             Message request = _message.Object;
@@ -160,7 +160,10 @@ namespace CLog.Services.Tests.MessageInspectors
             _inspector.AfterReceiveRequest(ref request, _clientChannel.Object, new InstanceContext(new object()));
 
             // Assert
-            Assert.Inconclusive("Handling expired sessions still needs to be investigated..");
+            ServerPrincipal principal = Thread.CurrentPrincipal as ServerPrincipal;
+
+            Assert.IsNotNull(principal);
+            Assert.IsTrue(principal.Identity.SessionExpired);
         }
 
         [TestMethod]
@@ -174,7 +177,7 @@ namespace CLog.Services.Tests.MessageInspectors
 
             SessionState sessionState = new SessionState()
             {
-                IsExpired = true,
+                IsExpired = false,
                 UserId = 1
             };
 
@@ -188,6 +191,10 @@ namespace CLog.Services.Tests.MessageInspectors
             _inspector.AfterReceiveRequest(ref request, _clientChannel.Object, new InstanceContext(new object()));
 
             // Assert
+            ServerPrincipal principal = Thread.CurrentPrincipal as ServerPrincipal;
+
+            Assert.IsNotNull(principal);
+            Assert.IsFalse(principal.Identity.SessionExpired);
             Assert.IsFalse(Thread.CurrentPrincipal.Identity.GetType() == typeof(AnonymousServerIdentity));
             Assert.IsTrue(Thread.CurrentPrincipal.Identity.GetType() == typeof(ServerIdentity));
             Assert.IsTrue(Thread.CurrentPrincipal.Identity.IsAuthenticated);
