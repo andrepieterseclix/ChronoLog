@@ -9,3 +9,7 @@ Business logic should validate every scenario, such as the dupliate dates check 
 Segregation of work, full stack developers don't focus enough on one task, forget smaller detail about one task.
 
 Unit testing and refactoring:  TimesheetManager.GetCapturedTime, see other attached doc
+
+Migrating to VS2017 Issues:
+	https://developercommunity.visualstudio.com/content/problem/24975/vs-2017-rtm-ignores-project-dependencies-build-fai.html
+	See Images folder for error and registering http namespaces, etc...

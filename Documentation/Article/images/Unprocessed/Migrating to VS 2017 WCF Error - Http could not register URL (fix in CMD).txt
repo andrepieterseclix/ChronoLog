@@ -1,0 +1,3 @@
+C:\Windows\system32>netsh http add urlacl url=http://+:8001/Access user=Prodigy\Andre
+C:\Windows\system32>netsh http add urlacl url=http://+:8002/Timesheets/ user=Prodigy\Andre
+C:\Windows\system32>netsh http add urlacl url=http://+:8003/Users/ user=Prodigy\Andre
