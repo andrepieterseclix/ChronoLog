@@ -109,7 +109,7 @@ namespace CLog.UI.Common.Business
             string message = string.Format(CultureInfo.CurrentCulture, "({0}) {1}", Code, Message);
 
             if (!string.IsNullOrWhiteSpace(AdditionalInfo))
-                message = string.Format(CultureInfo.CurrentCulture, "{0} {1}", AdditionalInfo);
+                message = string.Format(CultureInfo.CurrentCulture, "{0} {1}", message, AdditionalInfo);
 
             return message;
         }

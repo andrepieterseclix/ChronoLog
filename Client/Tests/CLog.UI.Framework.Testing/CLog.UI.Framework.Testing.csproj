@@ -100,6 +100,8 @@
   <ItemGroup>
     <Compile Include="Automation\AutomationAction.cs" />
     <Compile Include="Automation\AutomationSet.cs" />
+    <Compile Include="Automation\IAction.cs" />
+    <Compile Include="Automation\NonUIAction.cs" />
     <Compile Include="Behaviors\AutoScrollListBoxBehavior.cs" />
     <Compile Include="Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Exceptions\CancelException.cs" />

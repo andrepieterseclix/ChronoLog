@@ -80,7 +80,9 @@ namespace CLog.Infrastructure.Security
                 true,
                 string.Join(DATA_SEPARATOR, userData));
 
-            return FormsAuthentication.Encrypt(ticket);
+            string encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+            return encryptedTicket;
         }
 
         /// <summary>

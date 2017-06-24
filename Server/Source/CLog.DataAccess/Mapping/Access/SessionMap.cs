@@ -23,7 +23,7 @@ namespace CLog.DataAccess.Mapping.Access
             Property(t => t.SessionKey)
                 .HasColumnName("SessionKey")
                 .HasColumnType("nvarchar")
-                .HasMaxLength(512)
+                .HasMaxLength(1024)
                 .IsRequired();
 
             Property(t => t.UserId)

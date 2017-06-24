@@ -19,7 +19,7 @@ namespace CLog.Host.Configuration.Installers
         {
             // Singleton
             container
-                .RegisterType<ILogger, Log4NetLogger>(new ContainerControlledLifetimeManager());
+                .RegisterType<ILogger, Log4NetLogger>(new ContainerControlledLifetimeManager()); // Singleton
         }
     }
 }

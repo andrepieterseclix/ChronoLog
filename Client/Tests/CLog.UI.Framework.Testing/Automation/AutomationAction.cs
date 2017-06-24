@@ -4,11 +4,15 @@ using System.Windows.Automation;
 
 namespace CLog.UI.Framework.Testing.Automation
 {
-    public class AutomationAction
+    public class AutomationAction : IAction
     {
         #region Fields
 
-        private const int SLEEP = 500;
+        public const int SLEEP = 500;
+
+        private Func<AutomationElement> _getElement;
+
+        private Predicate<AutomationElement> _action;
 
         #endregion
 
@@ -21,8 +25,8 @@ namespace CLog.UI.Framework.Testing.Automation
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
 
-            GetElement = getElement;
-            Action = action;
+            _getElement = getElement;
+            _action = action;
             Retries = retries;
         }
 
@@ -31,16 +35,12 @@ namespace CLog.UI.Framework.Testing.Automation
         #region Properties
 
         public int Retries { get; set; }
-
-        public Func<AutomationElement> GetElement { get; private set; }
-
-        public Predicate<AutomationElement> Action { get; private set; }
-
+        
         #endregion
 
         #region Methods
 
-        internal void Invoke()
+        public void Invoke()
         {
             // Give element some time to load (sleep on first try), UI Automation Framework is finicky :(
             AutomationElement element = null;
@@ -51,7 +51,7 @@ namespace CLog.UI.Framework.Testing.Automation
                     break;
 
                 Thread.Sleep(SLEEP);
-                element = GetElement();
+                element = _getElement();
             }
 
             if (element == null)
@@ -60,7 +60,7 @@ namespace CLog.UI.Framework.Testing.Automation
             // Execute action
             for (int i = 0; i < Retries; i++)
             {
-                if (Action(element))
+                if (_action(element))
                     return;
 
                 Thread.Sleep(SLEEP);

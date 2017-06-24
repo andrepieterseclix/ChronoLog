@@ -35,7 +35,9 @@ namespace CLog.UI.Framework.Testing.Helpers
         public static DTE2 GetActiveIDE()
         {
             // Get an instance of currently running Visual Studio IDE.
-            DTE2 dte2 = (DTE2)Marshal.GetActiveObject("VisualStudio.DTE.14.0");
+            //DTE2 dte2 = (DTE2)Marshal.GetActiveObject("VisualStudio.DTE.14.0"); // 2015
+            DTE2 dte2 = (DTE2)Marshal.GetActiveObject("VisualStudio.DTE.15.0"); // 2017
+            // TODO:  find a way to obtain dynamically
 
             return dte2;
         }

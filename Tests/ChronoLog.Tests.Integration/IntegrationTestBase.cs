@@ -274,6 +274,8 @@ namespace ChronoLog.Tests.Integration
             return element;
         }
 
+        // UI
+
         protected void EnqueueEnterUserName(AutomationSet set)
         {
             set.Enqueue(new AutomationAction(
@@ -420,6 +422,43 @@ namespace ChronoLog.Tests.Integration
 
                     return true;
                 }));
+        }
+
+        // Non-UI
+
+        protected void EnqueueLockDates(AutomationSet set, params DateTime[] dates)
+        {
+            if (dates.Length < 1)
+                return;
+
+            set.Enqueue(new NonUIAction(() =>
+            {
+                string[] dateStrings = dates.Select(x => string.Format("('{0:yyyy-MM-dd}')", x)).ToArray();
+
+                string commandText = string.Format(@"
+                    DECLARE @Source table ([Date] DateTime)
+
+                    INSERT @Source VALUES
+                    {0}
+
+                    MERGE dbo.[DateState] ds
+                    USING @Source s ON
+	                    ds.[Date] = s.[Date]
+                    WHEN MATCHED THEN
+	                    UPDATE SET ds.[IsLocked] = 1
+                    WHEN NOT MATCHED BY TARGET THEN
+	                    INSERT ([Date], [IsLocked], [IsPublicHoliday])
+	                    VALUES (s.[Date], 1, 0);", string.Join(",\r\n                    ", dateStrings));
+
+                using (DbCommand cmd = NewCommand(commandText))
+                {
+                    cmd.Connection = Connection;
+                    if (Connection.State != ConnectionState.Open)
+                        Connection.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }));
         }
 
         #endregion

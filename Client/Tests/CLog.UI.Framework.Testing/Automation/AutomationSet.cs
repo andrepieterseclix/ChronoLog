@@ -7,7 +7,7 @@ namespace CLog.UI.Framework.Testing.Automation
     {
         #region Fields
 
-        private readonly Queue<AutomationAction> _actionQueue = new Queue<AutomationAction>();
+        private readonly Queue<IAction> _actionQueue = new Queue<IAction>();
 
         private readonly Action _callback;
 
@@ -24,7 +24,7 @@ namespace CLog.UI.Framework.Testing.Automation
 
         #region Methods
 
-        public void Enqueue(AutomationAction action)
+        public void Enqueue(IAction action)
         {
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
@@ -36,7 +36,7 @@ namespace CLog.UI.Framework.Testing.Automation
         {
             try
             {
-                AutomationAction action = null;
+                IAction action = null;
 
                 while (_actionQueue.Count > 0)
                 {

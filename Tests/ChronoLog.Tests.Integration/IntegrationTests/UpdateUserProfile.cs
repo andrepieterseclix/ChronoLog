@@ -1,6 +1,5 @@
 ﻿using CLog.UI.Framework.Testing.Automation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;

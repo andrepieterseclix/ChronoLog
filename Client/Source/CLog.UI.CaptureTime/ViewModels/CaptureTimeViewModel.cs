@@ -239,7 +239,7 @@ namespace CLog.UI.CaptureTime.ViewModels
                 if (result.HasErrors)
                 {
                     if (result.Errors.Count > 1)
-                        StatusService.SetStatus(StatusMessageType.Error, "Multiple errors have occurred, see the logs for more detail.");
+                        StatusService.SetStatus(StatusMessageType.Error, "{0}  See the logs for additional errors that have occurred.", result.Errors.First());
                     else
                         StatusService.SetStatus(StatusMessageType.Error, "{0}", result.Errors.First());
                 }

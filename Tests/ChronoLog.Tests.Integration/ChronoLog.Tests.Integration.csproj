@@ -54,6 +54,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="IntegrationTests\CaptureAfterLocked.cs" />
     <Compile Include="IntegrationTests\CaptureLastThreeWeeks.cs" />
     <Compile Include="IntegrationTests\CapturePublicHoliday.cs" />
     <Compile Include="IntegrationTests\FutureDateDisabled.cs" />

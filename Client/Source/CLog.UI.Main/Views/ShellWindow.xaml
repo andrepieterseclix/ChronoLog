@@ -13,7 +13,7 @@
         <DockPanel Margin="2">
             <local:BannerView DockPanel.Dock="Top" DataContext="{Binding Banner}" Style="{StaticResource DivisionStyle}" Margin="5"/>
             <StatusBar DockPanel.Dock="Bottom" Background="Transparent">
-                <TextBlock FontWeight="Bold" Text="{Binding Status, FallbackValue=[Status]}" Foreground="{Binding StatusType, Converter={StaticResource StatusTypeColourConverter}}" Margin="5, 0" />
+                <TextBlock FontWeight="Bold" Text="{Binding Status, FallbackValue=[Status]}" Foreground="{Binding StatusType, Converter={StaticResource StatusTypeColourConverter}}" Margin="5, 0" TextTrimming="WordEllipsis" />
             </StatusBar>
 
             <!--Tab Items added through App.xaml.cs-->
