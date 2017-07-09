@@ -27,7 +27,7 @@ namespace ChronoLog.Tests.Integration.IntegrationTests
             EnqueueLogin(set);
             EnqueueChangeDate(set, testDate);
             EnqueueCaptureDate(set, hoursWorked, captureDateId);
-            EnqueueLockDates(set, testDate);  // After this the UI still thinks the date is not locked, server must handle the situation and return an error
+            EnqueueLockDatesServerSide(set, testDate);  // After this the UI still thinks the date is not locked, server must handle the situation and return an error
             EnqueueSaveCapturedTime(set);
             EnqueueLogout(set);
             EnqueueCloseLogoutWindow(set);

@@ -31,26 +31,26 @@ namespace ChronoLog.Tests.Integration
         public const string KNOWN_STATE_1 = @"
             -- User
             INSERT [dbo].[User] ([State], [UserName], [Password], [Salt], [Name], [Surname], [Email], [ManagerId])
-            VALUES (4, N'TestBot', N'rUCFPNntYl0OLM61tTLDsj8Nr2WZbk8znn+RIh8i+40=', N'G3NWV7jT', N'Tester', N'Botto', N'testbot@companyname.co.za', NULL)
+                VALUES (4, N'TestBot', N'rUCFPNntYl0OLM61tTLDsj8Nr2WZbk8znn+RIh8i+40=', N'G3NWV7jT', N'Tester', N'Botto', N'testbot@companyname.co.za', NULL)
 
             -- Date States
             INSERT [dbo].[DateState] ([Date], [IsLocked], [IsPublicHoliday])
-            VALUES (CAST(N'2016-12-19 00:00:00.000' AS DateTime), 1, 0)
+                VALUES (CAST(N'2016-12-19 00:00:00.000' AS DateTime), 1, 0)
             INSERT [dbo].[DateState] ([Date], [IsLocked], [IsPublicHoliday])
-            VALUES (CAST(N'2016-12-20 00:00:00.000' AS DateTime), 1, 0)
+                VALUES (CAST(N'2016-12-20 00:00:00.000' AS DateTime), 1, 0)
             INSERT [dbo].[DateState] ([Date], [IsLocked], [IsPublicHoliday])
-            VALUES (CAST(N'2016-12-21 00:00:00.000' AS DateTime), 1, 0)
+                VALUES (CAST(N'2016-12-21 00:00:00.000' AS DateTime), 1, 0)
             INSERT [dbo].[DateState] ([Date], [IsLocked], [IsPublicHoliday])
-            VALUES (CAST(N'2016-12-22 00:00:00.000' AS DateTime), 1, 0)
+                VALUES (CAST(N'2016-12-22 00:00:00.000' AS DateTime), 1, 0)
             INSERT [dbo].[DateState] ([Date], [IsLocked], [IsPublicHoliday])
-            VALUES (CAST(N'2016-12-23 00:00:00.000' AS DateTime), 1, 0)
+                VALUES (CAST(N'2016-12-23 00:00:00.000' AS DateTime), 1, 0)
             INSERT [dbo].[DateState] ([Date], [IsLocked], [IsPublicHoliday])
-            VALUES (CAST(N'2016-12-24 00:00:00.000' AS DateTime), 1, 0)
+                VALUES (CAST(N'2016-12-24 00:00:00.000' AS DateTime), 1, 0)
             INSERT [dbo].[DateState] ([Date], [IsLocked], [IsPublicHoliday])
-            VALUES (CAST(N'2016-12-25 00:00:00.000' AS DateTime), 1, 0)
+                VALUES (CAST(N'2016-12-25 00:00:00.000' AS DateTime), 1, 0)
             
             INSERT [dbo].[DateState] ([Date], [IsLocked], [IsPublicHoliday])
-            VALUES (CAST(N'2017-01-01 00:00:00.000' AS DateTime), 0, 1)
+                VALUES (CAST(N'2017-01-01 00:00:00.000' AS DateTime), 0, 1)
         ";
 
         protected DbConnection Connection { get; private set; }
@@ -192,8 +192,8 @@ namespace ChronoLog.Tests.Integration
 
         protected DbCommand NewCommand(string commandText)
         {
-            DbCommand cmd = new SqlCommand(commandText);
-            cmd.Connection = Connection;
+            DbCommand cmd = Connection.CreateCommand();
+            cmd.CommandText = commandText;
 
             return cmd;
         }
@@ -426,7 +426,7 @@ namespace ChronoLog.Tests.Integration
 
         // Non-UI
 
-        protected void EnqueueLockDates(AutomationSet set, params DateTime[] dates)
+        protected void EnqueueLockDatesServerSide(AutomationSet set, params DateTime[] dates)
         {
             if (dates.Length < 1)
                 return;
